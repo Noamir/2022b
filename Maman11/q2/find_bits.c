@@ -1,30 +1,31 @@
 #include <stdio.h>
+#define UNSIGNED_LONG_BITS 32
 
-/* int unsignedLongToBit(unsigned long num)
+/* This function updates bitsArr with unsigned long num binary representation */
+void ULToBit(unsigned long num, int *bitsArr)
 {
     int i = 0;
-    int B[32];
+
     while (num > 0)
     {
-        B[i] = num % 2;
+        bitsArr[i] = num % 2;
         num = num / 2;
         i++;
     }
-    return &(B[0]);
-} */
-
-/* This function checks the number of on bits - in identical indexes in 2 unsigned long numbers */
-/* int checkBitsNumber(unsigned long x, unsigned long y)
-{
-
-} */
+}
 
 int main()
-{
-
+{   
+    /* variables */
     unsigned long x, y;
-    int bitsNumber; /* (unsigned long is 32 bits so int) */
+    int i, bitsCounter = 0;
 
+    /* initialize bits arrays cells to 0 */
+    int xBits[UNSIGNED_LONG_BITS] = {0};
+    int yBits[UNSIGNED_LONG_BITS] = {0};
+
+
+    /* inputs */
     printf("Enter number x: ");
     scanf("%lu", &x);
 
@@ -33,48 +34,34 @@ int main()
 
     printf("\nThe input is: \nx: %lu, y: %lu\n", x, y);
 
-    int xBits[32];
-    printf("A\n");
-    int yBits[32];
-    printf("B\n");
-    int i = 0;
+    /* update bits arrays cells to the numbers binary representation */
+    ULToBit(x, xBits);
+    ULToBit(y, yBits);
 
-    while (x > 0)
-    {
-        xBits[i] = x % 2;
-        printf("xBits[%d]: %d ", i, xBits[i]);
-        x = x / 2; /* we will have 32 times of /2 (32 bits = 2^32 options) */
-        printf("x: %lu \n", x);
 
-        i++;
-    }
-
-    printf("B\n");
-
-    i = 0;
-
-    while (y > 0)
-    {
-        yBits[i] = y % 2;
-        printf("yBits[%d] %d ", i, yBits[i]);
-        y = y / 2; /* we will have 32 times of /2 (32 bits = 2^32 options) */
-        printf("y: %lu \n", x);
-        i++;
-    }
-
-    printf("C\n");
-
+    /* TODO - delete - just for debug - print numbers binary */
     printf("\nBinary for x: ");
-    for (i = 0; i < 32; i++)
+    for (i = UNSIGNED_LONG_BITS-1; i >= 0; i--)
     {
         printf("%d ", xBits[i]);
     }
 
     printf("\nBinary for y: ");
-    for (i = 0; i < 32; i++)
+    for (i = UNSIGNED_LONG_BITS-1; i >= 0; i--)
     {
         printf("%d ", yBits[i]);
     }
+
+    /* count indexes where both numbers have binary value 1 */
+    for (i = 0; i < UNSIGNED_LONG_BITS; i++)
+    {
+        if (xBits[i] && yBits[i])
+        {
+            bitsCounter++;
+        }
+    }
+
+    printf("\nNumber of 'on' (=1) bits in both numbers: %d\n", bitsCounter);
 
     return 0;
 }
