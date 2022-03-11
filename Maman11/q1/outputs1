@@ -1,0 +1,4 @@
+Enter vectors size (max valid size is 100000): 
+Enter 5 integers for vector number 1: 
+Enter 5 integers for vector number 2: 
+The scalar product of the vectors is: 55 

@@ -1,6 +1,8 @@
 #include <stdio.h>
+#define MAX_SIZE  100000 /* max size of vector */
 
-int product_scalar(int size, int vec1[], int vec2[])
+/* Function that calculates 2 vectors of size <size> scalar product */
+int getScalarProduct(int size, int vec1[], int vec2[])
 {
     int i, scalarProduct = 0;
 
@@ -16,11 +18,11 @@ int main()
 {
     int size, scalarProduct, i;
 
-    printf("Enter vectors size: ");
-    scanf("%d", &size);
+    int vec1[MAX_SIZE];
+    int vec2[MAX_SIZE];
 
-    int vec1[size];
-    int vec2[size];
+    printf("Enter vectors size (max valid size is %d): ", MAX_SIZE);
+    scanf("%d", &size);
 
     printf("\nEnter %d integers for vector number 1: ", size);
     for (i = 0; i < size; i++)
@@ -34,7 +36,7 @@ int main()
         scanf("%d", &vec2[i]);
     }
 
-    scalarProduct = product_scalar(size, vec1, vec2);
+    scalarProduct = getScalarProduct(size, vec1, vec2);
     printf("\nThe scalar product of the vectors is: %d \n", scalarProduct);
 
     return 0;
