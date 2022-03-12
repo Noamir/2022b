@@ -1,29 +1,10 @@
 #include <stdio.h>
-#define UNSIGNED_LONG_BITS 32
-
-/* This function updates bitsArr with unsigned long num binary representation */
-void ULToBit(unsigned long num, int *bitsArr)
-{
-    int i = 0;
-
-    while (num > 0)
-    {
-        bitsArr[i] = num % 2;
-        num = num / 2;
-        i++;
-    }
-}
 
 int main()
-{   
+{
     /* variables */
     unsigned long x, y;
-    int i, bitsCounter = 0;
-
-    /* initialize bits arrays cells to 0 */
-    int xBits[UNSIGNED_LONG_BITS] = {0};
-    int yBits[UNSIGNED_LONG_BITS] = {0};
-
+    int combined, counter = 0;
 
     /* inputs */
     printf("Enter number x: ");
@@ -34,34 +15,21 @@ int main()
 
     printf("\nThe input is: \nx: %lu, y: %lu\n", x, y);
 
-    /* update bits arrays cells to the numbers binary representation */
-    ULToBit(x, xBits);
-    ULToBit(y, yBits);
+    /* if x and y have bit 1 in the same index - insert 1 to combined index. if only one of them is 1 \ both 0 - insert 0 */
+    /* which mean combined contains the number of 1s which are mutual - this is what we need to count! */
+    combined = (x & y); 
 
-
-    /* TODO - delete - just for debug - print numbers binary */
-    printf("\nBinary for x: ");
-    for (i = UNSIGNED_LONG_BITS-1; i >= 0; i--)
+    /* go over combined - if 1 count, if 0 don't, shift right after every time to go over all */
+    while (combined > 0) /* each shift right, it put 0 on the right instead, so eventually we will have 00000000000000000000000000000000 == 0 */
     {
-        printf("%d ", xBits[i]);
+        if ((combined & 1) == 1) /* check the right bit (MSB) of combined - if it's 1 - count it */
+            counter++;
+
+        /* We checked the most right bit, don't need it anymore - shift combined bits to the right */
+        combined = combined >> 1; /* next time we will check the next bit */
     }
 
-    printf("\nBinary for y: ");
-    for (i = UNSIGNED_LONG_BITS-1; i >= 0; i--)
-    {
-        printf("%d ", yBits[i]);
-    }
-
-    /* count indexes where both numbers have binary value 1 */
-    for (i = 0; i < UNSIGNED_LONG_BITS; i++)
-    {
-        if (xBits[i] && yBits[i])
-        {
-            bitsCounter++;
-        }
-    }
-
-    printf("\nNumber of 'on' (=1) bits in both numbers: %d\n", bitsCounter);
+    printf("\ncounter: %d\n", counter); /* 1 bits */
 
     return 0;
 }
