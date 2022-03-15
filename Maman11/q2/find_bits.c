@@ -1,35 +1,30 @@
+/* This program gets 2 unsigned long numbers and returns how many bits are on (1) in the same spot in both numbers */
+
 #include <stdio.h>
+
+int get_on_bits(int number);
 
 int main()
 {
-    /* variables */
     unsigned long x, y;
-    int combined, counter = 0;
+    int combined, counter;
 
-    /* inputs */
+    /* handle inputs */
     printf("Enter number x: ");
     scanf("%lu", &x);
 
-    printf("Enter number y: ");
+    printf("\nEnter number y: ");
     scanf("%lu", &y);
 
-    printf("\nThe input is: \nx: %lu, y: %lu\n", x, y);
+    printf("\n\nThe input is: \nx: %lu \ny: %lu", x, y);
 
-    /* if x and y have bit 1 in the same index - insert 1 to combined index. if only one of them is 1 \ both 0 - insert 0 */
-    /* which mean combined contains the number of 1s which are mutual - this is what we need to count! */
-    combined = (x & y); 
+    /* combined is a new binary number, with bit 1 where BOTH x and y have bit 1, and bit 0 where not */
+    combined = (x & y);
 
-    /* go over combined - if 1 count, if 0 don't, shift right after every time to go over all */
-    while (combined > 0) /* each shift right, it put 0 on the right instead, so eventually we will have 00000000000000000000000000000000 == 0 */
-    {
-        if ((combined & 1) == 1) /* check the right bit (MSB) of combined - if it's 1 - count it */
-            counter++;
+    /* count on bits (1) in combined (both x and y) */
+    counter = get_on_bits(combined);
 
-        /* We checked the most right bit, don't need it anymore - shift combined bits to the right */
-        combined = combined >> 1; /* next time we will check the next bit */
-    }
-
-    printf("\ncounter: %d\n", counter); /* 1 bits */
+    printf("\n\nNumber of on bits (1) in both x and y: %d\n", counter);
 
     return 0;
 }
