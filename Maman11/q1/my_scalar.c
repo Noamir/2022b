@@ -1,9 +1,10 @@
+/* This program gets size for 2 vectors and 2 vectors integers, and prints the vectors scalar product */
+
 #include <stdio.h>
 #define MAX_SIZE 1000 /* max size of vector */
 
 int scalar_product(int size, int vec1[], int vec2[]);
 
-/* get size for 2 vectors and 2 vectors integers from stdin, print the vectors scalar product */
 int main()
 {
     int size, i, scalar_product_res;

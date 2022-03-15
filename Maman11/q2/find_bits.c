@@ -9,7 +9,7 @@ int main()
     unsigned long x, y;
     int combined, counter;
 
-    /* handle inputs */
+    /* inputs: get x and y values from stdin */
     printf("Enter number x: ");
     scanf("%lu", &x);
 
