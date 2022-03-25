@@ -1,4 +1,4 @@
-/* get_on_bits: get binary number, return the number of on bits (1) in number */
+/* get_on_bits: get a number, return the number of on bits (1) in number */
 
 int get_on_bits(int number)
 {

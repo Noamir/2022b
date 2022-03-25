@@ -1,4 +1,4 @@
-/* This program gets size for 2 vectors and 2 vectors integers, and prints the vectors scalar product */
+/* This program gets size for 2 vectors and the 2 vectors integers, and prints the vectors scalar product */
 
 #include <stdio.h>
 #define MAX_SIZE 1000 /* max size of vector */
