@@ -1,41 +1,67 @@
 #include "data.h"
 
-int main()
+int *get_text(int *chars)
 {
-    int *chars = malloc(DEFAULT_SIZE * sizeof(int));    /* allocate DEFAULT_SIZE size for dynamic array */
-
-    int length = DEFAULT_SIZE;                          /* chars length */
-
-    int i, j = 0;
-
-    int counter_all = 0, counter_alpha = 0;             /* counter for all chars and counter for alphanumeric chars */
+    int i = 0;
+    int limit = DEFAULT_SIZE; /* chars length limit */
 
     printf("Please enter as many chars as you want:\n");
 
     /* insert input to chars dynamic array. If chars limit is met - realloc. */
-    for (i = 0; (i < length) && (chars[i] = getchar()) != EOF; i++)
+    for (i = 0; (i <= limit) && (*(chars + i) = getchar()) != EOF; i++)
     {
-        if (i == length - 2) /* got to the end of chars length - realloc more space and increase length */
+        /* got to the limit of chars length - realloc more space and increase limit */
+        if (i == limit - 1)
         {
-            chars = realloc(chars, 2 * length * sizeof(int));
-            length = 2 * length;
-        }
-
-        if (isalnum(chars[i]))
-        {
-            counter_alpha++;
+            limit = 2 * limit;
+            chars = (int *)realloc(chars, limit * sizeof(int));
         }
     }
 
-    /* now we have all input in array */
-    counter_all = i;
+    return chars; /* if realloc failed, retirns NULL. checking in main - if NULL exist with error */
+}
 
-    /* print nicely */
-    printf("\n\nNice printing: \n\n");
+/* count all chars in *chars */
+int count_chars(int *chars)
+{
+    int i = 0;
 
-    for (i = 0; i < counter_all; i++, j++) /* go over all array */
+    while (*(chars + i) != EOF)
     {
-        if (chars[i] == "\n")
+        i++;
+    }
+
+    return i;
+}
+
+/* count all alphanumeric chars in *chars */
+int count_alphanum_chars(int *chars)
+{
+    int counter = 0, i = 0;
+
+    while (*(chars + i) != EOF)
+    {
+        if (isalnum(*(chars + i)))
+        {
+            counter++;
+        }
+
+        i++;
+    }
+
+    return counter;
+}
+
+/* print *chars txt nicely */
+void print_text(int *chars)
+{
+    int i = 0, j = 0;
+
+    printf("\n\n===== NICE PRINT =====\n\n");
+
+    while (*(chars + i) != EOF)
+    {
+        if (*(chars + i) == (int)'\n')
             j = 0;         /* reset lines counter */
         if (j == LINE_LEN) /* if got to line limit - start a new line */
         {
@@ -43,13 +69,46 @@ int main()
             printf("\n");
         }
 
-        printf("%c", chars[i]); /* print char */
+        printf("%c", *(chars + i)); /* print char */
+
+        i++;
+        j++;
     }
 
-    printf("\n\n"); /* for clear output */
+    printf("\n\n======================\n\n");
+}
+
+int main(void)
+{
+    int *chars, counter_all, counter_alphanum; /* counter for all chars and counter for alphanumeric chars */
+
+    chars = (int *)malloc(DEFAULT_SIZE * sizeof(int)); /* allocate DEFAULT_SIZE size for dynamic array */
+
+    /* check the dynamic allocation succeeded */
+    if (chars == NULL)
+    {
+        printf("malloc failed!");
+        return 1;
+    }
+
+    chars = get_text(chars); /* get unlimited number of chars to chars array */
+
+    if (chars == NULL)
+    {
+        printf("realloc failed!");
+        return 1;
+    }
+
+    counter_all = count_chars(chars); /* count all chars in input */
+
+    counter_alphanum = count_alphanum_chars(chars); /* count alphanumeric chars in input */
+
+    print_text(chars); /* print input nicely */
 
     printf("Number of total chars in input: %d\n", counter_all);
-    printf("Number of alphanumeric chars in input: %d\n", counter_alpha);
+    printf("Number of alphanumeric chars in input: %d\n", counter_alphanum);
+
+    free(chars);
 
     return 0;
 }
