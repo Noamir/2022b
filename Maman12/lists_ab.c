@@ -1,5 +1,6 @@
 #include "data.h"
 
+/* get unlimited number of chars from stdin to *chars pointer */
 int *get_text(int *chars)
 {
     int i = 0;
@@ -78,36 +79,52 @@ void print_text(int *chars)
     printf("\n\n======================\n\n");
 }
 
+
+/* This program gets unlimited number of chars from stdin. 
+ The program prints to stdout:
+ 1. The input in a nice format
+ 2. The count of all chars from stdin
+ 3. The count of alphanumeric chars from stdin  */
+
 int main(void)
 {
-    int *chars, counter_all, counter_alphanum; /* counter for all chars and counter for alphanumeric chars */
+    int *chars, counter_all, counter_alphanum;
 
-    chars = (int *)malloc(DEFAULT_SIZE * sizeof(int)); /* allocate DEFAULT_SIZE size for dynamic array */
+    /* allocate DEFAULT_SIZE size for dynamic chars size */
+    chars = (int *)malloc(DEFAULT_SIZE * sizeof(int)); 
 
-    /* check the dynamic allocation succeeded */
+    /* check if dynamic allocation succeeded */
     if (chars == NULL)
     {
         printf("malloc failed!");
         return 1;
     }
 
-    chars = get_text(chars); /* get unlimited number of chars to chars array */
+    /* get unlimited number of chars to chars array */
+    chars = get_text(chars); 
 
+
+    /* check if dynamic allocation succeeded */
     if (chars == NULL)
     {
         printf("realloc failed!");
         return 1;
     }
 
-    counter_all = count_chars(chars); /* count all chars in input */
+    /* count all chars from stdin */
+    counter_all = count_chars(chars); 
 
-    counter_alphanum = count_alphanum_chars(chars); /* count alphanumeric chars in input */
+    /* count alphanumeric chars from stdin */
+    counter_alphanum = count_alphanum_chars(chars); 
 
-    print_text(chars); /* print input nicely */
+    /* print input in a nice format */
+    print_text(chars); 
 
+    /* print number of total chars and number of alphanumeric chars */
     printf("Number of total chars in input: %d\n", counter_all);
     printf("Number of alphanumeric chars in input: %d\n", counter_alphanum);
 
+    /* free chars allocation */
     free(chars);
 
     return 0;
