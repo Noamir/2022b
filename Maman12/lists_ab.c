@@ -1,8 +1,9 @@
 #include "data.h"
 
 /* get unlimited number of chars from stdin to *chars pointer */
-int *get_text(int *chars)
+int *get_chars(int *chars)
 {
+    int *tmp_ptr;
     int i = 0;
     int limit = DEFAULT_SIZE; /* chars length limit */
 
@@ -11,15 +12,23 @@ int *get_text(int *chars)
     /* insert input to chars dynamic array. If chars limit is met - realloc. */
     for (i = 0; (i <= limit) && (*(chars + i) = getchar()) != EOF; i++)
     {
-        /* got to the limit of chars length - realloc more space and increase limit */
+        /* got to the limit of current chars length - realloc more space and increase limit */
         if (i == limit - 1)
         {
             limit = 2 * limit;
-            chars = (int *)realloc(chars, limit * sizeof(int));
+            tmp_ptr = (int *)realloc(chars, limit * sizeof(int));
+
+            /* check if dynamic allocation succeeded */
+            if (tmp_ptr == NULL)
+            {
+                printf("realloc failed!");
+                return (int *)1;
+            }
+
+            chars = tmp_ptr;
         }
     }
-
-    return chars; /* if realloc failed, retirns NULL. checking in main - if NULL exist with error */
+    return chars;
 }
 
 /* count all chars in *chars */
@@ -53,8 +62,8 @@ int count_alphanum_chars(int *chars)
     return counter;
 }
 
-/* print *chars txt nicely */
-void print_text(int *chars)
+/* print *chars chars nicely */
+void print_chars(int *chars)
 {
     int i = 0, j = 0;
 
@@ -79,8 +88,7 @@ void print_text(int *chars)
     printf("\n\n======================\n\n");
 }
 
-
-/* This program gets unlimited number of chars from stdin. 
+/* This program gets unlimited number of chars from stdin.
  The program prints to stdout:
  1. The input in a nice format
  2. The count of all chars from stdin
@@ -91,7 +99,7 @@ int main(void)
     int *chars, counter_all, counter_alphanum;
 
     /* allocate DEFAULT_SIZE size for dynamic chars size */
-    chars = (int *)malloc(DEFAULT_SIZE * sizeof(int)); 
+    chars = (int *)malloc(DEFAULT_SIZE * sizeof(int));
 
     /* check if dynamic allocation succeeded */
     if (chars == NULL)
@@ -101,24 +109,16 @@ int main(void)
     }
 
     /* get unlimited number of chars to chars array */
-    chars = get_text(chars); 
-
-
-    /* check if dynamic allocation succeeded */
-    if (chars == NULL)
-    {
-        printf("realloc failed!");
-        return 1;
-    }
+    chars = get_chars(chars);
 
     /* count all chars from stdin */
-    counter_all = count_chars(chars); 
+    counter_all = count_chars(chars);
 
     /* count alphanumeric chars from stdin */
-    counter_alphanum = count_alphanum_chars(chars); 
+    counter_alphanum = count_alphanum_chars(chars);
 
     /* print input in a nice format */
-    print_text(chars); 
+    print_chars(chars);
 
     /* print number of total chars and number of alphanumeric chars */
     printf("Number of total chars in input: %d\n", counter_all);
