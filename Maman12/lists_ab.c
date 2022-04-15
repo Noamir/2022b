@@ -1,28 +1,35 @@
 #include "data.h"
 
-/* get unlimited number of chars from stdin to *chars pointer */
-int *get_chars(int *chars)
+
+/* get_chars: get unlimited number of chars from stdin, return pointer to these chars */
+int *get_chars()
 {
-    int *tmp_ptr;
-    int i = 0;
-    int limit = DEFAULT_SIZE; /* chars length limit */
+    int *tmp_ptr, i = 0, limit = DEFAULT_LIMIT;
+
+    /* allocate DEFAULT_LIMIT size for dynamic chars pointer size */
+    int *chars = (int *)malloc(limit * sizeof(int));
+
+    /* if dynamic allocation failed - return NULL */
+    if (chars == NULL)
+    {
+        return NULL;
+    }
 
     printf("Please enter as many chars as you want:\n");
 
-    /* insert input to chars dynamic array. If chars limit is met - realloc. */
+    /* insert input to the next space in chars. If chars limit is met - realloc. */
     for (i = 0; (i <= limit) && (*(chars + i) = getchar()) != EOF; i++)
     {
-        /* got to the limit of current chars length - realloc more space and increase limit */
+        /* got to the limit of chars size - increase limit and realloc chars with new limit size */
         if (i == limit - 1)
         {
-            limit = 2 * limit;
+            limit = INCREAS_BY * limit;
             tmp_ptr = (int *)realloc(chars, limit * sizeof(int));
 
-            /* check if dynamic allocation succeeded */
+            /* if dynamic allocation failed - return NULL */
             if (tmp_ptr == NULL)
             {
-                printf("realloc failed!");
-                return (int *)1;
+                return NULL;
             }
 
             chars = tmp_ptr;
@@ -31,7 +38,8 @@ int *get_chars(int *chars)
     return chars;
 }
 
-/* count all chars in *chars */
+
+/* count_chars: count and return all chars in *chars */
 int count_chars(int *chars)
 {
     int i = 0;
@@ -44,7 +52,8 @@ int count_chars(int *chars)
     return i;
 }
 
-/* count all alphanumeric chars in *chars */
+
+/* count_alphanum_chars: count and return all alphanumeric chars in *chars */
 int count_alphanum_chars(int *chars)
 {
     int counter = 0, i = 0;
@@ -62,31 +71,36 @@ int count_alphanum_chars(int *chars)
     return counter;
 }
 
-/* print *chars chars nicely */
+
+/* print_chars: print all *chars chars in a nice format */
 void print_chars(int *chars)
 {
-    int i = 0, j = 0;
+    int i = 0, len = 0;
 
     printf("\n\n===== NICE PRINT =====\n\n");
 
     while (*(chars + i) != EOF)
     {
-        if (*(chars + i) == (int)'\n')
-            j = 0;         /* reset lines counter */
-        if (j == LINE_LEN) /* if got to line limit - start a new line */
+        if (*(chars + i) == (int)'\n')      /* got to a new line char - start a new line and reset len counter */
+            len = 0;   
+
+        if (len == LINE_LEN)                /* got to LINE_LEN limit - start a new line and reset len counter */ 
         {
-            j = 0;
             printf("\n");
+            len = 0;          
         }
 
-        printf("%c", *(chars + i)); /* print char */
+        printf("%c", *(chars + i));         /* print char */
 
-        i++;
-        j++;
+        i++;                                /* point to next char in *chars */
+        len++;                              /* increase len */
     }
 
     printf("\n\n======================\n\n");
 }
+
+
+
 
 /* This program gets unlimited number of chars from stdin.
  The program prints to stdout:
@@ -98,18 +112,14 @@ int main(void)
 {
     int *chars, counter_all, counter_alphanum;
 
-    /* allocate DEFAULT_SIZE size for dynamic chars size */
-    chars = (int *)malloc(DEFAULT_SIZE * sizeof(int));
+    /* get unlimited number of chars to chars pointer */
+    chars = get_chars();
 
-    /* check if dynamic allocation succeeded */
     if (chars == NULL)
     {
-        printf("malloc failed!");
+        printf("Fatal error: memory allocation failed!\n");
         return 1;
     }
-
-    /* get unlimited number of chars to chars array */
-    chars = get_chars(chars);
 
     /* count all chars from stdin */
     counter_all = count_chars(chars);
