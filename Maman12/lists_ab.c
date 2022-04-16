@@ -1,6 +1,5 @@
 #include "data.h"
 
-
 /* get_chars: get unlimited number of chars from stdin, return pointer to these chars */
 int *get_chars()
 {
@@ -38,7 +37,6 @@ int *get_chars()
     return chars;
 }
 
-
 /* count_chars: count and return all chars in *chars */
 int count_chars(int *chars)
 {
@@ -51,7 +49,6 @@ int count_chars(int *chars)
 
     return i;
 }
-
 
 /* count_alphanum_chars: count and return all alphanumeric chars in *chars */
 int count_alphanum_chars(int *chars)
@@ -71,7 +68,6 @@ int count_alphanum_chars(int *chars)
     return counter;
 }
 
-
 /* print_chars: print all *chars chars in a nice format */
 void print_chars(int *chars)
 {
@@ -81,26 +77,30 @@ void print_chars(int *chars)
 
     while (*(chars + i) != EOF)
     {
-        if (*(chars + i) == (int)'\n')      /* got to a new line char - start a new line and reset len counter */
-            len = 0;   
-
-        if (len == LINE_LEN)                /* got to LINE_LEN limit - start a new line and reset len counter */ 
+        if (*(chars + i) == (int)'\n') /* got to a new line char - print char (start a new line) and reset len counter to 0 */
         {
-            printf("\n");
-            len = 0;          
+
+            printf("%c", *(chars + i)); /* print char */
+            len = 0;                    /* new line - len is 0 */
+            i++;                        /* point to next char in *chars */
         }
 
-        printf("%c", *(chars + i));         /* print char */
+        else
+        {
+            if (len == LINE_LEN)        /* got to LINE_LEN limit - start a new line and reset len counter to 0 */
+            {
+                printf("\n");
+                len = 0;
+            }
 
-        i++;                                /* point to next char in *chars */
-        len++;                              /* increase len */
+            printf("%c", *(chars + i)); /* print char */
+            len++;                      /* increase len */
+            i++;                        /* point to next char in *chars */
+        }
     }
 
     printf("\n\n======================\n\n");
 }
-
-
-
 
 /* This program gets unlimited number of chars from stdin.
  The program prints to stdout:
