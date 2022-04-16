@@ -99,7 +99,7 @@ void print_chars(int *chars)
         }
     }
 
-    printf("\n\n======================\n\n");
+    printf("\n\n========= END =========\n\n");
 }
 
 /* This program gets unlimited number of chars from stdin.
