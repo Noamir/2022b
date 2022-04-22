@@ -89,8 +89,8 @@ char *get_command()
         }
     }
 
-    printf("\nthe command as string:\n");
-    printf("%s ", command);
+    printf("\nThe full command as string:\n");
+    printf("%s\n", command);
 
     return command;
 }
@@ -98,6 +98,10 @@ char *get_command()
 int main()
 {
     char *command;
+
+    char *action;
+
+    char *params_list;
 
     mat *MAT_A = calloc(1, sizeof(mat));
     mat *MAT_B = calloc(1, sizeof(mat));
@@ -124,8 +128,26 @@ int main()
         return 1;
     }
 
+    action = strtok(command, " ");
+
+    printf("The action name is: %s\n", action);
+
+
+    /* don't keep as string --> insert each param by delimeter ',' to an array */
+    params_list = strtok(NULL, " ");
+
+    printf("The params list is: %s\n", params_list);
+
+
+/*     mat_list = strtok(command, ",");
+
+    printf("The mat names are: %s\n", mat_list); */
+
+    /*     params = strtok(command, ",");
+        printf("The params are: %s\n", params); */
+
     /* change matrix using read_mat --> insert 0 to end input */
-    float input_a[5] = {1, 2, 3, 4, 0};
+    /* float input_a[5] = {1, 2, 3, 4, 0};
 
     read_mat(MAT_A, input_a);
 
@@ -139,15 +161,15 @@ int main()
     read_mat(MAT_D, input_d);
 
     float input_e[17] = {-1, -12, -123, -1234, -12345, 1.2345, 12.345, 123.45, 1234.5, 12345, 12345, 12345, 12345, 12345, 12345, 12345, 0};
-    read_mat(MAT_E, input_e);
+    read_mat(MAT_E, input_e); */
 
     /* print matrix using print_mat */
-    print_mat(MAT_A);
+    /* print_mat(MAT_A);
     print_mat(MAT_B);
     print_mat(MAT_C);
     print_mat(MAT_D);
     print_mat(MAT_E);
-    print_mat(MAT_F);
+    print_mat(MAT_F); */
 
     return 0;
 }
