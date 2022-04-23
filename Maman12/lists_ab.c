@@ -15,7 +15,7 @@ char *get_chars()
         return NULL;
     }
 
-    printf("Please enter as many chars as you want:\n");
+    printf("Hello, Please insert as many chars as you want: \n(to end input click ctrl+d or ctrl+z, depending on your os)\n");
 
     /* insert input to the next space in chars. If chars limit is met - realloc. */
     for (i = 0; (i <= limit) && (*(chars + i) = getchar()) != EOF; i++)
