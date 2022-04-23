@@ -1,12 +1,13 @@
 #include "data.h"
 
 /* get_chars: get unlimited number of chars from stdin, return pointer to these chars */
-int *get_chars()
+char *get_chars()
 {
-    int *tmp_ptr, i = 0, limit = DEFAULT_LIMIT;
+    int i = 0, limit = DEFAULT_LIMIT;
+    char *tmp_ptr;
 
     /* allocate DEFAULT_LIMIT size for dynamic chars pointer size */
-    int *chars = (int *)malloc(limit * sizeof(int));
+    char *chars = (char *)malloc(limit * sizeof(char));
 
     /* if dynamic allocation failed - return NULL */
     if (chars == NULL)
@@ -23,7 +24,7 @@ int *get_chars()
         if (i == limit - 1)
         {
             limit = INCREAS_BY * limit;
-            tmp_ptr = (int *)realloc(chars, limit * sizeof(int));
+            tmp_ptr = (char *)realloc(chars, limit * sizeof(char));
 
             /* if dynamic allocation failed - return NULL */
             if (tmp_ptr == NULL)
@@ -37,8 +38,9 @@ int *get_chars()
     return chars;
 }
 
+
 /* count_chars: count and return all chars in *chars */
-int count_chars(int *chars)
+int count_chars(char *chars)
 {
     int i = 0;
 
@@ -50,8 +52,9 @@ int count_chars(int *chars)
     return i;
 }
 
+
 /* count_alphanum_chars: count and return all alphanumeric chars in *chars */
-int count_alphanum_chars(int *chars)
+int count_alphanum_chars(char *chars)
 {
     int counter = 0, i = 0;
 
@@ -68,8 +71,9 @@ int count_alphanum_chars(int *chars)
     return counter;
 }
 
+
 /* print_chars: print all *chars chars in a nice format */
-void print_chars(int *chars)
+void print_chars(char *chars)
 {
     int i = 0, len = 0;
 
@@ -77,7 +81,7 @@ void print_chars(int *chars)
 
     while (*(chars + i) != EOF)
     {
-        if (*(chars + i) == (int)'\n') /* got to a new line char - print char (start a new line) and reset len counter to 0 */
+        if (*(chars + i) == '\n')       /* got to a new line char - print char (start a new line) and reset len counter to 0 */
         {
 
             printf("%c", *(chars + i)); /* print char */
@@ -102,6 +106,7 @@ void print_chars(int *chars)
     printf("\n\n========= END =========\n\n");
 }
 
+
 /* This program gets unlimited number of chars from stdin.
  The program prints to stdout:
  1. The input in a nice format
@@ -110,7 +115,8 @@ void print_chars(int *chars)
 
 int main(void)
 {
-    int *chars, counter_all, counter_alphanum;
+    char *chars;
+    int counter_all, counter_alphanum;
 
     /* get unlimited number of chars to chars pointer */
     chars = get_chars();
