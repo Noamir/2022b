@@ -73,6 +73,7 @@ int count_alphanum_chars(char *chars)
 
 
 /* print_chars: print all *chars chars in a nice format */
+/* special chars to handle for unified printing: \n and \t */
 void print_chars(char *chars)
 {
     int i = 0, len = 0;
@@ -81,25 +82,34 @@ void print_chars(char *chars)
 
     while (*(chars + i) != EOF)
     {
-        if (*(chars + i) == '\n')       /* got to a new line char - print char (start a new line) and reset len counter to 0 */
+        if (*(chars + i) == '\n')           /* \n is a special char - starts a new line*/
         {
-
-            printf("%c", *(chars + i)); /* print char */
-            len = 0;                    /* new line - len is 0 */
-            i++;                        /* point to next char in *chars */
+            printf("%c", *(chars + i));     /* print char */
+            len = 0;                        /* reset len counter to 0 */
+            i++;                            /* point to next char in *chars */
         }
 
-        else
+        else                            
         {
-            if (len == LINE_LEN)        /* got to LINE_LEN limit - start a new line and reset len counter to 0 */
+            if (len >= LINE_LEN)            /* for any other char - first check if line limit has reached LINE_LEN */
             {
-                printf("\n");
-                len = 0;
+                printf("\n");               /* start a new line */
+                len = 0;                    /* reset len counter to 0 */
             }
 
-            printf("%c", *(chars + i)); /* print char */
-            len++;                      /* increase len */
-            i++;                        /* point to next char in *chars */
+            if (*(chars + i) == '\t')       /* \t is a special char */
+            {
+                printf("%c", *(chars + i)); /* print char */
+                len += (8 - (len%8));       /* increase len with the space tab takes in line - completes to multiple of 8 spot*/
+                i++;                        /* point to next char in *chars */
+            }
+
+            else                            /* for all other chars */
+            {
+                printf("%c", *(chars + i)); /* print char */
+                len++;                      /* increase len by 1 */
+                i++;                        /* point to next char in *chars */
+            }
         }
     }
 
