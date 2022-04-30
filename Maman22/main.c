@@ -6,14 +6,13 @@ int handleAdd(mat_t *all[], char *c);
 void init_mat(mat_t *m)
 {
     int i;
-    m = calloc(1, sizeof(mat_t));
 
     m->size = MAT_SIZE;
 
     /* initiate all matrix cells to 0 */
     for (i = 0; i < m->size * m->size; i++)
     {
-        m->matrix[i] = 0;
+        m->matrix[i] = 1;
     }
 }
 
@@ -86,45 +85,28 @@ int finish(int status)
     return status;
 }
 
+
 int main()
 {
-    mat_t *MAT_A;
-    mat_t *MAT_B;
-    mat_t *MAT_C;
-    mat_t *MAT_D;
-    mat_t *MAT_E;
-    mat_t *MAT_F;
+    mat_t *MAT_A = calloc(1, sizeof(mat_t));
+    mat_t *MAT_B = calloc(1, sizeof(mat_t));
+    mat_t *MAT_C = calloc(1, sizeof(mat_t));
+    mat_t *MAT_D = calloc(1, sizeof(mat_t));
+    mat_t *MAT_E = calloc(1, sizeof(mat_t));
+    mat_t *MAT_F = calloc(1, sizeof(mat_t));
 
-    int i;
     int status;
     char *command_str;
     int cmd;
 
     mat_t *all[6];
 
-    MAT_A = calloc(1, sizeof(mat_t));
-    MAT_B = calloc(1, sizeof(mat_t));
-    MAT_C = calloc(1, sizeof(mat_t));
-    MAT_D = calloc(1, sizeof(mat_t));
-    MAT_E = calloc(1, sizeof(mat_t));
-    MAT_F = calloc(1, sizeof(mat_t));
-
-    MAT_A->size = MAT_SIZE;
-    MAT_B->size = MAT_SIZE;
-    MAT_C->size = MAT_SIZE;
-    MAT_D->size = MAT_SIZE;
-    MAT_E->size = MAT_SIZE;
-    MAT_F->size = MAT_SIZE;
-
-    for (i = 0; i < 16; i++)
-    {
-        MAT_A->matrix[i] = 0;
-        MAT_B->matrix[i] = 1;
-        MAT_C->matrix[i] = 2;
-        MAT_D->matrix[i] = 3;
-        MAT_E->matrix[i] = 4;
-        MAT_F->matrix[i] = 5;
-    }
+    init_mat(MAT_A);
+    init_mat(MAT_B);
+    init_mat(MAT_C);
+    init_mat(MAT_D);
+    init_mat(MAT_E);
+    init_mat(MAT_F);
 
     all[E_MAT_A] = MAT_A;
     all[E_MAT_B] = MAT_B;

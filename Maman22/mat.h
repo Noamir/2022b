@@ -3,8 +3,8 @@
 #include <stddef.h>
 #include <string.h>
 
-#define MAT_SIZE 4
 
+#define MAT_SIZE 4
 
 
 enum STATUS
@@ -30,8 +30,6 @@ enum MATRIX
     E_MAT_E,
     E_MAT_F
 };
-
-
 
 
 

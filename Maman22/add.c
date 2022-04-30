@@ -87,5 +87,5 @@ int handleAdd(mat_t *all[], char *c)
 
     status = add_mat(my_mat->mats[0], my_mat->mats[1], my_mat->mats[2]);
 
-    return S_SUCCESS;
+    return status;
 }

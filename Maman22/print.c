@@ -69,5 +69,5 @@ int handlePrint(mat_t *all[], char *c)
 
     status = print_mat(my_mat->mat);
 
-    return S_SUCCESS;
+    return status;
 }
