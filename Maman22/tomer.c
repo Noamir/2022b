@@ -28,12 +28,12 @@ void init_mat(mat_t *m)
     m = calloc(1, sizeof(mat_t));
     int i;
 
-    m->size = MAT_SIZE; /* define mat m size */
+    m->size = MAT_SIZE;
 
     /* initiate all matrix cells to 0 */
     for (i = 0; i < m->size * m->size; i++)
     {
-        m->matrix[i] = 0; /* define mat m matrix */
+        m->matrix[i] = 0;
     }
 }
 
@@ -43,7 +43,6 @@ char *get_command()
     char *tmp_ptr;
     char *command = (char *)malloc(limit * sizeof(char));
 
-    /* menu of possible actions: */
     printf("\nHi, insert command\n");
 
     /* get command chars from stdin to command pointer */
@@ -73,8 +72,6 @@ char *get_command()
 
 int main()
 {
-
-
     mat_t *MAT_A;
     mat_t *MAT_B;
     mat_t *MAT_C;
@@ -120,27 +117,30 @@ int main()
 
     command_str = get_command();
 
+    if (command_str == NULL)
+    {
+        printf("Fatal error: memory allocation failed!\n");
+        return 1;
+    }
+
     status = whichCommand(command_str);
 
     printf("\nwhichCommand status: %d\n", status);
 
-    print_mat_t *noa = calloc(1, sizeof(print_mat_t));
+    print_mat_t *my_mat = calloc(1, sizeof(print_mat_t));
 
-    status = toStructForPrint(all, command_str, noa);
+    status = toStructForPrint(all, command_str, my_mat);
 
     printf("\ntoStructForPrint status: %d\n", status);
 
-    doPrint(noa->mat);
+    doPrint(my_mat->mat);
 
     return finish(SUCCESS);
 }
 
 int whichCommand(char *c)
 {
-    /* char tmp[strlen(c)];
-    strcpy(tmp, c); */
-
-    char *tmp = (char *)malloc(100 * sizeof(char));
+    char *tmp = (char *)malloc(strlen(c) * sizeof(char));
 
     strcpy(tmp, c);
 
@@ -159,48 +159,36 @@ int whichCommand(char *c)
 
 int toStructForPrint(mat_t *all[], char *c, print_mat_t *ptrStruct)
 {
-
     int idx;
-
-    printf("DEBUG: the current mat is: %s", c);
 
     if (strncmp(c, "MAT_A", strlen("MAT_A")) == 0)
     {
-        printf("DEBUG: inside idx 0\n");
         idx = E_MAT_A;
     }
     else if (strncmp(c, "MAT_B", strlen("MAT_B")) == 0)
     {
-        printf("DEBUG: inside idx 1\n");
         idx = E_MAT_B;
     }
     else if (strncmp(c, "MAT_C", strlen("MAT_C")) == 0)
     {
-        printf("DEBUG: inside idx 2\n");
         idx = E_MAT_C;
     }
     else if (strncmp(c, "MAT_D", strlen("MAT_D")) == 0)
     {
-        printf("DEBUG: inside idx 3\n");
         idx = E_MAT_D;
     }
     else if (strncmp(c, "MAT_E", strlen("MAT_E")) == 0)
     {
-        printf("DEBUG: inside idx 4\n");
         idx = E_MAT_E;
     }
     else if (strncmp(c, "MAT_F", strlen("MAT_F")) == 0)
     {
-        printf("DEBUG: inside idx 5\n");
         idx = E_MAT_F;
     }
     else
     {
-        printf("command is: %s\n", c);
         return FAIL_WRONG_PARAMS;
     }
-
-    printf("DEBUG: the current idx is: %d", idx);
 
     ptrStruct->mat = all[idx];
     return SUCCESS;
