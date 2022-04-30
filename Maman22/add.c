@@ -1,6 +1,6 @@
 #include "mat.h"
 
-void print_mat(mat_t *m);
+int print_mat(mat_t *m);
 
 int toStructForAdd(mat_t *all[], char *c, add_mat_t *ptrStruct)
 {
@@ -62,7 +62,7 @@ int toStructForAdd(mat_t *all[], char *c, add_mat_t *ptrStruct)
     return S_SUCCESS;
 }
 
-void add_mat(mat_t *m1, mat_t *m2, mat_t *m3)
+int add_mat(mat_t *m1, mat_t *m2, mat_t *m3)
 {
     int i;
 
@@ -72,9 +72,9 @@ void add_mat(mat_t *m1, mat_t *m2, mat_t *m3)
     }
 
     print_mat(m3);
+
+    return S_SUCCESS;
 }
-
-
 
 int handleAdd(mat_t *all[], char *c)
 {
@@ -85,7 +85,7 @@ int handleAdd(mat_t *all[], char *c)
 
     printf("\ntoStructForAdd status: %d\n", status);
 
-    add_mat(my_mat->mats[0], my_mat->mats[1], my_mat->mats[2]);
+    status = add_mat(my_mat->mats[0], my_mat->mats[1], my_mat->mats[2]);
 
     return S_SUCCESS;
 }
