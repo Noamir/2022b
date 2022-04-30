@@ -69,13 +69,13 @@ int finish(int status)
 {
     switch (status)
     {
-    case SUCCESS:
+    case S_SUCCESS:
         printf("Well done! goodbye.\n");
         break;
-    case FAIL_WRONG_PARAMS:
+    case S_FAIL_WRONG_PARAMS:
         printf("the parameters are wrong. please try again\n");
         break;
-    case FAIL_NO_COMMAND:
+    case S_FAIL_NO_COMMAND:
         printf("the command is wrong. please try again\n");
         break;
     }
@@ -151,7 +151,7 @@ int main()
         status = handlePrint(all, command_str);
         break;
     case CMD_UNDEFINED:
-        status = FAIL_NO_COMMAND;
+        status = S_FAIL_NO_COMMAND;
         break;
     }
 

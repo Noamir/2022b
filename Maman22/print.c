@@ -30,11 +30,11 @@ int toStructForPrint(mat_t *all[], char *c, print_mat_t *ptrStruct)
     }
     else
     {
-        return FAIL_WRONG_PARAMS;
+        return S_FAIL_WRONG_PARAMS;
     }
 
     ptrStruct->mat = all[idx];
-    return SUCCESS;
+    return S_SUCCESS;
 }
 
 void doPrint(mat_t *m)
@@ -67,5 +67,5 @@ int handlePrint(mat_t *all[], char *c)
 
     doPrint(my_mat->mat);
 
-    return SUCCESS;
+    return S_SUCCESS;
 }
