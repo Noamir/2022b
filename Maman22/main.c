@@ -1,6 +1,7 @@
 #include "mat.h"
 
 int handlePrint(mat_t *all[], char *c);
+int handleAdd(mat_t *all[], char *c);
 
 void init_mat(mat_t *m)
 {
@@ -52,7 +53,7 @@ int whichCommand(char *c)
     char *cmd;
 
     strcpy(tmp, c);
-    
+
     cmd = strtok(tmp, " ");
 
     /* FIXME: How to forward pointer correctly - how to free spaces I skipped here */
@@ -61,6 +62,8 @@ int whichCommand(char *c)
 
     if (strcmp(cmd, "print_mat") == 0)
         return CMD_PRINT_MAT;
+    else if (strcmp(cmd, "add_mat") == 0)
+        return CMD_ADD_MAT;
     else
         return CMD_UNDEFINED;
 }
@@ -82,9 +85,6 @@ int finish(int status)
 
     return status;
 }
-
-
-
 
 int main()
 {
@@ -126,7 +126,6 @@ int main()
         MAT_F->matrix[i] = 5;
     }
 
-    
     all[E_MAT_A] = MAT_A;
     all[E_MAT_B] = MAT_B;
     all[E_MAT_C] = MAT_C;
@@ -150,6 +149,10 @@ int main()
         printf("calling handlePrint()...\n");
         status = handlePrint(all, command_str);
         break;
+    case CMD_ADD_MAT:
+        printf("calling handleAdd()...\n");
+        status = handleAdd(all, command_str);
+        break;
     case CMD_UNDEFINED:
         status = S_FAIL_NO_COMMAND;
         break;
@@ -157,5 +160,3 @@ int main()
 
     return finish(status);
 }
-
-

@@ -5,6 +5,8 @@
 
 #define MAT_SIZE 4
 
+
+
 enum STATUS
 {
     S_SUCCESS,
@@ -15,6 +17,7 @@ enum STATUS
 enum COMMAND
 {
     CMD_PRINT_MAT,
+    CMD_ADD_MAT,
     CMD_UNDEFINED
 };
 
@@ -28,6 +31,10 @@ enum MATRIX
     E_MAT_F
 };
 
+
+
+
+
 struct mat_def
 {
     int size;                          /* how many rows and cols in mat (for us 4x4) */
@@ -36,12 +43,6 @@ struct mat_def
 
 typedef struct mat_def mat_t;
 
-struct param_def
-{
-    char *param;
-};
-
-typedef struct param_def param_t;
 
 struct print_mat_def
 {
@@ -51,3 +52,10 @@ struct print_mat_def
 
 typedef struct print_mat_def print_mat_t;
 
+
+struct add_mat_def
+{
+    mat_t *mats[3];
+};
+
+typedef struct add_mat_def add_mat_t;
