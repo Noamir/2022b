@@ -9,8 +9,8 @@ enum STATUS
 
 enum COMMAND
 {
-    PRINT_MAT,
-    UNDEFINED
+    CMD_PRINT_MAT,
+    CMD_UNDEFINED
 };
 
 enum MATRIX
@@ -37,8 +37,44 @@ void init_mat(mat_t *m)
     }
 }
 
+char *get_command()
+{
+    int limit = 10, i = 0;
+    char *tmp_ptr;
+    char *command = (char *)malloc(limit * sizeof(char));
+
+    /* menu of possible actions: */
+    printf("\nHi, insert command\n");
+
+    /* get command chars from stdin to command pointer */
+    for (i = 0; (i <= limit) && (*(command + i) = getchar()) != '\n'; i++)
+    {
+        /* got to the limit of chars size - increase limit and realloc command with new limit size */
+        if (i == limit - 1)
+        {
+            limit = 2 * limit;
+            tmp_ptr = (char *)realloc(command, limit * sizeof(char));
+
+            /* if dynamic allocation failed - return NULL */
+            if (tmp_ptr == NULL)
+            {
+                return NULL;
+            }
+
+            command = tmp_ptr;
+        }
+    }
+
+    printf("\nThe full command as string:\n");
+    printf("%s\n", command);
+
+    return command;
+}
+
 int main()
 {
+
+
     mat_t *MAT_A;
     mat_t *MAT_B;
     mat_t *MAT_C;
@@ -52,24 +88,26 @@ int main()
     MAT_D = calloc(1, sizeof(mat_t));
     MAT_E = calloc(1, sizeof(mat_t));
     MAT_F = calloc(1, sizeof(mat_t));
+
     int i;
+    int status;
+    char *command_str;
 
-    MAT_A->size = MAT_SIZE; /* define mat m size */
-    MAT_B->size = MAT_SIZE; /* define mat m size */
-    MAT_C->size = MAT_SIZE; /* define mat m size */
-    MAT_D->size = MAT_SIZE; /* define mat m size */
-    MAT_E->size = MAT_SIZE; /* define mat m size */
-    MAT_F->size = MAT_SIZE; /* define mat m size */
+    MAT_A->size = MAT_SIZE;
+    MAT_B->size = MAT_SIZE;
+    MAT_C->size = MAT_SIZE;
+    MAT_D->size = MAT_SIZE;
+    MAT_E->size = MAT_SIZE;
+    MAT_F->size = MAT_SIZE;
 
-    /* initiate all matrix cells to 0 */
-    for (i = 0; i < MAT_A->size * MAT_A->size; i++)
+    for (i = 0; i < 16; i++)
     {
-        MAT_A->matrix[i] = 1; /* define mat m matrix */
-        MAT_B->matrix[i] = 2;
-        MAT_C->matrix[i] = 3;
-        MAT_D->matrix[i] = 4;
-        MAT_E->matrix[i] = 5;
-        MAT_F->matrix[i] = 6;
+        MAT_A->matrix[i] = 0;
+        MAT_B->matrix[i] = 1;
+        MAT_C->matrix[i] = 2;
+        MAT_D->matrix[i] = 3;
+        MAT_E->matrix[i] = 4;
+        MAT_F->matrix[i] = 5;
     }
 
     mat_t *all[6];
@@ -80,40 +118,89 @@ int main()
     all[E_MAT_E] = MAT_E;
     all[E_MAT_F] = MAT_F;
 
+    command_str = get_command();
+
+    status = whichCommand(command_str);
+
+    printf("\nwhichCommand status: %d\n", status);
+
     print_mat_t *noa = calloc(1, sizeof(print_mat_t));
-    int status = toStructForPrint(all, "MAT_F", noa);
-   
-    if (status != SUCCESS)
-        return finish(status);
-        
+
+    status = toStructForPrint(all, command_str, noa);
+
+    printf("\ntoStructForPrint status: %d\n", status);
+
     doPrint(noa->mat);
 
     return finish(SUCCESS);
 }
 
-/* int whichCommand(char *c)
+int whichCommand(char *c)
 {
-    // TODO: make this return print mat
-    return UNDEFINED;
-}*/
+    /* char tmp[strlen(c)];
+    strcpy(tmp, c); */
+
+    char *tmp = (char *)malloc(100 * sizeof(char));
+
+    strcpy(tmp, c);
+
+    char *cmd;
+    cmd = strtok(tmp, " ");
+
+    /* FIXME: How to forward pointer correctly - how to free spaces I skipped here */
+
+    memmove(c, c + strlen(cmd) + 1, strlen(c));
+
+    if (strcmp(cmd, "print_mat") == 0)
+        return CMD_PRINT_MAT;
+    else
+        return CMD_UNDEFINED;
+}
 
 int toStructForPrint(mat_t *all[], char *c, print_mat_t *ptrStruct)
 {
-    int idx = -1;
-    if (strcmp(c, "MAT_A") == 0)
+
+    int idx;
+
+    printf("DEBUG: the current mat is: %s", c);
+
+    if (strncmp(c, "MAT_A", strlen("MAT_A")) == 0)
+    {
+        printf("DEBUG: inside idx 0\n");
         idx = E_MAT_A;
-    else if (strcmp(c, "MAT_B") == 0)
+    }
+    else if (strncmp(c, "MAT_B", strlen("MAT_B")) == 0)
+    {
+        printf("DEBUG: inside idx 1\n");
         idx = E_MAT_B;
-    else if (strcmp(c, "MAT_C") == 0)
+    }
+    else if (strncmp(c, "MAT_C", strlen("MAT_C")) == 0)
+    {
+        printf("DEBUG: inside idx 2\n");
         idx = E_MAT_C;
-    else if (strcmp(c, "MAT_D") == 0)
+    }
+    else if (strncmp(c, "MAT_D", strlen("MAT_D")) == 0)
+    {
+        printf("DEBUG: inside idx 3\n");
         idx = E_MAT_D;
-    else if (strcmp(c, "MAT_E") == 0)
+    }
+    else if (strncmp(c, "MAT_E", strlen("MAT_E")) == 0)
+    {
+        printf("DEBUG: inside idx 4\n");
         idx = E_MAT_E;
-    else if (strcmp(c, "MAT_F") == 0)
+    }
+    else if (strncmp(c, "MAT_F", strlen("MAT_F")) == 0)
+    {
+        printf("DEBUG: inside idx 5\n");
         idx = E_MAT_F;
+    }
     else
+    {
+        printf("command is: %s\n", c);
         return FAIL_WRONG_PARAMS;
+    }
+
+    printf("DEBUG: the current idx is: %d", idx);
 
     ptrStruct->mat = all[idx];
     return SUCCESS;
@@ -121,7 +208,6 @@ int toStructForPrint(mat_t *all[], char *c, print_mat_t *ptrStruct)
 
 void doPrint(mat_t *m)
 {
-    printf("DEBUG: size %d", m->size);
     int i = 0;
     int j = 0;
 
@@ -144,10 +230,10 @@ int finish(int status)
     switch (status)
     {
     case SUCCESS:
-        printf("Well done! goodbye.");
+        printf("Well done! goodbye.\n");
         break;
     case FAIL_WRONG_PARAMS:
-        printf("the parameters are wrong. please try again");
+        printf("the parameters are wrong. please try again\n");
         break;
     }
 
