@@ -37,7 +37,7 @@ int toStructForPrint(mat_t *all[], char *c, print_mat_t *ptrStruct)
     return S_SUCCESS;
 }
 
-void print_mat(mat_t *m)
+int print_mat(mat_t *m)
 {
     int i = 0;
     int j = 0;
@@ -54,6 +54,8 @@ void print_mat(mat_t *m)
         printf("%7.2f  ", m->matrix[i]);
     }
     printf("\n\n");
+
+    return S_SUCCESS;
 }
 
 int handlePrint(mat_t *all[], char *c)
@@ -65,7 +67,7 @@ int handlePrint(mat_t *all[], char *c)
 
     printf("\ntoStructForPrint status: %d\n", status);
 
-    print_mat(my_mat->mat);
+    status = print_mat(my_mat->mat);
 
     return S_SUCCESS;
 }
