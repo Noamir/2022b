@@ -2,6 +2,7 @@
 
 int handlePrint(mat_t *all[], char *c);
 int handleAdd(mat_t *all[], char *c);
+int handleSub(mat_t *all[], char *c);
 
 void init_mats(mat_t *mats[])
 {
@@ -67,46 +68,39 @@ int whichCommand(char *c)
 
     if (strcmp(cmd, "print_mat") == 0)
         return CMD_PRINT_MAT;
+
     else if (strcmp(cmd, "add_mat") == 0)
         return CMD_ADD_MAT;
+
+    else if (strcmp(cmd, "sub_mat") == 0)
+        return CMD_SUB_MAT;
+
     else
         return CMD_UNDEFINED;
 }
 
 int whichMat(char *c)
 {
-    int idx;
-
     if (strncmp(c, "MAT_A", strlen("MAT_A")) == 0)
-    {
-        idx = E_MAT_A;
-    }
-    else if (strncmp(c, "MAT_B", strlen("MAT_B")) == 0)
-    {
-        idx = E_MAT_B;
-    }
-    else if (strncmp(c, "MAT_C", strlen("MAT_C")) == 0)
-    {
-        idx = E_MAT_C;
-    }
-    else if (strncmp(c, "MAT_D", strlen("MAT_D")) == 0)
-    {
-        idx = E_MAT_D;
-    }
-    else if (strncmp(c, "MAT_E", strlen("MAT_E")) == 0)
-    {
-        idx = E_MAT_E;
-    }
-    else if (strncmp(c, "MAT_F", strlen("MAT_F")) == 0)
-    {
-        idx = E_MAT_F;
-    }
-    else
-    {
-        idx = -1;
-    }
+        return E_MAT_A;
 
-    return idx;
+    else if (strncmp(c, "MAT_B", strlen("MAT_B")) == 0)
+        return E_MAT_B;
+
+    else if (strncmp(c, "MAT_C", strlen("MAT_C")) == 0)
+        return E_MAT_C;
+
+    else if (strncmp(c, "MAT_D", strlen("MAT_D")) == 0)
+        return E_MAT_D;
+
+    else if (strncmp(c, "MAT_E", strlen("MAT_E")) == 0)
+        return E_MAT_E;
+
+    else if (strncmp(c, "MAT_F", strlen("MAT_F")) == 0)
+        return E_MAT_F;
+
+    else
+        return MAT_UNDEFINED;
 }
 
 int finish(int status)
@@ -166,10 +160,17 @@ int main()
         printf("calling handlePrint()...\n");
         status = handlePrint(all, command_str);
         break;
+
     case CMD_ADD_MAT:
         printf("calling handleAdd()...\n");
         status = handleAdd(all, command_str);
         break;
+
+    case CMD_SUB_MAT:
+        printf("calling handleSub()...\n");
+        status = handleSub(all, command_str);
+        break;
+        
     case CMD_UNDEFINED:
         status = S_FAIL_NO_COMMAND;
         break;

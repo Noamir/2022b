@@ -18,6 +18,7 @@ enum COMMAND
 {
     CMD_PRINT_MAT,
     CMD_ADD_MAT,
+    CMD_SUB_MAT,
     CMD_UNDEFINED
 };
 
@@ -28,7 +29,8 @@ enum MATRIX
     E_MAT_C,
     E_MAT_D,
     E_MAT_E,
-    E_MAT_F
+    E_MAT_F,
+    MAT_UNDEFINED
 };
 
 
@@ -59,3 +61,13 @@ struct add_mat_def
 };
 
 typedef struct add_mat_def add_mat_t;
+
+
+struct sub_mat_def
+{
+    mat_t *sub1;
+    mat_t *sub2;
+    mat_t *result;
+};
+
+typedef struct sub_mat_def sub_mat_t;
