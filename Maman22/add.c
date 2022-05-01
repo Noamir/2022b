@@ -5,40 +5,61 @@ int whichMat(char *c);
 
 int toStructForAdd(mat_t *all[], char *c, add_mat_t *ptrStruct)
 {
-    int i;
+    char *tmp = (char *)malloc(strlen(c) * sizeof(char));
+    char *mat_name;
+    int idx;
 
-    for (i = 0; i < 3; i++)
-    {
-        char *tmp = (char *)malloc(strlen(c) * sizeof(char));
-        char *mat_name;
-        int idx;
-        
-        strcpy(tmp, c);
+    strcpy(tmp, c);
 
-        mat_name = strtok(tmp, ",");
+    mat_name = strtok(tmp, ",");
 
-        /* TODO: How to forward pointer correctly - how to free spaces I skipped here */
+    printf("add1: %s\n", mat_name);
 
-        memmove(c, c + strlen(mat_name) + 1, strlen(c));
+    idx = whichMat(mat_name);
 
-        idx = whichMat(mat_name);
+    ptrStruct->add1 = all[idx];
 
-        ptrStruct->mats[i] = all[idx];
-    }
+    /* TODO: How to forward pointer correctly - how to free spaces I skipped here */
+
+    memmove(c, c + strlen(mat_name) + 1, strlen(c));
+
+    strcpy(tmp, c);
+
+    mat_name = strtok(tmp, ",");
+
+    printf("add2: %s\n", mat_name);
+
+    idx = whichMat(mat_name);
+
+    ptrStruct->add2 = all[idx];
+
+    memmove(c, c + strlen(mat_name) + 1, strlen(c));
+
+    strcpy(tmp, c);
+
+    mat_name = strtok(tmp, ",");
+
+    printf("add3: %s\n", mat_name);
+
+    idx = whichMat(mat_name);
+
+    ptrStruct->result = all[idx];
+
+    free(tmp);
 
     return S_SUCCESS;
 }
 
-int add_mat(mat_t *m1, mat_t *m2, mat_t *m3)
+int add_mat(mat_t *add1, mat_t *add2, mat_t *result)
 {
     int i;
 
-    for (i = 0; i < m3->size * m3->size; i++)
+    for (i = 0; i < result->size * result->size; i++)
     {
-        m3->matrix[i] = m1->matrix[i] + m2->matrix[i];
+        result->matrix[i] = add1->matrix[i] + add2->matrix[i];
     }
 
-    print_mat(m3);
+    print_mat(result);
 
     return S_SUCCESS;
 }
@@ -52,7 +73,7 @@ int handleAdd(mat_t *all[], char *c)
 
     printf("\ntoStructForAdd status: %d\n", status);
 
-    status = add_mat(my_mat->mats[0], my_mat->mats[1], my_mat->mats[2]);
+    status = add_mat(my_mat->add1, my_mat->add2, my_mat->result);
 
     return status;
 }

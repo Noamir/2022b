@@ -53,7 +53,9 @@ typedef struct print_mat_def print_mat_t;
 
 struct add_mat_def
 {
-    mat_t *mats[3];
+    mat_t *add1;
+    mat_t *add2;
+    mat_t *result;
 };
 
 typedef struct add_mat_def add_mat_t;
