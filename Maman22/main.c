@@ -3,16 +3,22 @@
 int handlePrint(mat_t *all[], char *c);
 int handleAdd(mat_t *all[], char *c);
 
-void init_mat(mat_t *m)
+void init_mats(mat_t *mats[])
 {
-    int i;
+    int i, j;
+    mat_t *m;
 
-    m->size = MAT_SIZE;
-
-    /* initiate all matrix cells to 0 */
-    for (i = 0; i < m->size * m->size; i++)
+    for (i = 0; i < 6; i++)
     {
-        m->matrix[i] = 1;
+        m = mats[i];
+
+        m->size = MAT_SIZE;
+
+        /* initiate all matrix cells to 0 */
+        for (j = 0; j < m->size * m->size; j++)
+        {
+            m->matrix[j] = 1;
+        }
     }
 }
 
@@ -67,6 +73,42 @@ int whichCommand(char *c)
         return CMD_UNDEFINED;
 }
 
+int whichMat(char *c)
+{
+    int idx;
+
+    if (strncmp(c, "MAT_A", strlen("MAT_A")) == 0)
+    {
+        idx = E_MAT_A;
+    }
+    else if (strncmp(c, "MAT_B", strlen("MAT_B")) == 0)
+    {
+        idx = E_MAT_B;
+    }
+    else if (strncmp(c, "MAT_C", strlen("MAT_C")) == 0)
+    {
+        idx = E_MAT_C;
+    }
+    else if (strncmp(c, "MAT_D", strlen("MAT_D")) == 0)
+    {
+        idx = E_MAT_D;
+    }
+    else if (strncmp(c, "MAT_E", strlen("MAT_E")) == 0)
+    {
+        idx = E_MAT_E;
+    }
+    else if (strncmp(c, "MAT_F", strlen("MAT_F")) == 0)
+    {
+        idx = E_MAT_F;
+    }
+    else
+    {
+        idx = -1;
+    }
+
+    return idx;
+}
+
 int finish(int status)
 {
     switch (status)
@@ -85,7 +127,6 @@ int finish(int status)
     return status;
 }
 
-
 int main()
 {
     mat_t *MAT_A = calloc(1, sizeof(mat_t));
@@ -100,20 +141,14 @@ int main()
     int cmd;
 
     mat_t *all[6];
-
-    init_mat(MAT_A);
-    init_mat(MAT_B);
-    init_mat(MAT_C);
-    init_mat(MAT_D);
-    init_mat(MAT_E);
-    init_mat(MAT_F);
-
     all[E_MAT_A] = MAT_A;
     all[E_MAT_B] = MAT_B;
     all[E_MAT_C] = MAT_C;
     all[E_MAT_D] = MAT_D;
     all[E_MAT_E] = MAT_E;
     all[E_MAT_F] = MAT_F;
+
+    init_mats(all);
 
     command_str = get_command();
 

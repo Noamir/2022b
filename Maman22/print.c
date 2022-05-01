@@ -1,39 +1,15 @@
 #include "mat.h"
 
+int whichMat(char *c);
+
 int toStructForPrint(mat_t *all[], char *c, print_mat_t *ptrStruct)
 {
     int idx;
 
-    if (strncmp(c, "MAT_A", strlen("MAT_A")) == 0)
-    {
-        idx = E_MAT_A;
-    }
-    else if (strncmp(c, "MAT_B", strlen("MAT_B")) == 0)
-    {
-        idx = E_MAT_B;
-    }
-    else if (strncmp(c, "MAT_C", strlen("MAT_C")) == 0)
-    {
-        idx = E_MAT_C;
-    }
-    else if (strncmp(c, "MAT_D", strlen("MAT_D")) == 0)
-    {
-        idx = E_MAT_D;
-    }
-    else if (strncmp(c, "MAT_E", strlen("MAT_E")) == 0)
-    {
-        idx = E_MAT_E;
-    }
-    else if (strncmp(c, "MAT_F", strlen("MAT_F")) == 0)
-    {
-        idx = E_MAT_F;
-    }
-    else
-    {
-        return S_FAIL_WRONG_PARAMS;
-    }
+    idx = whichMat(c);
 
     ptrStruct->mat = all[idx];
+    
     return S_SUCCESS;
 }
 

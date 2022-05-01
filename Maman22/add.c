@@ -1,11 +1,11 @@
 #include "mat.h"
 
 int print_mat(mat_t *m);
+int whichMat(char *c);
 
 int toStructForAdd(mat_t *all[], char *c, add_mat_t *ptrStruct)
 {
     int i;
-    printf("DEBUG 1: current command is: %s \n", c);
 
     for (i = 0; i < 3; i++)
     {
@@ -17,44 +17,11 @@ int toStructForAdd(mat_t *all[], char *c, add_mat_t *ptrStruct)
 
         mat_name = strtok(tmp, ",");
 
-        printf("DEBUG 2: current mat_name is: %s \n", mat_name);
-
-        /* FIXME: How to forward pointer correctly - how to free spaces I skipped here */
+        /* TODO: How to forward pointer correctly - how to free spaces I skipped here */
 
         memmove(c, c + strlen(mat_name) + 1, strlen(c));
 
-
-        printf("DEBUG 3: current command is: %s \n", c);
-
-
-        if (strncmp(mat_name, "MAT_A", strlen("MAT_A")) == 0)
-        {
-            idx = E_MAT_A;
-        }
-        else if (strncmp(mat_name, "MAT_B", strlen("MAT_B")) == 0)
-        {
-            idx = E_MAT_B;
-        }
-        else if (strncmp(mat_name, "MAT_C", strlen("MAT_C")) == 0)
-        {
-            idx = E_MAT_C;
-        }
-        else if (strncmp(mat_name, "MAT_D", strlen("MAT_D")) == 0)
-        {
-            idx = E_MAT_D;
-        }
-        else if (strncmp(mat_name, "MAT_E", strlen("MAT_E")) == 0)
-        {
-            idx = E_MAT_E;
-        }
-        else if (strncmp(mat_name, "MAT_F", strlen("MAT_F")) == 0)
-        {
-            idx = E_MAT_F;
-        }
-        else
-        {
-            return S_FAIL_WRONG_PARAMS;
-        }
+        idx = whichMat(mat_name);
 
         ptrStruct->mats[i] = all[idx];
     }
