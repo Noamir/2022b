@@ -60,7 +60,10 @@ int whichCommand(char *c)
 
     strcpy(tmp, c);
 
-    cmd = strtok(tmp, " ");
+    /* FIXME: How to enable many spaces, tabs.. */
+    cmd = strtok(tmp, " \t\n");
+
+    printf("cmd: %s\n", cmd);
 
     /* FIXME: How to forward pointer correctly - how to free spaces I skipped here */
 
@@ -74,6 +77,9 @@ int whichCommand(char *c)
 
     else if (strcmp(cmd, "sub_mat") == 0)
         return CMD_SUB_MAT;
+
+    else if (strcmp(cmd, "stop") == 0)
+        return CMD_STOP;
 
     else
         return CMD_UNDEFINED;
@@ -144,36 +150,43 @@ int main()
 
     init_mats(all);
 
-    command_str = get_command();
-
-    if (command_str == NULL)
+    while (1)
     {
-        printf("Fatal error: memory allocation failed!\n");
-        return 1;
-    }
+        command_str = get_command();
 
-    cmd = whichCommand(command_str);
+        if (command_str == NULL)
+        {
+            printf("Fatal error: memory allocation failed!\n");
+            return 1;
+        }
 
-    switch (cmd)
-    {
-    case CMD_PRINT_MAT:
-        printf("calling handlePrint()...\n");
-        status = handlePrint(all, command_str);
-        break;
+        cmd = whichCommand(command_str);
 
-    case CMD_ADD_MAT:
-        printf("calling handleAdd()...\n");
-        status = handleAdd(all, command_str);
-        break;
+        switch (cmd)
+        {
+        case CMD_PRINT_MAT:
+            printf("calling handlePrint()...\n");
+            status = handlePrint(all, command_str);
+            break;
 
-    case CMD_SUB_MAT:
-        printf("calling handleSub()...\n");
-        status = handleSub(all, command_str);
-        break;
-        
-    case CMD_UNDEFINED:
-        status = S_FAIL_NO_COMMAND;
-        break;
+        case CMD_ADD_MAT:
+            printf("calling handleAdd()...\n");
+            status = handleAdd(all, command_str);
+            break;
+
+        case CMD_SUB_MAT:
+            printf("calling handleSub()...\n");
+            status = handleSub(all, command_str);
+            break;
+
+        case CMD_STOP:
+            printf("Stopping...\n");
+            exit(0);
+
+        case CMD_UNDEFINED:
+            status = S_FAIL_NO_COMMAND;
+            break;
+        }
     }
 
     return finish(status);

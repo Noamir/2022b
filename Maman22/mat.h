@@ -19,6 +19,7 @@ enum COMMAND
     CMD_PRINT_MAT,
     CMD_ADD_MAT,
     CMD_SUB_MAT,
+    CMD_STOP,
     CMD_UNDEFINED
 };
 
