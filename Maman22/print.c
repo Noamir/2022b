@@ -9,25 +9,22 @@ int toStructForPrint(mat_t *all[], char *c, print_mat_t *ptrStruct)
     idx = whichMat(c);
 
     ptrStruct->mat = all[idx];
-    
+
     return S_SUCCESS;
 }
 
 int print_mat(mat_t *m)
 {
-    int i = 0;
-    int j = 0;
+    int i,j;
 
     printf("\n\n");
-    for (i = 0; i < m->size * m->size; i++, j++)
+    for (i = 0; i < m->size; i++, j++)
     {
-
-        if (j == m->size)
+        for (j = 0; j < m->size; j++)
         {
-            printf("\n");
-            j = 0;
+            printf("%7.2f  ", m->matrix[i][j]);
         }
-        printf("%7.2f  ", m->matrix[i]);
+        printf("\n");
     }
     printf("\n\n");
 

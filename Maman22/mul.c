@@ -3,7 +3,7 @@
 int print_mat(mat_t *m);
 int whichMat(char *c);
 
-int toStructForAdd(mat_t *all[], char *c, add_mat_t *ptrStruct)
+int toStructForMul(mat_t *all[], char *c, mul_mat_t *ptrStruct)
 {
     char *tmp = (char *)malloc(strlen(c) * sizeof(char));
     char *mat_name;
@@ -13,11 +13,9 @@ int toStructForAdd(mat_t *all[], char *c, add_mat_t *ptrStruct)
 
     mat_name = strtok(tmp, ",");
 
-    printf("add1: %s\n", mat_name);
-
     idx = whichMat(mat_name);
 
-    ptrStruct->add1 = all[idx];
+    ptrStruct->mul1 = all[idx];
 
     /* TODO: How to forward pointer correctly - how to free spaces I skipped here */
 
@@ -27,19 +25,15 @@ int toStructForAdd(mat_t *all[], char *c, add_mat_t *ptrStruct)
 
     mat_name = strtok(tmp, ",");
 
-    printf("add2: %s\n", mat_name);
-
     idx = whichMat(mat_name);
 
-    ptrStruct->add2 = all[idx];
+    ptrStruct->mul2 = all[idx];
 
     memmove(c, c + strlen(mat_name) + 1, strlen(c));
 
     strcpy(tmp, c);
 
     mat_name = strtok(tmp, ",");
-
-    printf("add3: %s\n", mat_name);
 
     idx = whichMat(mat_name);
 
@@ -50,33 +44,37 @@ int toStructForAdd(mat_t *all[], char *c, add_mat_t *ptrStruct)
     return S_SUCCESS;
 }
 
-int add_mat(mat_t *add1, mat_t *add2, mat_t *result)
+int mul_mat(mat_t *mul1, mat_t *mul2, mat_t *result)
 {
-    int i,j;
+    int i, j, k;
 
-    for (i = 0; i < result->size; i++)
+    for (i = 0; i < mul1->size; i++)
     {
-        for (j = 0; j < result->size; j++)
+        for (j = 0; j < mul2->size; j++)
         {
-            result->matrix[i][j] = add1->matrix[i][j] + add2->matrix[i][j];
+            result->matrix[i][j] = 0;
+
+            for (k = 0; k < mul2->size; k++)
+            {
+                result->matrix[i][j] += mul1->matrix[i][k] * mul2->matrix[k][j];
+            }
         }
     }
 
     print_mat(result);
-
     return S_SUCCESS;
 }
 
-int handleAdd(mat_t *all[], char *c)
+int handleMul(mat_t *all[], char *c)
 {
     int status;
-    add_mat_t *my_mat = calloc(1, sizeof(add_mat_t));
+    mul_mat_t *my_mat = calloc(1, sizeof(mul_mat_t));
 
-    status = toStructForAdd(all, c, my_mat);
+    status = toStructForMul(all, c, my_mat);
 
-    printf("\ntoStructForAdd status: %d\n", status);
+    printf("\ntoStructForMul status: %d\n", status);
 
-    status = add_mat(my_mat->add1, my_mat->add2, my_mat->result);
+    status = mul_mat(my_mat->mul1, my_mat->mul2, my_mat->result);
 
     return status;
 }

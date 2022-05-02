@@ -3,10 +3,11 @@
 int handlePrint(mat_t *all[], char *c);
 int handleAdd(mat_t *all[], char *c);
 int handleSub(mat_t *all[], char *c);
+int handleMul(mat_t *all[], char *c);
 
 void init_mats(mat_t *mats[])
 {
-    int i, j;
+    int i, j, k;
     mat_t *m;
 
     for (i = 0; i < 6; i++)
@@ -16,9 +17,12 @@ void init_mats(mat_t *mats[])
         m->size = MAT_SIZE;
 
         /* initiate all matrix cells to 0 */
-        for (j = 0; j < m->size * m->size; j++)
+        for (j = 0; j < m->size; j++)
         {
-            m->matrix[j] = 1;
+            for (k = 0; k < m->size; k++)
+            {
+                m->matrix[j][k] = 1;
+            }
         }
     }
 }
@@ -77,6 +81,9 @@ int whichCommand(char *c)
 
     else if (strcmp(cmd, "sub_mat") == 0)
         return CMD_SUB_MAT;
+
+    else if (strcmp(cmd, "mul_mat") == 0)
+        return CMD_MUL_MAT;
 
     else if (strcmp(cmd, "stop") == 0)
         return CMD_STOP;
@@ -179,11 +186,17 @@ int main()
             status = handleSub(all, command_str);
             break;
 
+        case CMD_MUL_MAT:
+            printf("calling handleMul()...\n");
+            status = handleMul(all, command_str);
+            break;
+
         case CMD_STOP:
             printf("Stopping...\n");
             exit(0);
 
         case CMD_UNDEFINED:
+            printf("Command undifiend, please try again.\n");
             status = S_FAIL_NO_COMMAND;
             break;
         }

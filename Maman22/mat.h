@@ -19,6 +19,7 @@ enum COMMAND
     CMD_PRINT_MAT,
     CMD_ADD_MAT,
     CMD_SUB_MAT,
+    CMD_MUL_MAT,
     CMD_STOP,
     CMD_UNDEFINED
 };
@@ -39,7 +40,7 @@ enum MATRIX
 struct mat_def
 {
     int size;                          /* how many rows and cols in mat (for us 4x4) */
-    float matrix[MAT_SIZE * MAT_SIZE]; /* floats array, with MAT_SIZE*MAT_SIZE places (for us 4x4) */
+    float matrix[MAT_SIZE][MAT_SIZE]; /* floats array, with MAT_SIZE*MAT_SIZE places (for us 4x4) */
 };
 
 typedef struct mat_def mat_t;
@@ -72,3 +73,13 @@ struct sub_mat_def
 };
 
 typedef struct sub_mat_def sub_mat_t;
+
+
+struct mul_mat_def
+{
+    mat_t *mul1;
+    mat_t *mul2;
+    mat_t *result;
+};
+
+typedef struct mul_mat_def mul_mat_t;

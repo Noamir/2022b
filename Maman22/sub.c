@@ -52,11 +52,14 @@ int toStructForSub(mat_t *all[], char *c, sub_mat_t *ptrStruct)
 
 int sub_mat(mat_t *sub1, mat_t *sub2, mat_t *result)
 {
-    int i;
+    int i, j;
 
-    for (i = 0; i < result->size * result->size; i++)
+    for (i = 0; i < result->size; i++)
     {
-        result->matrix[i] = sub1->matrix[i] - sub2->matrix[i];
+        for (j = 0; j < result->size; j++)
+        {
+            result->matrix[i][j] = sub1->matrix[i][j] - sub2->matrix[i][j];
+        }
     }
 
     print_mat(result);
