@@ -89,7 +89,7 @@ typedef struct mul_mat_def mul_mat_t;
 struct read_mat_def
 {
     mat_t *mat;
-    double number;
+    double *numbers;
 };
 
 typedef struct read_mat_def read_mat_t;

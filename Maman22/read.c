@@ -3,15 +3,38 @@
 int print_mat(mat_t *m);
 int whichMat(char *c);
 
-double whichNumber(char *c)
+double *whichNumber(char *c)
 {
+    printf("hello\n");
     char *end;
-    double number;
+    double *numbers = (double *)malloc(20 * sizeof(double));
+    ;
 
-    number = strtod(c, &end);
+    char *tmp = (char *)malloc(strlen(c) * sizeof(char));
+    char *num_str;
+    strcpy(tmp, c);
+    num_str = strtok(tmp, ",");
+    printf("num_str is: %s\n", num_str);
 
-    printf("number is: %7.2f\n", number);
-    return number;
+    int i = 0;
+
+    while (num_str != NULL)
+    {
+        *(numbers + i) = strtod(num_str, &end);
+        printf("number is: %.2f\n", *(numbers + i));
+
+        memmove(c, c + strlen(num_str) + 1, strlen(c));
+
+        strcpy(tmp, c);
+        num_str = strtok(tmp, ",");
+        printf("num_str is: %s\n", num_str);
+
+        printf("current c is: %s\n", c);
+
+        i++;
+    }
+
+    return numbers;
 }
 
 int toStructForRead(mat_t *all[], char *c, read_mat_t *ptrStruct)
@@ -19,7 +42,7 @@ int toStructForRead(mat_t *all[], char *c, read_mat_t *ptrStruct)
     char *tmp = (char *)malloc(strlen(c) * sizeof(char));
     char *mat_str, *num_str;
     int idx;
-    double number;
+    double *numbers = (double *)malloc(20 * sizeof(double));
 
     strcpy(tmp, c);
 
@@ -37,29 +60,26 @@ int toStructForRead(mat_t *all[], char *c, read_mat_t *ptrStruct)
 
     strcpy(tmp, c);
 
-    num_str = strtok(tmp, ",");
+    numbers = whichNumber(c);
 
-    printf("num_str: %s\n", num_str);
-
-    /* convert str to double */
-    number = whichNumber(num_str);
-
-    ptrStruct->number = number;
+    ptrStruct->numbers = numbers;
 
     free(tmp);
 
     return S_SUCCESS;
 }
 
-int read_mat(mat_t *mat, double num)
+int read_mat(mat_t *mat, double *nums)
 {
-    int i, j;
+    int i, j, k;
+    k = 0;
 
     for (i = 0; i < mat->size; i++)
     {
         for (j = 0; j < mat->size; j++)
         {
-            mat->matrix[i][j] = num;
+            mat->matrix[i][j] = *(nums + k);
+            k++;
         }
     }
 
@@ -77,7 +97,7 @@ int handleRead(mat_t *all[], char *c)
 
     printf("\ntoStructForRead status: %d\n", status);
 
-    status = read_mat(my_mat->mat, my_mat->number);
+    status = read_mat(my_mat->mat, my_mat->numbers);
 
     return status;
 }
