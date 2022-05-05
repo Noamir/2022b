@@ -6,6 +6,7 @@ int handleSub(mat_t *all[], char *c);
 int handleMul(mat_t *all[], char *c);
 int handleRead(mat_t *all[], char *c);
 int handleMulScalar(mat_t *all[], char *c);
+int handleTrans(mat_t *all[], char *c);
 
 void init_mats(mat_t *mats[])
 {
@@ -92,6 +93,9 @@ int whichCommand(char *c)
 
     else if (strcmp(cmd, "mul_scalar") == 0)
         return CMD_MUL_SCALAR;
+
+    else if (strcmp(cmd, "trans_mat") == 0)
+        return CMD_TRANS_MAT;
 
     else if (strcmp(cmd, "stop") == 0)
         return CMD_STOP;
@@ -217,6 +221,11 @@ int main()
         case CMD_MUL_SCALAR:
             printf("calling handleMulScalar()...\n");
             status = handleMulScalar(all, command_str);
+            break;
+
+        case CMD_TRANS_MAT:
+            printf("calling handleTrans()...\n");
+            status = handleTrans(all, command_str);
             break;
 
         case CMD_STOP:

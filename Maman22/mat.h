@@ -24,6 +24,7 @@ enum COMMAND
     CMD_MUL_MAT,
     CMD_READ_MAT,
     CMD_MUL_SCALAR,
+    CMD_TRANS_MAT,
     CMD_STOP,
     CMD_UNDEFINED
 };
@@ -98,3 +99,11 @@ struct read_mat_def
 };
 
 typedef struct read_mat_def read_mat_t;
+
+struct trans_mat_def
+{
+    mat_t *mat;
+    mat_t *result;
+};
+
+typedef struct trans_mat_def trans_mat_t;
