@@ -36,7 +36,7 @@ int toStructForTrans(mat_t *all[], char *c, trans_mat_t *ptrStruct)
 
 int trans_mat(mat_t *mat, mat_t *result)
 {
-    int i, j, k;
+    int i, j;
 
     for (i = 0; i < result->size; i++)
     {

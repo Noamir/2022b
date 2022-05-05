@@ -8,7 +8,7 @@ int handleRead(mat_t *all[], char *c);
 int handleMulScalar(mat_t *all[], char *c);
 int handleTrans(mat_t *all[], char *c);
 
-void init_mats(mat_t *mats[])
+void initMats(mat_t *mats[])
 {
     int i, j, k;
     mat_t *m;
@@ -30,7 +30,7 @@ void init_mats(mat_t *mats[])
     }
 }
 
-char *get_command()
+char *getCommand()
 {
     int limit = DEFAULT_BUFFER, i = 0;
     char *tmp_ptr;
@@ -68,7 +68,7 @@ int whichCommand(char *c)
     strcpy(tmp, c);
 
     /* FIXME: How to enable many spaces, tabs.. */
-    cmd = strtok(tmp, " \t\n");
+    cmd = strtok(tmp, " \t");
 
     printf("cmd: %s\n", cmd);
 
@@ -151,6 +151,8 @@ int finish(int status)
     case S_FAIL_NO_COMMAND:
         printf("the command is wrong. please try again\n");
         break;
+    case S_FAIL_MEMORY_ALLOCATION:
+        printf("Fatal error: memory allocation failed!\n");
     }
 
     return status;
@@ -177,16 +179,15 @@ int main()
     all[E_MAT_E] = MAT_E;
     all[E_MAT_F] = MAT_F;
 
-    init_mats(all);
+    initMats(all);
 
     while (1)
     {
-        command_str = get_command();
+        command_str = getCommand();
 
         if (command_str == NULL)
         {
-            printf("Fatal error: memory allocation failed!\n");
-            return 1;
+            finish(S_FAIL_MEMORY_ALLOCATION);
         }
 
         cmd = whichCommand(command_str);
@@ -197,41 +198,33 @@ int main()
             printf("calling handlePrint()...\n");
             status = handlePrint(all, command_str);
             break;
-
         case CMD_ADD_MAT:
             printf("calling handleAdd()...\n");
             status = handleAdd(all, command_str);
             break;
-
         case CMD_SUB_MAT:
             printf("calling handleSub()...\n");
             status = handleSub(all, command_str);
             break;
-
         case CMD_MUL_MAT:
             printf("calling handleMul()...\n");
             status = handleMul(all, command_str);
             break;
-
         case CMD_READ_MAT:
             printf("calling handleRead()...\n");
             status = handleRead(all, command_str);
             break;
-
         case CMD_MUL_SCALAR:
             printf("calling handleMulScalar()...\n");
             status = handleMulScalar(all, command_str);
             break;
-
         case CMD_TRANS_MAT:
             printf("calling handleTrans()...\n");
             status = handleTrans(all, command_str);
             break;
-
         case CMD_STOP:
             printf("Stopping...\n");
             exit(0);
-
         case CMD_UNDEFINED:
             printf("Command undifiend, please try again.\n");
             status = S_FAIL_NO_COMMAND;

@@ -40,6 +40,13 @@ enum MATRIX
     MAT_UNDEFINED
 };
 
+enum ARG_TYPE
+{
+    A_MAT,
+    A_NUM,
+    A_NUMS
+};
+
 struct mat_def
 {
     int size;                          /* how many rows and cols in mat (for us 4x4) */
