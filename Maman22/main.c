@@ -5,6 +5,7 @@ int handleAdd(mat_t *all[], char *c);
 int handleSub(mat_t *all[], char *c);
 int handleMul(mat_t *all[], char *c);
 int handleRead(mat_t *all[], char *c);
+int handleMulScalar(mat_t *all[], char *c);
 
 void init_mats(mat_t *mats[])
 {
@@ -88,6 +89,9 @@ int whichCommand(char *c)
 
     else if (strcmp(cmd, "read_mat") == 0)
         return CMD_READ_MAT;
+
+    else if (strcmp(cmd, "mul_scalar") == 0)
+        return CMD_MUL_SCALAR;
 
     else if (strcmp(cmd, "stop") == 0)
         return CMD_STOP;
@@ -208,7 +212,11 @@ int main()
         case CMD_READ_MAT:
             printf("calling handleRead()...\n");
             status = handleRead(all, command_str);
-            printf("Read returned: %d\n", status);
+            break;
+
+        case CMD_MUL_SCALAR:
+            printf("calling handleMulScalar()...\n");
+            status = handleMulScalar(all, command_str);
             break;
 
         case CMD_STOP:

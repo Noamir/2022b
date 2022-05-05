@@ -25,10 +25,15 @@ int toStructForRead(mat_t *all[], char *c, read_mat_t *ptrStruct)
     {
         if (num_str)
         {
-            ptrStruct->numbers[i] = whichNumber(num_str);
-            memmove(c, c + strlen(num_str) + 1, strlen(c));
-            strcpy(tmp, c);
-            num_str = strtok(tmp, ",");
+            /* if (isdigit(num_str) == 0) */
+            
+                ptrStruct->numbers[i] = whichNumber(num_str);
+                memmove(c, c + strlen(num_str) + 1, strlen(c));
+                strcpy(tmp, c);
+                num_str = strtok(tmp, ",");
+            
+            /* else
+                return S_FAIL_NOT_A_REAL_NUMBER; */
         }
         else
         {

@@ -3,7 +3,6 @@
 #include <stddef.h>
 #include <string.h>
 
-
 #define MAT_SIZE 4
 #define DEFAULT_BUFFER 5
 #define DEFAULT_MAT_VAL 0
@@ -13,6 +12,7 @@ enum STATUS
     S_SUCCESS,
     S_FAIL_NO_COMMAND,
     S_FAIL_WRONG_PARAMS,
+    S_FAIL_NOT_A_REAL_NUMBER,
     S_FAIL_MEMORY_ALLOCATION
 };
 
@@ -23,6 +23,7 @@ enum COMMAND
     CMD_SUB_MAT,
     CMD_MUL_MAT,
     CMD_READ_MAT,
+    CMD_MUL_SCALAR,
     CMD_STOP,
     CMD_UNDEFINED
 };
@@ -38,8 +39,6 @@ enum MATRIX
     MAT_UNDEFINED
 };
 
-
-
 struct mat_def
 {
     int size;                          /* how many rows and cols in mat (for us 4x4) */
@@ -48,7 +47,6 @@ struct mat_def
 
 typedef struct mat_def mat_t;
 
-
 struct print_mat_def
 {
     char *action;
@@ -56,7 +54,6 @@ struct print_mat_def
 };
 
 typedef struct print_mat_def print_mat_t;
-
 
 struct add_mat_def
 {
@@ -67,7 +64,6 @@ struct add_mat_def
 
 typedef struct add_mat_def add_mat_t;
 
-
 struct sub_mat_def
 {
     mat_t *sub1;
@@ -76,7 +72,6 @@ struct sub_mat_def
 };
 
 typedef struct sub_mat_def sub_mat_t;
-
 
 struct mul_mat_def
 {
@@ -87,11 +82,19 @@ struct mul_mat_def
 
 typedef struct mul_mat_def mul_mat_t;
 
+struct mul_scalar_def
+{
+    mat_t *mat;
+    double scalar;
+    mat_t *result;
+};
+
+typedef struct mul_scalar_def mul_scalar_t;
 
 struct read_mat_def
 {
     mat_t *mat;
-    double numbers[MAT_SIZE*MAT_SIZE];
+    double numbers[MAT_SIZE * MAT_SIZE];
 };
 
 typedef struct read_mat_def read_mat_t;
