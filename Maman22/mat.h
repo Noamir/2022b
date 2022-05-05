@@ -5,13 +5,15 @@
 
 
 #define MAT_SIZE 4
-
+#define DEFAULT_BUFFER 5
+#define DEFAULT_MAT_VAL 0
 
 enum STATUS
 {
     S_SUCCESS,
     S_FAIL_NO_COMMAND,
-    S_FAIL_WRONG_PARAMS
+    S_FAIL_WRONG_PARAMS,
+    S_FAIL_MEMORY_ALLOCATION
 };
 
 enum COMMAND
@@ -89,7 +91,7 @@ typedef struct mul_mat_def mul_mat_t;
 struct read_mat_def
 {
     mat_t *mat;
-    double *numbers;
+    double numbers[MAT_SIZE*MAT_SIZE];
 };
 
 typedef struct read_mat_def read_mat_t;

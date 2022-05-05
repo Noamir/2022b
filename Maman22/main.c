@@ -22,7 +22,7 @@ void init_mats(mat_t *mats[])
         {
             for (k = 0; k < m->size; k++)
             {
-                m->matrix[j][k] = 1;
+                m->matrix[j][k] = DEFAULT_MAT_VAL;
             }
         }
     }
@@ -30,7 +30,7 @@ void init_mats(mat_t *mats[])
 
 char *get_command()
 {
-    int limit = 10, i = 0;
+    int limit = DEFAULT_BUFFER, i = 0;
     char *tmp_ptr;
     char *command = (char *)malloc(limit * sizeof(char));
 
@@ -118,6 +118,16 @@ int whichMat(char *c)
 
     else
         return MAT_UNDEFINED;
+}
+
+double whichNumber(char *num_str)
+{
+    char *end;
+    double number;
+
+    number = strtod(num_str, &end);
+
+    return number;
 }
 
 int finish(int status)
