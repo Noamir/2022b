@@ -60,6 +60,28 @@ char *getCommand()
     return command;
 }
 
+int trimSpaces(char *command)
+{   
+    int i, j = 0;
+    char *tmp = (char *)malloc(strlen(command) * sizeof(char));
+
+    if(command == NULL)
+        return S_FAIL_WRONG_PARAMS;
+
+    for(i=0; i< strlen(command); i++)
+    {   
+        if(command[i] != ' ' && command[i] != '\t')
+        {
+            tmp[j] = command[i];
+            j++;
+        }
+    }
+    /* TODO: make sure memory allocation is right */
+    strcpy(command, tmp);
+
+    return S_SUCCESS;
+}
+
 int whichCommand(char *c)
 {
     char *tmp = (char *)malloc(strlen(c) * sizeof(char));
@@ -78,28 +100,20 @@ int whichCommand(char *c)
 
     if (strcmp(cmd, "print_mat") == 0)
         return CMD_PRINT_MAT;
-
     else if (strcmp(cmd, "add_mat") == 0)
         return CMD_ADD_MAT;
-
     else if (strcmp(cmd, "sub_mat") == 0)
         return CMD_SUB_MAT;
-
     else if (strcmp(cmd, "mul_mat") == 0)
         return CMD_MUL_MAT;
-
     else if (strcmp(cmd, "read_mat") == 0)
         return CMD_READ_MAT;
-
     else if (strcmp(cmd, "mul_scalar") == 0)
         return CMD_MUL_SCALAR;
-
     else if (strcmp(cmd, "trans_mat") == 0)
         return CMD_TRANS_MAT;
-
     else if (strcmp(cmd, "stop") == 0)
         return CMD_STOP;
-
     else
         return CMD_UNDEFINED;
 }
@@ -191,6 +205,8 @@ int main()
         }
 
         cmd = whichCommand(command_str);
+        status = trimSpaces(command_str);
+        printf("trimmed params: %s\n", command_str);
 
         switch (cmd)
         {

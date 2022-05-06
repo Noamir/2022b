@@ -1,6 +1,7 @@
 #include "mat.h"
 
 int whichMat(char *c);
+int validatePrint(char *command, int argTypes[], int argsNum);
 
 int toStructForPrint(mat_t *all[], char *c, print_mat_t *ptrStruct)
 {
@@ -35,6 +36,10 @@ int handlePrint(mat_t *all[], char *c)
 {
     int status;
     print_mat_t *my_mat = calloc(1, sizeof(print_mat_t));
+
+    my_mat->args[0] = A_MAT;
+
+   /*  status = validatePrint(c, my_mat->args, 1); */
 
     status = toStructForPrint(all, c, my_mat);
 
