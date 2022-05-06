@@ -7,12 +7,18 @@
 #define DEFAULT_BUFFER 5
 #define DEFAULT_MAT_VAL 0
 
+int isalpha( int ch );
+int isdigit( int ch );
+
+
 enum STATUS
 {
     S_SUCCESS,
     S_FAIL_NO_COMMAND,
     S_FAIL_WRONG_PARAMS,
     S_FAIL_NOT_A_REAL_NUMBER,
+    S_FAIL_ILLEGAL_COMMA,
+    S_FAIL_NOT_NUM,
     S_FAIL_MEMORY_ALLOCATION
 };
 
@@ -47,6 +53,11 @@ enum ARG_TYPE
     A_NUMS
 };
 
+enum ARGS_NUM
+{
+    PRINT_MAT_ARGS_NUM = 1
+};
+
 struct mat_def
 {
     int size;                          /* how many rows and cols in mat (for us 4x4) */
@@ -57,8 +68,8 @@ typedef struct mat_def mat_t;
 
 struct print_mat_def
 {
-    char *action;
     mat_t *mat;
+    int args[PRINT_MAT_ARGS_NUM];
 };
 
 typedef struct print_mat_def print_mat_t;
