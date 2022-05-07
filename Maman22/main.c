@@ -39,6 +39,7 @@ char *getCommand()
     printf("\nHi, insert command\n");
 
     /* get command chars from stdin to command pointer */
+    /* TODO: get input from file is not ending aith \n - handle */
     for (i = 0; (i <= limit) && (*(command + i) = getchar()) != '\n'; i++)
     {
         /* got to the limit of chars size - increase limit and realloc command with new limit size */
@@ -59,6 +60,8 @@ char *getCommand()
 
     /* replace \n with \0 - NULL */
     command[i] = '\0';
+
+    printf("\nThe command is: %s\n", command);
 
     return command;
 }
@@ -196,6 +199,13 @@ double whichNumber(char *num_str)
     double number;
 
     number = strtod(num_str, &end);
+    printf("number: %f\n", number);
+    printf("end: %s\n", end);
+
+    if(strcmp(end, "\0") != 0)
+    {
+        printf("num_str is not a number - handle\n");
+    }
 
     return number;
 }

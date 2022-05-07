@@ -7,36 +7,92 @@ double whichNumber(char *num_str);
 int toStructForMulScalar(mat_t *all[], char *c, mul_scalar_t *ptrStruct)
 {
     char *tmp = (char *)malloc(strlen(c) * sizeof(char));
-    char *mat_name, *scalar_str;
-    int idx, scalar;
+    char *scalar_str, *end;
+    int idx;
+    double scalar;
 
-    strcpy(tmp, c);
+    idx = whichMat(c);
 
-    mat_name = strtok(tmp, ",");
+    printf("mat: %d\n", idx);
+    printf("currenct command: %s\n", c);
 
-    idx = whichMat(mat_name);
+    /* Validations */
+
+    if (idx == MAT_NULL)
+    {
+        return S_FAIL_MISSING_ARGS;
+    }
+
+    if (idx == MAT_UNDEFINED)
+    {
+        return S_FAIL_NO_MAT;
+    }
+
+    if (strncmp(c, ",", strlen(",")) != 0)
+        return S_FAIL_MISSING_COMMA;
+
+    memmove(c, c + 1 * sizeof(char), strlen(c)); /* remove the comma */
+    printf("currenct command: %s\n", c);
+
+    if (strncmp(c, ",", strlen(",")) == 0)
+        return S_FAIL_MULTIPLE_COMMAS;
+
+    /* End of validation */
 
     ptrStruct->mat = all[idx];
 
     /* TODO: How to forward pointer correctly - how to free spaces I skipped here */
 
-    memmove(c, c + strlen(mat_name) + 1, strlen(c));
-
     strcpy(tmp, c);
 
     scalar_str = strtok(tmp, ",");
 
-    scalar = whichNumber(scalar_str);
+    scalar = strtod(scalar_str, &end);
+    printf("number: %f\n", scalar);
+    printf("end: %s\n", end);
+
+    if (strcmp(end, "\0") != 0)
+    {
+        return S_FAIL_NOT_A_REAL_NUMBER;
+    }
 
     ptrStruct->scalar = scalar;
 
-    memmove(c, c + strlen(mat_name) + 1, strlen(c));
+    memmove(c, c + strlen(scalar_str), strlen(c));
 
-    strcpy(tmp, c);
+    printf("current command: %s\n", c);
 
-    mat_name = strtok(tmp, ",");
+    if (strncmp(c, ",", strlen(",")) != 0)
+        return S_FAIL_MISSING_COMMA;
 
-    idx = whichMat(mat_name);
+    memmove(c, c + 1 * sizeof(char), strlen(c)); /* remove the comma */
+    printf("currenct command: %s\n", c);
+
+    if (strncmp(c, ",", strlen(",")) == 0)
+        return S_FAIL_MULTIPLE_COMMAS;
+
+    idx = whichMat(c);
+
+    printf("current command: %s\n", c);
+
+    /* Validations */
+
+    if (idx == MAT_NULL)
+    {
+        return S_FAIL_MISSING_ARGS;
+    }
+
+    if (idx == MAT_UNDEFINED)
+    {
+        return S_FAIL_NO_MAT;
+    }
+
+    if (strcmp(c, "\0") != 0)
+    {
+        return S_FAIL_EXTRA_TEXT;
+    }
+
+    /* End of validation */
 
     ptrStruct->result = all[idx];
 
