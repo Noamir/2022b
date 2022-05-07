@@ -57,20 +57,22 @@ char *getCommand()
         }
     }
 
+    /* replace \n with \0 - NULL */
+    printf("debug get command1 %d\n", command[i]);
+    command[i] = '\0';
+    printf("debug get command2 %d\n", command[i + 1]);
+
     return command;
 }
 
-int trimSpaces(char *command)
-{   
+void trimSpaces(char *command)
+{
     int i, j = 0;
     char *tmp = (char *)malloc(strlen(command) * sizeof(char));
 
-    if(command == NULL)
-        return S_FAIL_WRONG_PARAMS;
-
-    for(i=0; i< strlen(command); i++)
-    {   
-        if(command[i] != ' ' && command[i] != '\t')
+    for (i = 0; i < strlen(command); i++)
+    {
+        if (command[i] != ' ' && command[i] != '\t')
         {
             tmp[j] = command[i];
             j++;
@@ -78,8 +80,6 @@ int trimSpaces(char *command)
     }
     /* TODO: make sure memory allocation is right */
     strcpy(command, tmp);
-
-    return S_SUCCESS;
 }
 
 int whichCommand(char *c)
@@ -91,6 +91,9 @@ int whichCommand(char *c)
 
     /* FIXME: How to enable many spaces, tabs.. */
     cmd = strtok(tmp, " \t");
+
+    if(cmd == NULL)
+        return CMD_UNDEFINED;
 
     printf("cmd: %s\n", cmd);
 
@@ -121,23 +124,39 @@ int whichCommand(char *c)
 int whichMat(char *c)
 {
     if (strncmp(c, "MAT_A", strlen("MAT_A")) == 0)
+    {
+        memmove(c, c + strlen("MAT_A"), strlen(c));
         return E_MAT_A;
-
+    }
     else if (strncmp(c, "MAT_B", strlen("MAT_B")) == 0)
+    {
+        memmove(c, c + strlen("MAT_B"), strlen(c));
         return E_MAT_B;
-
+    }
     else if (strncmp(c, "MAT_C", strlen("MAT_C")) == 0)
+    {
+        memmove(c, c + strlen("MAT_C"), strlen(c));
         return E_MAT_C;
-
+    }
     else if (strncmp(c, "MAT_D", strlen("MAT_D")) == 0)
+    {
+        memmove(c, c + strlen("MAT_D"), strlen(c));
         return E_MAT_D;
-
+    }
     else if (strncmp(c, "MAT_E", strlen("MAT_E")) == 0)
+    {
+        memmove(c, c + strlen("MAT_E"), strlen(c));
         return E_MAT_E;
-
+    }
     else if (strncmp(c, "MAT_F", strlen("MAT_F")) == 0)
+    {
+        memmove(c, c + strlen("MAT_F"), strlen(c));
         return E_MAT_F;
-
+    }
+    else if (strcmp(c, "\0") == 0)
+    {
+        return MAT_NULL;
+    }
     else
         return MAT_UNDEFINED;
 }
@@ -152,24 +171,47 @@ double whichNumber(char *num_str)
     return number;
 }
 
-int finish(int status)
+void finish(int status)
 {
     switch (status)
     {
     case S_SUCCESS:
-        printf("Well done! goodbye.\n");
-        break;
-    case S_FAIL_WRONG_PARAMS:
-        printf("the parameters are wrong. please try again\n");
+        printf("Success\n");
         break;
     case S_FAIL_NO_COMMAND:
-        printf("the command is wrong. please try again\n");
+        printf("Undefined command name\n");
+        break;
+    case S_FAIL_NO_MAT:
+        printf("Undefined matrix name\n");
+        break;
+    case S_FAIL_NOT_A_REAL_NUMBER:
+        printf("Argument is not a real number\n");
+        break;
+    case S_FAIL_EXTRA_TEXT:
+        printf("Extraneous text after end of command\n");
+        break;
+    case S_FAIL_MISSING_ARGS:
+        printf("Missing argument\n");
+        break;
+    case S_FAIL_ILLEGAL_COMMA:
+        printf("Illegal comma\n");
+        break;
+    case S_FAIL_MISSING_COMMA:
+        printf("Missing comma\n");
+        break;
+    case S_FAIL_MULTIPLE_COMMAS:
+        printf("Multiple consecutive commas\n");
+        break;
+    case S_FAIL_NOT_SCALAR:
+        printf("Argument is not a scalar\n");
+        break;
+    case S_FAIL_ETRA_TEXT_END:
+        printf("Extraneous text after end of command\n");
         break;
     case S_FAIL_MEMORY_ALLOCATION:
         printf("Fatal error: memory allocation failed!\n");
+        break;
     }
-
-    return status;
 }
 
 int main()
@@ -205,8 +247,11 @@ int main()
         }
 
         cmd = whichCommand(command_str);
-        status = trimSpaces(command_str);
+        printf("command after cmd: %s\n", command_str);
+        trimSpaces(command_str);
+        printf("command after trim: %s\n", command_str);
         printf("trimmed params: %s\n", command_str);
+
 
         switch (cmd)
         {
@@ -239,14 +284,21 @@ int main()
             status = handleTrans(all, command_str);
             break;
         case CMD_STOP:
-            printf("Stopping...\n");
-            exit(0);
+            printf("the command is: %s\n", command_str);
+            if (strcmp(command_str, "\0") == 0)
+            {
+                printf("Stopping...\n");
+                exit(0);
+            }
+            status = S_FAIL_ETRA_TEXT_END;
+            break;
         case CMD_UNDEFINED:
-            printf("Command undifiend, please try again.\n");
             status = S_FAIL_NO_COMMAND;
             break;
         }
+
+        finish(status);
     }
 
-    return finish(status);
+    return 0;
 }

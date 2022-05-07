@@ -15,10 +15,15 @@ enum STATUS
 {
     S_SUCCESS,
     S_FAIL_NO_COMMAND,
-    S_FAIL_WRONG_PARAMS,
+    S_FAIL_NO_MAT,
     S_FAIL_NOT_A_REAL_NUMBER,
+    S_FAIL_EXTRA_TEXT,
+    S_FAIL_MISSING_ARGS,
     S_FAIL_ILLEGAL_COMMA,
-    S_FAIL_NOT_NUM,
+    S_FAIL_MISSING_COMMA,
+    S_FAIL_MULTIPLE_COMMAS,
+    S_FAIL_NOT_SCALAR,
+    S_FAIL_ETRA_TEXT_END,
     S_FAIL_MEMORY_ALLOCATION
 };
 
@@ -43,6 +48,7 @@ enum MATRIX
     E_MAT_D,
     E_MAT_E,
     E_MAT_F,
+    MAT_NULL,
     MAT_UNDEFINED
 };
 
@@ -53,10 +59,6 @@ enum ARG_TYPE
     A_NUMS
 };
 
-enum ARGS_NUM
-{
-    PRINT_MAT_ARGS_NUM = 1
-};
 
 struct mat_def
 {
@@ -69,7 +71,7 @@ typedef struct mat_def mat_t;
 struct print_mat_def
 {
     mat_t *mat;
-    int args[PRINT_MAT_ARGS_NUM];
+    int args[1];
 };
 
 typedef struct print_mat_def print_mat_t;
