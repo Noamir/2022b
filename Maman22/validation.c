@@ -17,6 +17,19 @@ int validateMat(int matIdx)
     return S_SUCCESS;
 }
 
+int validateCommas(char *command)
+{
+    if (strncmp(command, ",", strlen(",")) != 0)
+        return S_FAIL_MISSING_COMMA;
+
+    memmove(command, command + 1 * sizeof(char), strlen(command)); /* remove the comma */
+    printf("currenct command: %s\n", command);
+
+    if (strncmp(command, ",", strlen(",")) == 0)
+        return S_FAIL_MULTIPLE_COMMAS;
+    
+    return S_SUCCESS;
+}
 
 int validateNull(char *command)
 {
