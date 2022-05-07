@@ -150,6 +150,7 @@ int whichCommand(char *c)
         return CMD_UNDEFINED;
 }
 
+
 int whichMat(char *c)
 {
     char *mat_name;
@@ -160,21 +161,21 @@ int whichMat(char *c)
 
     strcpy(tmp, c);
 
-    mat_name = strtok(tmp, ",");
+    /* mat_name = strtok(tmp, ","); */
 
-    printf("mat_name: %s\n", mat_name);
+    /* printf("mat_name: %s\n", mat_name); */
 
-    if (strcmp(mat_name, "MAT_A") == 0)
+    if (strncmp(c, "MAT_A", strlen("MAT_A")) == 0)
     {
         memmove(c, c + strlen("MAT_A"), strlen(c));
         return E_MAT_A;
     }
-    else if (strcmp(mat_name, "MAT_B") == 0)
+    else if (strncmp(c, "MAT_B", strlen("MAT_B")) == 0)
     {
         memmove(c, c + strlen("MAT_B"), strlen(c));
         return E_MAT_B;
     }
-    else if (strcmp(mat_name, "MAT_C") == 0)
+    else if (strncmp(c, "MAT_C", strlen("MAT_C")) == 0)
     {
         memmove(c, c + strlen("MAT_C"), strlen(c));
         return E_MAT_C;
