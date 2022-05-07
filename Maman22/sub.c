@@ -2,68 +2,39 @@
 
 int print_mat(mat_t *m);
 int whichMat(char *c);
+int validateMat(int matIdx);
+int validateCommas(char *command);
+int validateNull(char *command);
 
 int toStructForSub(mat_t *all[], char *c, sub_mat_t *ptrStruct)
 {
-    int idx;
+    int idx, status;
 
     idx = whichMat(c);
     printf("sub1: %d\n", idx);
     printf("currenct command: %s\n", c);
 
-    /* Validations */
+   status = validateMat(idx);
+    if (status != S_SUCCESS)
+        return status;
 
-    if (idx == MAT_NULL)
-    {
-        return S_FAIL_MISSING_ARGS;
-    }
-
-    if (idx == MAT_UNDEFINED)
-    {
-        return S_FAIL_NO_MAT;
-    }
-
-    if (strncmp(c, ",", strlen(",")) != 0)
-        return S_FAIL_MISSING_COMMA;
-
-    memmove(c, c + 1 * sizeof(char), strlen(c)); /* remove the comma */
-    printf("currenct command: %s\n", c);
-
-    if (strncmp(c, ",", strlen(",")) == 0)
-        return S_FAIL_MULTIPLE_COMMAS;
-
-    /* End of validation */
+    status = validateCommas(c);
+    if (status != S_SUCCESS)
+        return status;
 
     ptrStruct->sub1 = all[idx];
-
-    /* TODO: How to forward pointer correctly - how to free spaces I skipped here */
 
     idx = whichMat(c);
     printf("sub2: %d\n", idx);
     printf("currenct command: %s\n", c);
 
-    /* Validations */
+   status = validateMat(idx);
+    if (status != S_SUCCESS)
+        return status;
 
-    if (idx == MAT_NULL)
-    {
-        return S_FAIL_MISSING_ARGS;
-    }
-
-    if (idx == MAT_UNDEFINED)
-    {
-        return S_FAIL_NO_MAT;
-    }
-
-    if (strncmp(c, ",", strlen(",")) != 0)
-        return S_FAIL_MISSING_COMMA;
-
-    memmove(c, c + 1 * sizeof(char), strlen(c)); /* remove the comma */
-    printf("currenct command: %s\n", c);
-
-    if (strncmp(c, ",", strlen(",")) == 0)
-        return S_FAIL_MULTIPLE_COMMAS;
-
-    /* End of validation */
+    status = validateCommas(c);
+    if (status != S_SUCCESS)
+        return status;
 
     ptrStruct->sub2 = all[idx];
 
@@ -71,28 +42,17 @@ int toStructForSub(mat_t *all[], char *c, sub_mat_t *ptrStruct)
     printf("result: %d\n", idx);
     printf("currenct command: %s\n", c);
 
-    /* Validations */
+    status = validateMat(idx);
+    if (status != S_SUCCESS)
+        return status;
 
-    if (idx == MAT_NULL)
-    {
-        return S_FAIL_MISSING_ARGS;
-    }
-
-    if (idx == MAT_UNDEFINED)
-    {
-        return S_FAIL_NO_MAT;
-    }
-
-    if (strcmp(c, "\0") != 0)
-    {
-        return S_FAIL_EXTRA_TEXT;
-    }
-
-    /* End of validation */
+    status = validateNull(c);
+    if (status != S_SUCCESS)
+        return status;
 
     ptrStruct->result = all[idx];
 
-    return S_SUCCESS;
+    return status;
 }
 
 int sub_mat(mat_t *sub1, mat_t *sub2, mat_t *result)
