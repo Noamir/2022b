@@ -5,31 +5,60 @@ int whichMat(char *c);
 
 int toStructForTrans(mat_t *all[], char *c, trans_mat_t *ptrStruct)
 {
-    char *tmp = (char *)malloc(strlen(c) * sizeof(char));
-    char *mat_name;
     int idx;
 
-    strcpy(tmp, c);
+    idx = whichMat(c);
+    printf("mat: %d\n", idx);
+    printf("currenct command: %s\n", c);
 
-    mat_name = strtok(tmp, ",");
+    /* Validations */
 
-    idx = whichMat(mat_name);
+    if (idx == MAT_NULL)
+    {
+        return S_FAIL_MISSING_ARGS;
+    }
+
+    if (idx == MAT_UNDEFINED)
+    {
+        return S_FAIL_NO_MAT;
+    }
+
+    if (strncmp(c, ",", strlen(",")) != 0)
+        return S_FAIL_MISSING_COMMA;
+
+    memmove(c, c + 1 * sizeof(char), strlen(c)); /* remove the comma */
+    printf("currenct command: %s\n", c);
+
+    /* End of validation */
 
     ptrStruct->mat = all[idx];
 
     /* TODO: How to forward pointer correctly - how to free spaces I skipped here */
 
-    memmove(c, c + strlen(mat_name) + 1, strlen(c));
+    idx = whichMat(c);
+    printf("result: %d\n", idx);
+    printf("currenct command: %s\n", c);
 
-    strcpy(tmp, c);
+    /* Validations */
 
-    mat_name = strtok(tmp, ",");
+    if (idx == MAT_NULL)
+    {
+        return S_FAIL_MISSING_ARGS;
+    }
 
-    idx = whichMat(mat_name);
+    if (idx == MAT_UNDEFINED)
+    {
+        return S_FAIL_NO_MAT;
+    }
+
+    if (strcmp(c, "\0") != 0)
+    {
+        return S_FAIL_EXTRA_TEXT;
+    }
+
+    /* End of validation */
 
     ptrStruct->result = all[idx];
-
-    free(tmp);
 
     return S_SUCCESS;
 }

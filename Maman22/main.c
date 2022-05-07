@@ -111,37 +111,37 @@ int whichCommand(char *c)
         memmove(c, c + strlen("print_mat"), strlen(c));
         return CMD_PRINT_MAT;
     }
-    else if (strcmp(cmd, "add_mat") == 0)
+    else if (strncmp(cmd, "add_mat", strlen("add_mat")) == 0)
     {
         memmove(c, c + strlen("add_mat"), strlen(c));
         return CMD_ADD_MAT;
     }
-    else if (strcmp(cmd, "sub_mat") == 0)
+    else if (strncmp(cmd, "sub_mat", strlen("sub_mat") ) == 0)
     {
         memmove(c, c + strlen("sub_mat"), strlen(c));
         return CMD_SUB_MAT;
     }
-    else if (strcmp(cmd, "mul_mat") == 0)
+    else if (strncmp(cmd, "mul_mat", strlen("mul_mat")) == 0)
     {
         memmove(c, c + strlen("mul_mat"), strlen(c));
         return CMD_MUL_MAT;
     }
-    else if (strcmp(cmd, "read_mat") == 0)
+    else if (strncmp(cmd, "read_mat", strlen("read_mat")) == 0)
     {
         memmove(c, c + strlen("read_mat"), strlen(c));
         return CMD_READ_MAT;
     }
-    else if (strcmp(cmd, "mul_scalar") == 0)
+    else if (strncmp(cmd, "mul_scalar", strlen("mul_scalar")) == 0)
     {
         memmove(c, c + strlen("mul_scalar"), strlen(c));
         return CMD_MUL_SCALAR;
     }
-    else if (strcmp(cmd, "trans_mat") == 0)
+    else if (strncmp(cmd, "trans_mat", strlen("trans_mat")) == 0)
     {
         memmove(c, c + strlen("trans_mat"), strlen(c));
         return CMD_TRANS_MAT;
     }
-    else if (strcmp(cmd, "stop") == 0)
+    else if (strncmp(cmd, "stop", strlen("stop")) == 0)
     {
         memmove(c, c + strlen("stop"), strlen(c));
         return CMD_STOP;
