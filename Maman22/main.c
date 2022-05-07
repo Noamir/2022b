@@ -104,31 +104,55 @@ int whichCommand(char *c)
 
     /* FIXME: How to forward pointer correctly - how to free spaces I skipped here */
 
-    memmove(c, c + strlen(cmd), strlen(c));
+   /*  memmove(c, c + strlen(cmd), strlen(c)); */
 
     
-    if (strcmp(cmd, "print_mat") == 0)
+    if (strncmp(cmd, "print_mat", strlen("print_mat")) == 0)
+    {
+        memmove(c, c + strlen("print_mat"), strlen(c));
         return CMD_PRINT_MAT;
+    }
     else if (strcmp(cmd, "add_mat") == 0)
+    {
+        memmove(c, c + strlen("add_mat"), strlen(c));
         return CMD_ADD_MAT;
+    }
     else if (strcmp(cmd, "sub_mat") == 0)
+    {
+        memmove(c, c + strlen("sub_mat"), strlen(c));
         return CMD_SUB_MAT;
+    }
     else if (strcmp(cmd, "mul_mat") == 0)
+    {
+        memmove(c, c + strlen("mul_mat"), strlen(c));
         return CMD_MUL_MAT;
+    }
     else if (strcmp(cmd, "read_mat") == 0)
+    {
+        memmove(c, c + strlen("read_mat"), strlen(c));
         return CMD_READ_MAT;
+    }
     else if (strcmp(cmd, "mul_scalar") == 0)
+    {
+        memmove(c, c + strlen("mul_scalar"), strlen(c));
         return CMD_MUL_SCALAR;
+    }
     else if (strcmp(cmd, "trans_mat") == 0)
+    {
+        memmove(c, c + strlen("trans_mat"), strlen(c));
         return CMD_TRANS_MAT;
+    }
     else if (strcmp(cmd, "stop") == 0)
+    {
+        memmove(c, c + strlen("stop"), strlen(c));
         return CMD_STOP;
+    }
     else
         return CMD_UNDEFINED;
 }
 
 int whichMat(char *c)
-{
+{   
     if (strncmp(c, "MAT_A", strlen("MAT_A")) == 0)
     {
         memmove(c, c + strlen("MAT_A"), strlen(c));
