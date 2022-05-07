@@ -36,12 +36,17 @@ char *getCommand()
     char *tmp_ptr;
     char *command = (char *)malloc(limit * sizeof(char));
 
-    printf("\nHi, insert command\n");
+    printf("\nHi, insert a new command\n");
 
     /* get command chars from stdin to command pointer */
     /* TODO: get input from file is not ending aith \n - handle */
     for (i = 0; (i <= limit) && (*(command + i) = getchar()) != '\n'; i++)
-    {
+    {   
+        if (*(command+i) == EOF)
+        {
+            printf("\nInput got EOF char. Illigal. Stopping the program with error.\n");
+            exit(S_FAIL_EOF);
+        }
         /* got to the limit of chars size - increase limit and realloc command with new limit size */
         if (i == limit - 1)
         {

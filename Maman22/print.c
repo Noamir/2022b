@@ -1,39 +1,29 @@
 #include "mat.h"
 
 int whichMat(char *c);
-int validate(char *command, int argTypes[]);
+int validateMat(int matIdx);
+int validateNull(char *command);
 
 int toStructForPrint(mat_t *all[], char *c, print_mat_t *ptrStruct)
 {
-    int idx;
+    int idx, status;
 
     idx = whichMat(c);
 
-    /* Validations */
+    status = validateMat(idx);
+    if (status != S_SUCCESS)
+        return status;
 
-    if(idx == MAT_NULL)
-    {
-        return S_FAIL_MISSING_ARGS;
-    }
-
-    if (idx == MAT_UNDEFINED)
-    {
-        return S_FAIL_NO_MAT;
-    }
-
-    if (strcmp(c, "\0") != 0)
-    {
-        return S_FAIL_EXTRA_TEXT;
-    }
-
-    /* End of validation */
+    status = validateNull(c);
+    if (status != S_SUCCESS)
+        return status;
 
     ptrStruct->mat = all[idx];
 
-    return S_SUCCESS;
+    return status;
 }
 
-int print_mat(mat_t *m)
+void print_mat(mat_t *m)
 {
     int i, j;
 
@@ -47,8 +37,6 @@ int print_mat(mat_t *m)
         printf("\n");
     }
     printf("\n\n");
-
-    return S_SUCCESS;
 }
 
 int handlePrint(mat_t *all[], char *c)
@@ -62,7 +50,7 @@ int handlePrint(mat_t *all[], char *c)
     if (status != S_SUCCESS)
         return status;
 
-    status = print_mat(my_mat->mat);
+    print_mat(my_mat->mat);
 
     return status;
 }
