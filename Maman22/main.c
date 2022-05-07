@@ -85,7 +85,10 @@ int whichCommand(char *c)
     char *tmp = (char *)malloc(strlen(c) * sizeof(char));
     char *cmd;
     int i = 0;
-    
+
+    if (strcmp(c, "\0") == 0)
+        return CMD_UNDEFINED;
+
     /* remove spaces\tabs from begining of command - until string starts */
     while (c[i] == ' ' || c[i] == '\t')
     {
@@ -103,6 +106,7 @@ int whichCommand(char *c)
 
     memmove(c, c + strlen(cmd), strlen(c));
 
+    
     if (strcmp(cmd, "print_mat") == 0)
         return CMD_PRINT_MAT;
     else if (strcmp(cmd, "add_mat") == 0)
