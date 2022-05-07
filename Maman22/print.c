@@ -8,29 +8,25 @@ int toStructForPrint(mat_t *all[], char *c, print_mat_t *ptrStruct)
     int idx;
 
     idx = whichMat(c);
-    
-    printf("toStruct: current command: %s\n", c);
-    printf("toStruct: current idx: %d\n", idx);
 
     /* Validations */
 
     if(idx == MAT_NULL)
     {
-        printf("MAT is NULL\n");
         return S_FAIL_MISSING_ARGS;
     }
 
     if (idx == MAT_UNDEFINED)
     {
-        printf("MAT is undefined\n");
         return S_FAIL_NO_MAT;
     }
 
     if (strcmp(c, "\0") != 0)
     {
-        printf("Extra text after args\n");
         return S_FAIL_EXTRA_TEXT;
     }
+
+    /* End of validation */
 
     ptrStruct->mat = all[idx];
 
@@ -59,8 +55,6 @@ int handlePrint(mat_t *all[], char *c)
 {
     int status;
     print_mat_t *my_mat = calloc(1, sizeof(print_mat_t));
-
-    my_mat->args[0] = A_MAT;
 
     status = toStructForPrint(all, c, my_mat);
     printf("\ntoStructForPrint status: %d\n", status);

@@ -58,9 +58,7 @@ char *getCommand()
     }
 
     /* replace \n with \0 - NULL */
-    printf("debug get command1 %d\n", command[i]);
     command[i] = '\0';
-    printf("debug get command2 %d\n", command[i + 1]);
 
     return command;
 }
@@ -86,20 +84,24 @@ int whichCommand(char *c)
 {
     char *tmp = (char *)malloc(strlen(c) * sizeof(char));
     char *cmd;
+    int i = 0;
+    
+    /* remove spaces\tabs from begining of command - until string starts */
+    while (c[i] == ' ' || c[i] == '\t')
+    {
+        i++;
+    }
+    memmove(c, c + i*sizeof(char), strlen(c)); /* move command forward s spaces and tabs amount */
 
     strcpy(tmp, c);
 
-    /* FIXME: How to enable many spaces, tabs.. */
-    cmd = strtok(tmp, " \t");
-
-    if(cmd == NULL)
-        return CMD_UNDEFINED;
+    cmd = strtok(tmp, " \t"); /* looks for the first space or tab. If there are no such - return all string */
 
     printf("cmd: %s\n", cmd);
 
     /* FIXME: How to forward pointer correctly - how to free spaces I skipped here */
 
-    memmove(c, c + strlen(cmd) + 1, strlen(c));
+    memmove(c, c + strlen(cmd), strlen(c));
 
     if (strcmp(cmd, "print_mat") == 0)
         return CMD_PRINT_MAT;
@@ -247,11 +249,8 @@ int main()
         }
 
         cmd = whichCommand(command_str);
-        printf("command after cmd: %s\n", command_str);
         trimSpaces(command_str);
-        printf("command after trim: %s\n", command_str);
         printf("trimmed params: %s\n", command_str);
-
 
         switch (cmd)
         {
