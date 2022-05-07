@@ -14,7 +14,7 @@ int toStructForSub(mat_t *all[], char *c, sub_mat_t *ptrStruct)
     printf("sub1: %d\n", idx);
     printf("currenct command: %s\n", c);
 
-   status = validateMat(idx);
+    status = validateMat(idx);
     if (status != S_SUCCESS)
         return status;
 
@@ -28,7 +28,7 @@ int toStructForSub(mat_t *all[], char *c, sub_mat_t *ptrStruct)
     printf("sub2: %d\n", idx);
     printf("currenct command: %s\n", c);
 
-   status = validateMat(idx);
+    status = validateMat(idx);
     if (status != S_SUCCESS)
         return status;
 
@@ -55,7 +55,7 @@ int toStructForSub(mat_t *all[], char *c, sub_mat_t *ptrStruct)
     return status;
 }
 
-int sub_mat(mat_t *sub1, mat_t *sub2, mat_t *result)
+void sub_mat(mat_t *sub1, mat_t *sub2, mat_t *result)
 {
     int i, j;
 
@@ -68,8 +68,6 @@ int sub_mat(mat_t *sub1, mat_t *sub2, mat_t *result)
     }
 
     print_mat(result);
-
-    return S_SUCCESS;
 }
 
 int handleSub(mat_t *all[], char *c)
@@ -84,7 +82,7 @@ int handleSub(mat_t *all[], char *c)
     if (status != S_SUCCESS)
         return status;
 
-    status = sub_mat(my_mat->sub1, my_mat->sub2, my_mat->result);
+    sub_mat(my_mat->sub1, my_mat->sub2, my_mat->result);
 
     return status;
 }

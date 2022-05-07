@@ -2,8 +2,6 @@
 
 int validateMat(int matIdx)
 {
-    int status;
-
     if (matIdx == MAT_NULL)
     {
         return S_FAIL_MISSING_ARGS;

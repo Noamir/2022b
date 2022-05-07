@@ -55,7 +55,7 @@ int toStructForAdd(mat_t *all[], char *c, add_mat_t *ptrStruct)
     return status;
 }
 
-int add_mat(mat_t *add1, mat_t *add2, mat_t *result)
+void add_mat(mat_t *add1, mat_t *add2, mat_t *result)
 {
     int i, j;
 
@@ -68,8 +68,6 @@ int add_mat(mat_t *add1, mat_t *add2, mat_t *result)
     }
 
     print_mat(result);
-
-    return S_SUCCESS;
 }
 
 int handleAdd(mat_t *all[], char *c)
@@ -84,7 +82,7 @@ int handleAdd(mat_t *all[], char *c)
     if (status != S_SUCCESS)
         return status;
 
-    status = add_mat(my_mat->add1, my_mat->add2, my_mat->result);
+    add_mat(my_mat->add1, my_mat->add2, my_mat->result);
 
     return status;
 }

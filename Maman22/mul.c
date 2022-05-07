@@ -55,7 +55,7 @@ int toStructForMul(mat_t *all[], char *c, mul_mat_t *ptrStruct)
     return status;
 }
 
-int mul_mat(mat_t *mul1, mat_t *mul2, mat_t *result)
+void mul_mat(mat_t *mul1, mat_t *mul2, mat_t *result)
 {
     int i, j, k;
 
@@ -73,7 +73,7 @@ int mul_mat(mat_t *mul1, mat_t *mul2, mat_t *result)
     }
 
     print_mat(result);
-    return S_SUCCESS;
+
 }
 
 int handleMul(mat_t *all[], char *c)
@@ -88,7 +88,7 @@ int handleMul(mat_t *all[], char *c)
     if (status != S_SUCCESS)
         return status;
 
-    status = mul_mat(my_mat->mul1, my_mat->mul2, my_mat->result);
+    mul_mat(my_mat->mul1, my_mat->mul2, my_mat->result);
 
     return status;
 }
