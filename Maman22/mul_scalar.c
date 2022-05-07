@@ -70,6 +70,9 @@ int handleMulScalar(mat_t *all[], char *c)
 
     printf("\ntoStructForMulScalar status: %d\n", status);
 
+    if (status != S_SUCCESS)
+        return status;
+
     status = mul_scalar(my_mat->mat, my_mat->scalar, my_mat->result);
 
     return status;

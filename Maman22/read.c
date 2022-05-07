@@ -73,6 +73,9 @@ int handleRead(mat_t *all[], char *c)
 
     printf("\ntoStructForRead status: %d\n", status);
 
+    if (status != S_SUCCESS)
+        return status;
+
     status = read_mat(my_mat->mat, my_mat->numbers);
 
     return status;

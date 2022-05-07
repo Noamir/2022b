@@ -5,54 +5,93 @@ int whichMat(char *c);
 
 int toStructForAdd(mat_t *all[], char *c, add_mat_t *ptrStruct)
 {
-    char *tmp = (char *)malloc(strlen(c) * sizeof(char));
-    char *mat_name;
     int idx;
 
-    strcpy(tmp, c);
+    idx = whichMat(c);
+    printf("add1: %d\n", idx);
+    printf("currenct command: %s\n", c);
 
-    mat_name = strtok(tmp, ",");
+    /* Validations */
 
-    printf("add1: %s\n", mat_name);
+    if (idx == MAT_NULL)
+    {
+        return S_FAIL_MISSING_ARGS;
+    }
 
-    idx = whichMat(mat_name);
+    if (idx == MAT_UNDEFINED)
+    {
+        return S_FAIL_NO_MAT;
+    }
+
+    if (strncmp(c, ",", strlen(",")) != 0)
+        return S_FAIL_MISSING_COMMA;
+
+    memmove(c, c + 1 * sizeof(char), strlen(c)); /* remove the comma */
+    printf("currenct command: %s\n", c);
+
+    /* End of validation */
 
     ptrStruct->add1 = all[idx];
 
     /* TODO: How to forward pointer correctly - how to free spaces I skipped here */
 
-    memmove(c, c + strlen(mat_name) + 1, strlen(c));
+    idx = whichMat(c);
+    printf("add2: %d\n", idx);
+    printf("currenct command: %s\n", c);
 
-    strcpy(tmp, c);
+    /* Validations */
 
-    mat_name = strtok(tmp, ",");
+    if (idx == MAT_NULL)
+    {
+        return S_FAIL_MISSING_ARGS;
+    }
 
-    printf("add2: %s\n", mat_name);
+    if (idx == MAT_UNDEFINED)
+    {
+        return S_FAIL_NO_MAT;
+    }
 
-    idx = whichMat(mat_name);
+    if (strncmp(c, ",", strlen(",")) != 0)
+        return S_FAIL_MISSING_COMMA;
+
+    memmove(c, c + 1 * sizeof(char), strlen(c)); /* remove the comma */
+    printf("currenct command: %s\n", c);
+
+    /* End of validation */
 
     ptrStruct->add2 = all[idx];
 
-    memmove(c, c + strlen(mat_name) + 1, strlen(c));
+    idx = whichMat(c);
+    printf("result: %d\n", idx);
+    printf("currenct command: %s\n", c);
 
-    strcpy(tmp, c);
+    /* Validations */
 
-    mat_name = strtok(tmp, ",");
+    if (idx == MAT_NULL)
+    {
+        return S_FAIL_MISSING_ARGS;
+    }
 
-    printf("add3: %s\n", mat_name);
+    if (idx == MAT_UNDEFINED)
+    {
+        return S_FAIL_NO_MAT;
+    }
 
-    idx = whichMat(mat_name);
+    if (strcmp(c, "\0") != 0)
+    {
+        return S_FAIL_EXTRA_TEXT;
+    }
+
+    /* End of validation */
 
     ptrStruct->result = all[idx];
-
-    free(tmp);
 
     return S_SUCCESS;
 }
 
 int add_mat(mat_t *add1, mat_t *add2, mat_t *result)
 {
-    int i,j;
+    int i, j;
 
     for (i = 0; i < result->size; i++)
     {
@@ -75,6 +114,9 @@ int handleAdd(mat_t *all[], char *c)
     status = toStructForAdd(all, c, my_mat);
 
     printf("\ntoStructForAdd status: %d\n", status);
+
+    if (status != S_SUCCESS)
+        return status;
 
     status = add_mat(my_mat->add1, my_mat->add2, my_mat->result);
 

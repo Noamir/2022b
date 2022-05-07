@@ -76,6 +76,9 @@ int handleSub(mat_t *all[], char *c)
 
     printf("\ntoStructForSub status: %d\n", status);
 
+    if (status != S_SUCCESS)
+        return status;
+
     status = sub_mat(my_mat->sub1, my_mat->sub2, my_mat->result);
 
     return status;

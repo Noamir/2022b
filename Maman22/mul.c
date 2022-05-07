@@ -74,6 +74,9 @@ int handleMul(mat_t *all[], char *c)
 
     printf("\ntoStructForMul status: %d\n", status);
 
+    if (status != S_SUCCESS)
+        return status;
+
     status = mul_mat(my_mat->mul1, my_mat->mul2, my_mat->result);
 
     return status;

@@ -94,7 +94,7 @@ int whichCommand(char *c)
     {
         i++;
     }
-    memmove(c, c + i*sizeof(char), strlen(c)); /* move command forward s spaces and tabs amount */
+    memmove(c, c + i * sizeof(char), strlen(c)); /* move command forward s spaces and tabs amount */
 
     strcpy(tmp, c);
 
@@ -104,9 +104,8 @@ int whichCommand(char *c)
 
     /* FIXME: How to forward pointer correctly - how to free spaces I skipped here */
 
-   /*  memmove(c, c + strlen(cmd), strlen(c)); */
+    /*  memmove(c, c + strlen(cmd), strlen(c)); */
 
-    
     if (strncmp(cmd, "print_mat", strlen("print_mat")) == 0)
     {
         memmove(c, c + strlen("print_mat"), strlen(c));
@@ -152,43 +151,53 @@ int whichCommand(char *c)
 }
 
 int whichMat(char *c)
-{   
-    if (strncmp(c, "MAT_A", strlen("MAT_A")) == 0)
+{
+    char *mat_name;
+    char *tmp = (char *)malloc(strlen(c) * sizeof(char));
+
+    if (strcmp(c, "\0") == 0)
+        return MAT_NULL;
+
+    strcpy(tmp, c);
+
+    mat_name = strtok(tmp, ",");
+
+    printf("mat_name: %s\n", mat_name);
+
+    if (strcmp(mat_name, "MAT_A") == 0)
     {
         memmove(c, c + strlen("MAT_A"), strlen(c));
         return E_MAT_A;
     }
-    else if (strncmp(c, "MAT_B", strlen("MAT_B")) == 0)
+    else if (strcmp(mat_name, "MAT_B") == 0)
     {
         memmove(c, c + strlen("MAT_B"), strlen(c));
         return E_MAT_B;
     }
-    else if (strncmp(c, "MAT_C", strlen("MAT_C")) == 0)
+    else if (strcmp(mat_name, "MAT_C") == 0)
     {
         memmove(c, c + strlen("MAT_C"), strlen(c));
         return E_MAT_C;
     }
-    else if (strncmp(c, "MAT_D", strlen("MAT_D")) == 0)
+    else if (strcmp(mat_name, "MAT_D") == 0)
     {
         memmove(c, c + strlen("MAT_D"), strlen(c));
         return E_MAT_D;
     }
-    else if (strncmp(c, "MAT_E", strlen("MAT_E")) == 0)
+    else if (strcmp(mat_name, "MAT_E") == 0)
     {
         memmove(c, c + strlen("MAT_E"), strlen(c));
         return E_MAT_E;
     }
-    else if (strncmp(c, "MAT_F", strlen("MAT_F")) == 0)
+    else if (strcmp(mat_name, "MAT_F") == 0)
     {
         memmove(c, c + strlen("MAT_F"), strlen(c));
         return E_MAT_F;
     }
-    else if (strcmp(c, "\0") == 0)
-    {
-        return MAT_NULL;
-    }
     else
+    {
         return MAT_UNDEFINED;
+    }
 }
 
 double whichNumber(char *num_str)
@@ -280,7 +289,7 @@ int main()
         trimSpaces(command_str);
         printf("trimmed params: %s\n", command_str);
 
-        if(strncmp(command_str, ",", 1) == 0 )
+        if (strncmp(command_str, ",", 1) == 0)
         {
             finish(S_FAIL_ILLEGAL_COMMA);
             continue;

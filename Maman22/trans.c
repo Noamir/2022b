@@ -59,6 +59,9 @@ int handleTrans(mat_t *all[], char *c)
 
     printf("\ntoStructForTrans status: %d\n", status);
 
+    if (status != S_SUCCESS)
+        return status;
+
     status = trans_mat(my_mat->mat, my_mat->result);
 
     return status;
