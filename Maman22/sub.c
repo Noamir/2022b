@@ -29,6 +29,9 @@ int toStructForSub(mat_t *all[], char *c, sub_mat_t *ptrStruct)
     memmove(c, c + 1 * sizeof(char), strlen(c)); /* remove the comma */
     printf("currenct command: %s\n", c);
 
+    if (strncmp(c, ",", strlen(",")) == 0)
+        return S_FAIL_MULTIPLE_COMMAS;
+
     /* End of validation */
 
     ptrStruct->sub1 = all[idx];
@@ -56,6 +59,9 @@ int toStructForSub(mat_t *all[], char *c, sub_mat_t *ptrStruct)
 
     memmove(c, c + 1 * sizeof(char), strlen(c)); /* remove the comma */
     printf("currenct command: %s\n", c);
+
+    if (strncmp(c, ",", strlen(",")) == 0)
+        return S_FAIL_MULTIPLE_COMMAS;
 
     /* End of validation */
 

@@ -29,6 +29,9 @@ int toStructForAdd(mat_t *all[], char *c, add_mat_t *ptrStruct)
     memmove(c, c + 1 * sizeof(char), strlen(c)); /* remove the comma */
     printf("currenct command: %s\n", c);
 
+    if (strncmp(c, ",", strlen(",")) == 0)
+        return S_FAIL_MULTIPLE_COMMAS;
+
     /* End of validation */
 
     ptrStruct->add1 = all[idx];
@@ -56,6 +59,9 @@ int toStructForAdd(mat_t *all[], char *c, add_mat_t *ptrStruct)
 
     memmove(c, c + 1 * sizeof(char), strlen(c)); /* remove the comma */
     printf("currenct command: %s\n", c);
+
+    if (strncmp(c, ",", strlen(",")) == 0)
+        return S_FAIL_MULTIPLE_COMMAS;
 
     /* End of validation */
 

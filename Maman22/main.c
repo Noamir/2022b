@@ -94,6 +94,7 @@ int whichCommand(char *c)
     {
         i++;
     }
+
     memmove(c, c + i * sizeof(char), strlen(c)); /* move command forward s spaces and tabs amount */
 
     strcpy(tmp, c);
@@ -103,8 +104,6 @@ int whichCommand(char *c)
     printf("cmd: %s\n", cmd);
 
     /* FIXME: How to forward pointer correctly - how to free spaces I skipped here */
-
-    /*  memmove(c, c + strlen(cmd), strlen(c)); */
 
     if (strncmp(cmd, "print_mat", strlen("print_mat")) == 0)
     {
@@ -150,20 +149,10 @@ int whichCommand(char *c)
         return CMD_UNDEFINED;
 }
 
-
 int whichMat(char *c)
 {
-    char *mat_name;
-    char *tmp = (char *)malloc(strlen(c) * sizeof(char));
-
     if (strcmp(c, "\0") == 0)
         return MAT_NULL;
-
-    strcpy(tmp, c);
-
-    /* mat_name = strtok(tmp, ","); */
-
-    /* printf("mat_name: %s\n", mat_name); */
 
     if (strncmp(c, "MAT_A", strlen("MAT_A")) == 0)
     {
@@ -180,17 +169,17 @@ int whichMat(char *c)
         memmove(c, c + strlen("MAT_C"), strlen(c));
         return E_MAT_C;
     }
-    else if (strcmp(mat_name, "MAT_D") == 0)
+    else if (strncmp(c, "MAT_D", strlen("MAT_D")) == 0)
     {
         memmove(c, c + strlen("MAT_D"), strlen(c));
         return E_MAT_D;
     }
-    else if (strcmp(mat_name, "MAT_E") == 0)
+    else if (strncmp(c, "MAT_E", strlen("MAT_E")) == 0)
     {
         memmove(c, c + strlen("MAT_E"), strlen(c));
         return E_MAT_E;
     }
-    else if (strcmp(mat_name, "MAT_F") == 0)
+    else if (strncmp(c, "MAT_F", strlen("MAT_F")) == 0)
     {
         memmove(c, c + strlen("MAT_F"), strlen(c));
         return E_MAT_F;

@@ -5,7 +5,7 @@ int whichMat(char *c);
 
 int toStructForMul(mat_t *all[], char *c, mul_mat_t *ptrStruct)
 {
-   int idx;
+    int idx;
 
     idx = whichMat(c);
     printf("mul1: %d\n", idx);
@@ -28,6 +28,9 @@ int toStructForMul(mat_t *all[], char *c, mul_mat_t *ptrStruct)
 
     memmove(c, c + 1 * sizeof(char), strlen(c)); /* remove the comma */
     printf("currenct command: %s\n", c);
+
+    if (strncmp(c, ",", strlen(",")) == 0)
+        return S_FAIL_MULTIPLE_COMMAS;
 
     /* End of validation */
 
@@ -56,6 +59,9 @@ int toStructForMul(mat_t *all[], char *c, mul_mat_t *ptrStruct)
 
     memmove(c, c + 1 * sizeof(char), strlen(c)); /* remove the comma */
     printf("currenct command: %s\n", c);
+
+    if (strncmp(c, ",", strlen(",")) == 0)
+        return S_FAIL_MULTIPLE_COMMAS;
 
     /* End of validation */
 
