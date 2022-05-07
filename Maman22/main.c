@@ -280,6 +280,12 @@ int main()
         trimSpaces(command_str);
         printf("trimmed params: %s\n", command_str);
 
+        if(strncmp(command_str, ",", 1) == 0 )
+        {
+            finish(S_FAIL_ILLEGAL_COMMA);
+            continue;
+        }
+
         switch (cmd)
         {
         case CMD_PRINT_MAT:

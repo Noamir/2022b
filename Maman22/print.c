@@ -7,9 +7,6 @@ int toStructForPrint(mat_t *all[], char *c, print_mat_t *ptrStruct)
 {
     int idx;
 
-    if(strncmp(c, ",", 1) == 0 )
-        return S_FAIL_ILLEGAL_COMMA;
-
     idx = whichMat(c);
 
     /* Validations */
