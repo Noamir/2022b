@@ -71,23 +71,6 @@ char *getCommand()
     return command;
 }
 
-void trimSpaces(char *command)
-{
-    int i, j = 0;
-    char *tmp = (char *)malloc(strlen(command) * sizeof(char));
-
-    for (i = 0; i < strlen(command); i++)
-    {
-        if (command[i] != ' ' && command[i] != '\t')
-        {
-            tmp[j] = command[i];
-            j++;
-        }
-    }
-    /* TODO: make sure memory allocation is right */
-    strcpy(command, tmp);
-}
-
 void trimLeadingSpaces(char *c)
 {
     int i = 0;
@@ -311,7 +294,7 @@ int main()
         }
 
         cmd = whichCommand(command_str);
-        /* trimSpaces(command_str); */
+        trimLeadingSpaces(command_str);
         printf("trimmed params: %s\n", command_str);
 
         if (strncmp(command_str, ",", 1) == 0)
