@@ -19,6 +19,7 @@ int validateMat(int matIdx)
 int validateCommas(char *command)
 {
     trimLeadingSpaces(command);
+    printf("comma first trim: %s\n", command);
     if (strcmp(command, "\0") == 0)
     {
         return S_FAIL_MISSING_ARGS;
@@ -27,10 +28,10 @@ int validateCommas(char *command)
         return S_FAIL_MISSING_COMMA;
 
     memmove(command, command + strlen(","), strlen(command)); /* remove the comma */
+    printf("comma second trim: %s\n", command);
 
-    printf("currenct command: %s\n", command);
     trimLeadingSpaces(command);
-    printf("currenct command: %s\n", command);
+    printf("comma last trim: %s\n", command);
 
     if (strcmp(command, "\0") == 0)
     {

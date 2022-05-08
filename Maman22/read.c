@@ -36,7 +36,8 @@ int toStructForRead(mat_t *all[], char *c, read_mat_t *ptrStruct)
     printf("num_str: %s\n", num_str);
 
     while (num_str != NULL)
-    {
+    {   
+        
         number = strtod(num_str, &end);
         printf("number: %f\n", number);
         printf("end: %s\n", end);
@@ -49,7 +50,14 @@ int toStructForRead(mat_t *all[], char *c, read_mat_t *ptrStruct)
         if (counter < 16)
             ptrStruct->numbers[counter] = number;
 
-        memmove(c, c + strlen(num_str) + 1, strlen(c));
+        memmove(c, c + strlen(num_str), strlen(c));
+        if (strcmp(c, "\0") != 0)
+        {
+            status = validateCommas(c);
+            if (status != S_SUCCESS)
+                return status;
+        }
+
         strcpy(tmp, c);
         num_str = strtok(tmp, ",");
         printf("num_str: %s\n", num_str);
