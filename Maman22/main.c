@@ -41,8 +41,8 @@ char *getCommand()
     /* get command chars from stdin to command pointer */
     /* TODO: get input from file is not ending aith \n - handle */
     for (i = 0; (i <= limit) && (*(command + i) = getchar()) != '\n'; i++)
-    {   
-        if (*(command+i) == EOF)
+    {
+        if (*(command + i) == EOF)
         {
             printf("\nInput got EOF char. Illigal. Stopping the program with error.\n");
             exit(S_FAIL_EOF);
@@ -71,7 +71,7 @@ char *getCommand()
     return command;
 }
 
-void trimSpaces(char *command)
+/* void trimSpaces(char *command)
 {
     int i, j = 0;
     char *tmp = (char *)malloc(strlen(command) * sizeof(char));
@@ -85,8 +85,8 @@ void trimSpaces(char *command)
         }
     }
     /* TODO: make sure memory allocation is right */
-    strcpy(command, tmp);
-}
+/*     strcpy(command, tmp);
+}  */
 
 int whichCommand(char *c)
 {
@@ -123,7 +123,7 @@ int whichCommand(char *c)
         memmove(c, c + strlen("add_mat"), strlen(c));
         return CMD_ADD_MAT;
     }
-    else if (strncmp(cmd, "sub_mat", strlen("sub_mat") ) == 0)
+    else if (strncmp(cmd, "sub_mat", strlen("sub_mat")) == 0)
     {
         memmove(c, c + strlen("sub_mat"), strlen(c));
         return CMD_SUB_MAT;
@@ -158,7 +158,7 @@ int whichCommand(char *c)
 }
 
 int whichMat(char *c)
-{
+{   
     if (strcmp(c, "\0") == 0)
         return MAT_NULL;
 
@@ -207,7 +207,7 @@ double whichNumber(char *num_str)
     printf("number: %f\n", number);
     printf("end: %s\n", end);
 
-    if(strcmp(end, "\0") != 0)
+    if (strcmp(end, "\0") != 0)
     {
         printf("num_str is not a number - handle\n");
     }
@@ -291,7 +291,7 @@ int main()
         }
 
         cmd = whichCommand(command_str);
-        trimSpaces(command_str);
+        /*  trimSpaces(command_str); */
         printf("trimmed params: %s\n", command_str);
 
         if (strncmp(command_str, ",", 1) == 0)

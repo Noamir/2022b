@@ -3,12 +3,15 @@
 int print_mat(mat_t *m);
 int whichMat(char *c);
 double whichNumber(char *num_str);
+int validateMat(int matIdx);
+int validateCommas(char *command);
+int validateNull(char *command);
 
 int toStructForMulScalar(mat_t *all[], char *c, mul_scalar_t *ptrStruct)
 {
     char *tmp = (char *)malloc(strlen(c) * sizeof(char));
     char *scalar_str, *end;
-    int idx;
+    int idx, status;
     double scalar;
 
     idx = whichMat(c);
@@ -16,28 +19,13 @@ int toStructForMulScalar(mat_t *all[], char *c, mul_scalar_t *ptrStruct)
     printf("mat: %d\n", idx);
     printf("currenct command: %s\n", c);
 
-    /* Validations */
+    status = validateMat(idx);
+    if (status != S_SUCCESS)
+        return status;
 
-    if (idx == MAT_NULL)
-    {
-        return S_FAIL_MISSING_ARGS;
-    }
-
-    if (idx == MAT_UNDEFINED)
-    {
-        return S_FAIL_NO_MAT;
-    }
-
-    if (strncmp(c, ",", strlen(",")) != 0)
-        return S_FAIL_MISSING_COMMA;
-
-    memmove(c, c + 1 * sizeof(char), strlen(c)); /* remove the comma */
-    printf("currenct command: %s\n", c);
-
-    if (strncmp(c, ",", strlen(",")) == 0)
-        return S_FAIL_MULTIPLE_COMMAS;
-
-    /* End of validation */
+    status = validateCommas(c);
+    if (status != S_SUCCESS)
+        return status;
 
     ptrStruct->mat = all[idx];
 
@@ -48,6 +36,7 @@ int toStructForMulScalar(mat_t *all[], char *c, mul_scalar_t *ptrStruct)
     scalar_str = strtok(tmp, ",");
 
     scalar = strtod(scalar_str, &end);
+
     printf("number: %f\n", scalar);
     printf("end: %s\n", end);
 
@@ -62,43 +51,27 @@ int toStructForMulScalar(mat_t *all[], char *c, mul_scalar_t *ptrStruct)
 
     printf("current command: %s\n", c);
 
-    if (strncmp(c, ",", strlen(",")) != 0)
-        return S_FAIL_MISSING_COMMA;
-
-    memmove(c, c + 1 * sizeof(char), strlen(c)); /* remove the comma */
-    printf("currenct command: %s\n", c);
-
-    if (strncmp(c, ",", strlen(",")) == 0)
-        return S_FAIL_MULTIPLE_COMMAS;
+    status = validateCommas(c);
+    if (status != S_SUCCESS)
+        return status;
 
     idx = whichMat(c);
 
     printf("current command: %s\n", c);
 
-    /* Validations */
+    status = validateMat(idx);
+    if (status != S_SUCCESS)
+        return status;
 
-    if (idx == MAT_NULL)
-    {
-        return S_FAIL_MISSING_ARGS;
-    }
-
-    if (idx == MAT_UNDEFINED)
-    {
-        return S_FAIL_NO_MAT;
-    }
-
-    if (strcmp(c, "\0") != 0)
-    {
-        return S_FAIL_EXTRA_TEXT;
-    }
-
-    /* End of validation */
+    status = validateNull(c);
+    if (status != S_SUCCESS)
+        return status;
 
     ptrStruct->result = all[idx];
 
     free(tmp);
 
-    return S_SUCCESS;
+    return status;
 }
 
 int mul_scalar(mat_t *mat, double scalar, mat_t *result)

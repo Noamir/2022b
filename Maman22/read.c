@@ -3,10 +3,13 @@
 int print_mat(mat_t *m);
 int whichMat(char *c);
 double whichNumber(char *num_str);
+int validateMat(int matIdx);
+int validateCommas(char *command);
+int validateNull(char *command);
 
 int toStructForRead(mat_t *all[], char *c, read_mat_t *ptrStruct)
 {
-    int i, idx;
+    int i, idx, status, counter = 0;
     char *num_str, *tmp, *end;
     double number;
 
@@ -15,28 +18,13 @@ int toStructForRead(mat_t *all[], char *c, read_mat_t *ptrStruct)
     printf("mat: %d\n", idx);
     printf("currenct command: %s\n", c);
 
-    /* Validations */
+    status = validateMat(idx);
+    if (status != S_SUCCESS)
+        return status;
 
-    if (idx == MAT_NULL)
-    {
-        return S_FAIL_MISSING_ARGS;
-    }
-
-    if (idx == MAT_UNDEFINED)
-    {
-        return S_FAIL_NO_MAT;
-    }
-
-    if (strncmp(c, ",", strlen(",")) != 0)
-        return S_FAIL_MISSING_COMMA;
-
-    memmove(c, c + 1 * sizeof(char), strlen(c)); /* remove the comma */
-    printf("currenct command: %s\n", c);
-
-    if (strncmp(c, ",", strlen(",")) == 0)
-        return S_FAIL_MULTIPLE_COMMAS;
-
-    /* End of validation */
+    status = validateCommas(c);
+    if (status != S_SUCCESS)
+        return status;
 
     ptrStruct->mat = all[idx];
 
@@ -47,34 +35,38 @@ int toStructForRead(mat_t *all[], char *c, read_mat_t *ptrStruct)
     num_str = strtok(tmp, ",");
     printf("num_str: %s\n", num_str);
 
-    for (i = 0; i < MAT_SIZE * MAT_SIZE; i++)
+    while (num_str != NULL)
     {
-        if (num_str)
+        number = strtod(num_str, &end);
+        printf("number: %f\n", number);
+        printf("end: %s\n", end);
+
+        if (strcmp(end, "\0") != 0)
         {
-            number = strtod(num_str, &end);
-            printf("number: %f\n", number);
-            printf("end: %s\n", end);
-
-            if (strcmp(end, "\0") != 0)
-            {
-                return S_FAIL_NOT_A_REAL_NUMBER;
-            }
-
-            ptrStruct->numbers[i] = number;
-            memmove(c, c + strlen(num_str) + 1, strlen(c));
-            strcpy(tmp, c);
-            num_str = strtok(tmp, ",");
-            printf("num_str: %s\n", num_str);
+            return S_FAIL_NOT_A_REAL_NUMBER;
         }
-        else
+
+        if (counter < 16)
+            ptrStruct->numbers[counter] = number;
+
+        memmove(c, c + strlen(num_str) + 1, strlen(c));
+        strcpy(tmp, c);
+        num_str = strtok(tmp, ",");
+        printf("num_str: %s\n", num_str);
+
+        counter++;
+    }
+    if (counter < 16)
+    {
+        for (i = counter; i < 16; i++)
         {
-            ptrStruct->numbers[i] = DEFAULT_MAT_VAL;
+            ptrStruct->numbers[counter] = DEFAULT_MAT_VAL;
         }
     }
-    if (strcmp(c, "\0") != 0)
-    {
-        return S_FAIL_EXTRA_TEXT;
-    }
+
+    status = validateNull(c);
+    if (status != S_SUCCESS)
+        return status;
 
     free(tmp);
 

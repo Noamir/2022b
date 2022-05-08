@@ -5,6 +5,7 @@ int whichMat(char *c);
 int validateMat(int matIdx);
 int validateCommas(char *command);
 int validateNull(char *command);
+void trimSpaces(char *str);
 
 int toStructForAdd(mat_t *all[], char *c, add_mat_t *ptrStruct)
 {
