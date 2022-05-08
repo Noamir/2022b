@@ -71,7 +71,7 @@ char *getCommand()
     return command;
 }
 
-/* void trimSpaces(char *command)
+void trimSpaces(char *command)
 {
     int i, j = 0;
     char *tmp = (char *)malloc(strlen(command) * sizeof(char));
@@ -85,8 +85,8 @@ char *getCommand()
         }
     }
     /* TODO: make sure memory allocation is right */
-/*     strcpy(command, tmp);
-}  */
+    strcpy(command, tmp);
+}
 
 int whichCommand(char *c)
 {
@@ -158,7 +158,7 @@ int whichCommand(char *c)
 }
 
 int whichMat(char *c)
-{   
+{
     if (strcmp(c, "\0") == 0)
         return MAT_NULL;
 
@@ -291,7 +291,7 @@ int main()
         }
 
         cmd = whichCommand(command_str);
-        /*  trimSpaces(command_str); */
+         trimSpaces(command_str);
         printf("trimmed params: %s\n", command_str);
 
         if (strncmp(command_str, ",", 1) == 0)

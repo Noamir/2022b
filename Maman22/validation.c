@@ -48,20 +48,4 @@ int validateNull(char *command)
     return S_SUCCESS;
 }
 
-void trimSpaces(char *str)
-{
-    int i, j = 0;
-    char *tmp = (char *)malloc(strlen(str) * sizeof(char));
-
-    for (i = 0; i < strlen(str); i++)
-    {
-        if (str[i] != ' ' && str[i] != '\t')
-        {
-            tmp[j] = str[i];
-            j++;
-        }
-    }
-    /* TODO: make sure memory allocation is right */
-    strcpy(str, tmp);
-}
 
