@@ -85,7 +85,7 @@ int whichCommand(char *c)
 {
     char *tmp = (char *)malloc(strlen(c) * sizeof(char));
     char *cmd, *check;
-    int i = 0;
+    int i = 0, status;
 
     if (strcmp(c, "\0") == 0)
         return CMD_UNDEFINED;
@@ -96,9 +96,9 @@ int whichCommand(char *c)
 
     cmd = strtok(tmp, " \t"); /* looks for the first space or tab. If there are no such - return all string */
 
-    check = strtok(NULL, " \t");
+/*     check = strtok(NULL, " \t");
     if (check == NULL)
-        return CMD_NO_SPACE;
+        return CMD_NO_SPACE; */
 
     printf("cmd: %s\n", cmd);
 
@@ -107,45 +107,50 @@ int whichCommand(char *c)
     if (strncmp(cmd, "print_mat", strlen("print_mat")) == 0)
     {
         memmove(c, c + strlen("print_mat"), strlen(c));
-        return CMD_PRINT_MAT;
+        status = CMD_PRINT_MAT;
     }
     else if (strncmp(cmd, "add_mat", strlen("add_mat")) == 0)
     {
         memmove(c, c + strlen("add_mat"), strlen(c));
-        return CMD_ADD_MAT;
+        status = CMD_ADD_MAT;
     }
     else if (strncmp(cmd, "sub_mat", strlen("sub_mat")) == 0)
     {
         memmove(c, c + strlen("sub_mat"), strlen(c));
-        return CMD_SUB_MAT;
+        status = CMD_SUB_MAT;
     }
     else if (strncmp(cmd, "mul_mat", strlen("mul_mat")) == 0)
     {
         memmove(c, c + strlen("mul_mat"), strlen(c));
-        return CMD_MUL_MAT;
+        status = CMD_MUL_MAT;
     }
     else if (strncmp(cmd, "read_mat", strlen("read_mat")) == 0)
     {
         memmove(c, c + strlen("read_mat"), strlen(c));
-        return CMD_READ_MAT;
+        status = CMD_READ_MAT;
     }
     else if (strncmp(cmd, "mul_scalar", strlen("mul_scalar")) == 0)
     {
         memmove(c, c + strlen("mul_scalar"), strlen(c));
-        return CMD_MUL_SCALAR;
+        status = CMD_MUL_SCALAR;
     }
     else if (strncmp(cmd, "trans_mat", strlen("trans_mat")) == 0)
     {
         memmove(c, c + strlen("trans_mat"), strlen(c));
-        return CMD_TRANS_MAT;
+        status = CMD_TRANS_MAT;
     }
     else if (strncmp(cmd, "stop", strlen("stop")) == 0)
     {
         memmove(c, c + strlen("stop"), strlen(c));
-        return CMD_STOP;
+        status = CMD_STOP;
     }
     else
         return CMD_UNDEFINED;
+    
+    if((strncmp(c, " ", strlen(" ")) != 0))
+        return CMD_NO_SPACE;
+
+    return status;
 }
 
 int whichMat(char *c)
