@@ -73,7 +73,6 @@ typedef struct mat_def mat_t;
 struct print_mat_def
 {
     mat_t *mat;
-    int args[1];
 };
 
 typedef struct print_mat_def print_mat_t;
