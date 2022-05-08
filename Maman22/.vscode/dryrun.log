@@ -1,0 +1,5 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/noa/Desktop/2022b/Maman22'
+gcc -Wall -pedantic -ansi main.c print.c add.c sub.c mul.c read.c mul_scalar.c trans.c validation.c -o main && ./main
+make: Leaving directory '/home/noa/Desktop/2022b/Maman22'
+ 

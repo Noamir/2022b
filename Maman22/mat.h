@@ -25,6 +25,7 @@ enum STATUS
     S_FAIL_NOT_SCALAR,
     S_FAIL_ETRA_TEXT_END,
     S_FAIL_EOF,
+    S_FAIL_NO_SPACE,
     S_FAIL_MEMORY_ALLOCATION
 };
 
@@ -39,6 +40,7 @@ enum COMMAND
     CMD_TRANS_MAT,
     CMD_STOP,
     CMD_EOF,
+    CMD_NO_SPACE,
     CMD_UNDEFINED
 };
 
@@ -78,7 +80,7 @@ struct print_mat_def
 typedef struct print_mat_def print_mat_t;
 
 struct add_mat_def
-{
+{   
     mat_t *add1;
     mat_t *add2;
     mat_t *result;

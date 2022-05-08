@@ -88,26 +88,34 @@ void trimSpaces(char *command)
     strcpy(command, tmp);
 }
 
+void trimLeadingSpaces(char *c)
+{
+    int i = 0;
+    while (c[i] == ' ' || c[i] == '\t')
+        i++;
+
+    if (i > 0)
+        memmove(c, c + i * sizeof(char), strlen(c));
+}
+
 int whichCommand(char *c)
 {
     char *tmp = (char *)malloc(strlen(c) * sizeof(char));
-    char *cmd;
+    char *cmd, *check;
     int i = 0;
 
     if (strcmp(c, "\0") == 0)
         return CMD_UNDEFINED;
 
-    /* remove spaces\tabs from begining of command - until string starts */
-    while (c[i] == ' ' || c[i] == '\t')
-    {
-        i++;
-    }
-
-    memmove(c, c + i * sizeof(char), strlen(c)); /* move command forward s spaces and tabs amount */
+    trimLeadingSpaces(c);
 
     strcpy(tmp, c);
 
     cmd = strtok(tmp, " \t"); /* looks for the first space or tab. If there are no such - return all string */
+
+    check = strtok(NULL, " \t");
+    if (check == NULL)
+        return CMD_NO_SPACE;
 
     printf("cmd: %s\n", cmd);
 
@@ -159,43 +167,52 @@ int whichCommand(char *c)
 
 int whichMat(char *c)
 {
+    int status;
+    trimLeadingSpaces(c);
+
     if (strcmp(c, "\0") == 0)
         return MAT_NULL;
 
     if (strncmp(c, "MAT_A", strlen("MAT_A")) == 0)
     {
         memmove(c, c + strlen("MAT_A"), strlen(c));
-        return E_MAT_A;
+        status = E_MAT_A;
     }
     else if (strncmp(c, "MAT_B", strlen("MAT_B")) == 0)
     {
         memmove(c, c + strlen("MAT_B"), strlen(c));
-        return E_MAT_B;
+        status = E_MAT_B;
     }
     else if (strncmp(c, "MAT_C", strlen("MAT_C")) == 0)
     {
         memmove(c, c + strlen("MAT_C"), strlen(c));
-        return E_MAT_C;
+        status = E_MAT_C;
     }
     else if (strncmp(c, "MAT_D", strlen("MAT_D")) == 0)
     {
         memmove(c, c + strlen("MAT_D"), strlen(c));
-        return E_MAT_D;
+        status = E_MAT_D;
     }
     else if (strncmp(c, "MAT_E", strlen("MAT_E")) == 0)
     {
         memmove(c, c + strlen("MAT_E"), strlen(c));
-        return E_MAT_E;
+        status = E_MAT_E;
     }
     else if (strncmp(c, "MAT_F", strlen("MAT_F")) == 0)
     {
         memmove(c, c + strlen("MAT_F"), strlen(c));
-        return E_MAT_F;
+        status = E_MAT_F;
     }
     else
     {
         return MAT_UNDEFINED;
     }
+
+    printf("command: %s\n", c);
+    if ((strcmp(c, "\0") != 0) && (strncmp(c, " ", strlen(" ")) != 0) && (strncmp(c, "\t", strlen("\t")) != 0) && (strncmp(c, ",", strlen("\t")) != 0))
+        return MAT_UNDEFINED;
+
+    return status;
 }
 
 double whichNumber(char *num_str)
@@ -252,6 +269,9 @@ void finish(int status)
     case S_FAIL_ETRA_TEXT_END:
         printf("Extraneous text after end of command\n");
         break;
+    case S_FAIL_NO_SPACE:
+        printf("Must be at least 1 space after command\n");
+        break;
     case S_FAIL_MEMORY_ALLOCATION:
         printf("Fatal error: memory allocation failed!\n");
         break;
@@ -291,7 +311,7 @@ int main()
         }
 
         cmd = whichCommand(command_str);
-         trimSpaces(command_str);
+        /* trimSpaces(command_str); */
         printf("trimmed params: %s\n", command_str);
 
         if (strncmp(command_str, ",", 1) == 0)
@@ -338,6 +358,9 @@ int main()
                 exit(0);
             }
             status = S_FAIL_ETRA_TEXT_END;
+            break;
+        case CMD_NO_SPACE:
+            status = S_FAIL_NO_SPACE;
             break;
         case CMD_UNDEFINED:
             status = S_FAIL_NO_COMMAND;
