@@ -236,6 +236,9 @@ void finish(int status)
     case S_FAIL_NOT_A_REAL_NUMBER:
         printf("Argument is not a real number\n");
         break;
+    case S_FAIL_NOT_A_SCALAR:
+        printf("Argument is not a scalar\n");
+        break;
     case S_FAIL_EXTRA_TEXT:
         printf("Extraneous text after end of command\n");
         break;

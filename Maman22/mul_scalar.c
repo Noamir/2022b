@@ -42,7 +42,7 @@ int toStructForMulScalar(mat_t *all[], char *c, mul_scalar_t *ptrStruct)
 
     if (strcmp(end, "\0") != 0)
     {
-        return S_FAIL_NOT_A_REAL_NUMBER;
+        return S_FAIL_NOT_A_SCALAR;
     }
 
     ptrStruct->scalar = scalar;
