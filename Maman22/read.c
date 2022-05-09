@@ -6,6 +6,24 @@ double whichNumber(char *num_str);
 int validateMat(int matIdx);
 int validateCommas(char *command);
 int validateNull(char *command);
+void trimLeadingSpaces(char *c);
+
+void trimSpaces(char *c)
+{
+    int i, j = 0;
+    char *tmp = (char *)malloc(strlen(c) * sizeof(char));
+
+    for (i = 0; i < strlen(c); i++)
+    {
+        if (c[i] != ' ' && c[i] != '\t')
+        {
+            tmp[j] = c[i];
+            j++;
+        }
+    }
+    /* TODO: make sure memory allocation is right */
+    strcpy(c, tmp);
+}
 
 int toStructForRead(mat_t *all[], char *c, read_mat_t *ptrStruct)
 {
@@ -38,6 +56,11 @@ int toStructForRead(mat_t *all[], char *c, read_mat_t *ptrStruct)
     while (num_str != NULL)
     {   
         
+        printf("number before trim spaces: '%s'\n", num_str);
+        num_str = strtok(num_str, " ");
+        printf("number after trim spaces and strtok: '%s'\n", num_str);
+        memmove(c, c + strlen(num_str), strlen(c));
+        trimLeadingSpaces(num_str);
         number = strtod(num_str, &end);
         printf("number: %f\n", number);
         printf("end: %s\n", end);
@@ -50,10 +73,14 @@ int toStructForRead(mat_t *all[], char *c, read_mat_t *ptrStruct)
         if (counter < 16)
             ptrStruct->numbers[counter] = number;
 
-        memmove(c, c + strlen(num_str), strlen(c));
+        /* If its ONLY A COMMA in the whole command */
+        if (strcmp(c, ",") == 0)
+            return S_FAIL_EXTRA_TEXT; /* no more numbers after comma */
+
         if (strcmp(c, "\0") != 0)
         {
             status = validateCommas(c);
+            printf("VALIDATE COMMA AFTER EACH NUM\n");
             if (status != S_SUCCESS)
                 return status;
         }

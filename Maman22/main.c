@@ -84,7 +84,7 @@ void trimLeadingSpaces(char *c)
 int whichCommand(char *c)
 {
     char *tmp = (char *)malloc(strlen(c) * sizeof(char));
-    char *cmd, *check;
+    char *cmd;
     int i = 0, status;
 
     if (strcmp(c, "\0") == 0)
