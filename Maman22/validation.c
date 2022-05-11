@@ -35,7 +35,6 @@ int validateCommas(char *command)
 int validateScalar(char *scalar_str)
 {
     char *end;
-    printf("validate scalar \n");
     strtod(scalar_str, &end);
     if (strcmp(end, "\0") != 0)
         return S_FAIL_NOT_A_SCALAR;
