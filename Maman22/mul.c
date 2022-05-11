@@ -11,9 +11,6 @@ int toStructForMul(mat_t *all[], char *c, mul_mat_t *ptrStruct)
     int idx, status;
 
     idx = whichMat(c);
-    printf("mul1: %d\n", idx);
-    printf("currenct command: %s\n", c);
-
     status = validateMat(idx);
     if (status != S_SUCCESS)
         return status;
@@ -25,9 +22,6 @@ int toStructForMul(mat_t *all[], char *c, mul_mat_t *ptrStruct)
     ptrStruct->mul1 = all[idx];
 
     idx = whichMat(c);
-    printf("mul2: %d\n", idx);
-    printf("currenct command: %s\n", c);
-
     status = validateMat(idx);
     if (status != S_SUCCESS)
         return status;
@@ -39,9 +33,6 @@ int toStructForMul(mat_t *all[], char *c, mul_mat_t *ptrStruct)
     ptrStruct->mul2 = all[idx];
 
     idx = whichMat(c);
-    printf("result: %d\n", idx);
-    printf("currenct command: %s\n", c);
-
     status = validateMat(idx);
     if (status != S_SUCCESS)
         return status;
@@ -58,7 +49,6 @@ int toStructForMul(mat_t *all[], char *c, mul_mat_t *ptrStruct)
 void mul_mat(mat_t *mul1, mat_t *mul2, mat_t *result)
 {
     int i, j, k;
-
     mat_t *tmp = calloc(1, sizeof(mat_t));
     tmp->size = MAT_SIZE;
 
@@ -67,9 +57,7 @@ void mul_mat(mat_t *mul1, mat_t *mul2, mat_t *result)
         for (j = 0; j < mul2->size; j++)
         {
             for (k = 0; k < mul2->size; k++)
-            {
                 tmp->matrix[i][j] += mul1->matrix[i][k] * mul2->matrix[k][j];
-            }
         }
     }
 
@@ -78,9 +66,7 @@ void mul_mat(mat_t *mul1, mat_t *mul2, mat_t *result)
     for (i = 0; i < result->size; i++)
     {
         for (j = 0; j < result->size; j++)
-        {
             result->matrix[i][j] = tmp->matrix[i][j];
-        }
     }
 
     print_mat(result);
@@ -90,10 +76,7 @@ int handleMul(mat_t *all[], char *c)
 {
     int status;
     mul_mat_t *my_mat = calloc(1, sizeof(mul_mat_t));
-
     status = toStructForMul(all, c, my_mat);
-
-    printf("\ntoStructForMul status: %d\n", status);
 
     if (status != S_SUCCESS)
         return status;

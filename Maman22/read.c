@@ -2,7 +2,6 @@
 
 int print_mat(mat_t *m);
 int whichMat(char *c);
-double whichNumber(char *num_str);
 int validateMat(int matIdx);
 int validateCommas(char *command);
 int validateNull(char *command);
@@ -32,10 +31,6 @@ int toStructForRead(mat_t *all[], char *c, read_mat_t *ptrStruct)
     double number;
 
     idx = whichMat(c);
-
-    printf("mat: %d\n", idx);
-    printf("currenct command: %s\n", c);
-
     status = validateMat(idx);
     if (status != S_SUCCESS)
         return status;
@@ -49,26 +44,17 @@ int toStructForRead(mat_t *all[], char *c, read_mat_t *ptrStruct)
     /* TODO: How to forward pointer correctly - how to free spaces I skipped here */
     tmp = (char *)malloc(strlen(c) * sizeof(char));
     strcpy(tmp, c);
-
     num_str = strtok(tmp, ",");
-    printf("num_str: %s\n", num_str);
 
     while (num_str != NULL)
     {   
-        
-        printf("number before trim spaces: '%s'\n", num_str);
         num_str = strtok(num_str, " ");
-        printf("number after trim spaces and strtok: '%s'\n", num_str);
         memmove(c, c + strlen(num_str), strlen(c));
         trimLeadingSpaces(num_str);
         number = strtod(num_str, &end);
-        printf("number: %f\n", number);
-        printf("end: %s\n", end);
 
         if (strcmp(end, "\0") != 0)
-        {
             return S_FAIL_NOT_A_REAL_NUMBER;
-        }
 
         if (counter < 16)
             ptrStruct->numbers[counter] = number;
@@ -80,23 +66,19 @@ int toStructForRead(mat_t *all[], char *c, read_mat_t *ptrStruct)
         if (strcmp(c, "\0") != 0)
         {
             status = validateCommas(c);
-            printf("VALIDATE COMMA AFTER EACH NUM\n");
             if (status != S_SUCCESS)
                 return status;
         }
 
         strcpy(tmp, c);
         num_str = strtok(tmp, ",");
-        printf("num_str: %s\n", num_str);
-
         counter++;
     }
+
     if (counter < 16)
     {
         for (i = counter; i < 16; i++)
-        {
             ptrStruct->numbers[counter] = DEFAULT_MAT_VAL;
-        }
     }
 
     status = validateNull(c);
@@ -108,7 +90,7 @@ int toStructForRead(mat_t *all[], char *c, read_mat_t *ptrStruct)
     return S_SUCCESS;
 }
 
-int read_mat(mat_t *mat, double numbers[])
+void read_mat(mat_t *mat, double numbers[])
 {
     int i, j, k;
     k = 0;
@@ -122,23 +104,18 @@ int read_mat(mat_t *mat, double numbers[])
     }
 
     print_mat(mat);
-    return S_SUCCESS;
 }
 
 int handleRead(mat_t *all[], char *c)
 {
     int status;
-
     read_mat_t *my_mat = calloc(1, sizeof(read_mat_t));
-
     status = toStructForRead(all, c, my_mat);
-
-    printf("\ntoStructForRead status: %d\n", status);
 
     if (status != S_SUCCESS)
         return status;
 
-    status = read_mat(my_mat->mat, my_mat->numbers);
+    read_mat(my_mat->mat, my_mat->numbers);
 
     return status;
 }

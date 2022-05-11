@@ -30,6 +30,58 @@ void initMats(mat_t *mats[])
     }
 }
 
+void finish(int status)
+{
+    switch (status)
+    {
+    case S_SUCCESS:
+        printf("\nSuccess\n");
+        break;
+    case S_FAIL_NO_COMMAND:
+        printf("\nUndefined command name\n");
+        break;
+    case S_FAIL_NO_MAT:
+        printf("\nUndefined matrix name\n");
+        break;
+    case S_FAIL_NOT_A_REAL_NUMBER:
+        printf("\nArgument is not a real number\n");
+        break;
+    case S_FAIL_NOT_A_SCALAR:
+        printf("\nArgument is not a scalar\n");
+        break;
+    case S_FAIL_EXTRA_TEXT:
+        printf("\nExtraneous text after end of command\n");
+        break;
+    case S_FAIL_MISSING_ARGS:
+        printf("\nMissing argument\n");
+        break;
+    case S_FAIL_ILLEGAL_COMMA:
+        printf("\nIllegal comma\n");
+        break;
+    case S_FAIL_MISSING_COMMA:
+        printf("\nMissing comma\n");
+        break;
+    case S_FAIL_MULTIPLE_COMMAS:
+        printf("\nMultiple consecutive commas\n");
+        break;
+    case S_FAIL_NOT_SCALAR:
+        printf("\nArgument is not a scalar\n");
+        break;
+    case S_FAIL_ETRA_TEXT_END:
+        printf("\nExtraneous text after end of command\n");
+        break;
+    case S_FAIL_NO_SPACE:
+        printf("\nMust be at least 1 space after command\n");
+        break;
+    case S_FAIL_MEMORY_ALLOCATION:
+        printf("\nFatal error: memory allocation failed!\n");
+        break;
+    case S_FAIL_EOF:
+        printf("\nInput got EOF char. Illigal. Stopping the program with error.\n");
+        break;
+    }
+}
+
 char *getCommand()
 {
     int limit = DEFAULT_BUFFER, i = 0;
@@ -44,7 +96,7 @@ char *getCommand()
     {
         if (*(command + i) == EOF)
         {
-            printf("\nInput got EOF char. Illigal. Stopping the program with error.\n");
+            finish(S_FAIL_EOF);
             exit(S_FAIL_EOF);
         }
         /* got to the limit of chars size - increase limit and realloc command with new limit size */
@@ -81,11 +133,13 @@ void trimLeadingSpaces(char *c)
         memmove(c, c + i * sizeof(char), strlen(c));
 }
 
+
+
 int whichCommand(char *c)
 {
     char *tmp = (char *)malloc(strlen(c) * sizeof(char));
     char *cmd;
-    int i = 0, status;
+    int status;
 
     if (strcmp(c, "\0") == 0)
         return CMD_UNDEFINED;
@@ -95,12 +149,6 @@ int whichCommand(char *c)
     strcpy(tmp, c);
 
     cmd = strtok(tmp, " \t"); /* looks for the first space or tab. If there are no such - return all string */
-
-/*     check = strtok(NULL, " \t");
-    if (check == NULL)
-        return CMD_NO_SPACE; */
-
-    printf("cmd: %s\n", cmd);
 
     /* FIXME: How to forward pointer correctly - how to free spaces I skipped here */
 
@@ -196,77 +244,10 @@ int whichMat(char *c)
         return MAT_UNDEFINED;
     }
 
-    printf("command: %s\n", c);
     if ((strcmp(c, "\0") != 0) && (strncmp(c, " ", strlen(" ")) != 0) && (strncmp(c, "\t", strlen("\t")) != 0) && (strncmp(c, ",", strlen("\t")) != 0))
         return MAT_UNDEFINED;
 
     return status;
-}
-
-double whichNumber(char *num_str)
-{
-    char *end;
-    double number;
-
-    number = strtod(num_str, &end);
-    printf("number: %f\n", number);
-    printf("end: %s\n", end);
-
-    if (strcmp(end, "\0") != 0)
-    {
-        printf("num_str is not a number - handle\n");
-    }
-
-    return number;
-}
-
-void finish(int status)
-{
-    switch (status)
-    {
-    case S_SUCCESS:
-        printf("Success\n");
-        break;
-    case S_FAIL_NO_COMMAND:
-        printf("Undefined command name\n");
-        break;
-    case S_FAIL_NO_MAT:
-        printf("Undefined matrix name\n");
-        break;
-    case S_FAIL_NOT_A_REAL_NUMBER:
-        printf("Argument is not a real number\n");
-        break;
-    case S_FAIL_NOT_A_SCALAR:
-        printf("Argument is not a scalar\n");
-        break;
-    case S_FAIL_EXTRA_TEXT:
-        printf("Extraneous text after end of command\n");
-        break;
-    case S_FAIL_MISSING_ARGS:
-        printf("Missing argument\n");
-        break;
-    case S_FAIL_ILLEGAL_COMMA:
-        printf("Illegal comma\n");
-        break;
-    case S_FAIL_MISSING_COMMA:
-        printf("Missing comma\n");
-        break;
-    case S_FAIL_MULTIPLE_COMMAS:
-        printf("Multiple consecutive commas\n");
-        break;
-    case S_FAIL_NOT_SCALAR:
-        printf("Argument is not a scalar\n");
-        break;
-    case S_FAIL_ETRA_TEXT_END:
-        printf("Extraneous text after end of command\n");
-        break;
-    case S_FAIL_NO_SPACE:
-        printf("Must be at least 1 space after command\n");
-        break;
-    case S_FAIL_MEMORY_ALLOCATION:
-        printf("Fatal error: memory allocation failed!\n");
-        break;
-    }
 }
 
 int main()
@@ -303,7 +284,6 @@ int main()
 
         cmd = whichCommand(command_str);
         trimLeadingSpaces(command_str);
-        printf("trimmed params: %s\n", command_str);
 
         if (strncmp(command_str, ",", 1) == 0)
         {
@@ -314,39 +294,31 @@ int main()
         switch (cmd)
         {
         case CMD_PRINT_MAT:
-            printf("calling handlePrint()...\n");
             status = handlePrint(all, command_str);
             break;
         case CMD_ADD_MAT:
-            printf("calling handleAdd()...\n");
             status = handleAdd(all, command_str);
             break;
         case CMD_SUB_MAT:
-            printf("calling handleSub()...\n");
             status = handleSub(all, command_str);
             break;
         case CMD_MUL_MAT:
-            printf("calling handleMul()...\n");
             status = handleMul(all, command_str);
             break;
         case CMD_READ_MAT:
-            printf("calling handleRead()...\n");
             status = handleRead(all, command_str);
             break;
         case CMD_MUL_SCALAR:
-            printf("calling handleMulScalar()...\n");
             status = handleMulScalar(all, command_str);
             break;
         case CMD_TRANS_MAT:
-            printf("calling handleTrans()...\n");
             status = handleTrans(all, command_str);
             break;
         case CMD_STOP:
-            printf("the command is: %s\n", command_str);
             if (strcmp(command_str, "\0") == 0)
             {
                 printf("Stopping...\n");
-                exit(0);
+                exit(S_SUCCESS);
             }
             status = S_FAIL_ETRA_TEXT_END;
             break;

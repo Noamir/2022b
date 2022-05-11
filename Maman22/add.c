@@ -5,16 +5,12 @@ int whichMat(char *c);
 int validateMat(int matIdx);
 int validateCommas(char *command);
 int validateNull(char *command);
-void trimSpaces(char *str);
 
 int toStructForAdd(mat_t *all[], char *c, add_mat_t *ptrStruct)
 {
     int idx, status;
 
     idx = whichMat(c);
-    printf("add1: %d\n", idx);
-    printf("currenct command: %s\n", c);
-
     status = validateMat(idx);
     if (status != S_SUCCESS)
         return status;
@@ -26,9 +22,6 @@ int toStructForAdd(mat_t *all[], char *c, add_mat_t *ptrStruct)
     ptrStruct->add1 = all[idx];
 
     idx = whichMat(c);
-    printf("add2: %d\n", idx);
-    printf("currenct command: %s\n", c);
-
     status = validateMat(idx);
     if (status != S_SUCCESS)
         return status;
@@ -40,9 +33,6 @@ int toStructForAdd(mat_t *all[], char *c, add_mat_t *ptrStruct)
     ptrStruct->add2 = all[idx];
 
     idx = whichMat(c);
-    printf("result: %d\n", idx);
-    printf("currenct command: %s\n", c);
-
     status = validateMat(idx);
     if (status != S_SUCCESS)
         return status;
@@ -74,12 +64,9 @@ void add_mat(mat_t *add1, mat_t *add2, mat_t *result)
 int handleAdd(mat_t *all[], char *c)
 {
     int status;
+
     add_mat_t *my_mat = calloc(1, sizeof(add_mat_t));
-
     status = toStructForAdd(all, c, my_mat);
-
-    printf("\ntoStructForAdd status: %d\n", status);
-
     if (status != S_SUCCESS)
         return status;
 
