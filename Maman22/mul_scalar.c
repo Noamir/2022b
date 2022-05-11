@@ -3,12 +3,14 @@
 int print_mat(mat_t *m);
 int whichMat(char *c);
 int validateMat(int matIdx);
+int validateScalar(char *scalar_str);
 int validateCommas(char *command);
 int validateNull(char *command);
 
 int toStructForMulScalar(mat_t *all[], char *c, mul_scalar_t *ptrStruct)
 {
     char *tmp = (char *)malloc(strlen(c) * sizeof(char));
+    
     char *scalar_str, *end;
     int idx, status;
     double scalar;
@@ -25,15 +27,14 @@ int toStructForMulScalar(mat_t *all[], char *c, mul_scalar_t *ptrStruct)
     ptrStruct->mat = all[idx];
 
     /* TODO: How to forward pointer correctly - how to free spaces I skipped here */
-
     strcpy(tmp, c);
-
     scalar_str = strtok(tmp, ",");
+    printf("scalar_str: %s\n", scalar_str);
+    status = validateScalar(scalar_str);
+    if (status != S_SUCCESS)
+        return status;
+    
     scalar = strtod(scalar_str, &end);
-
-    if (strcmp(end, "\0") != 0)
-        return S_FAIL_NOT_A_SCALAR;
-
     ptrStruct->scalar = scalar;
 
     memmove(c, c + strlen(scalar_str), strlen(c));
@@ -61,7 +62,6 @@ int toStructForMulScalar(mat_t *all[], char *c, mul_scalar_t *ptrStruct)
 void mul_scalar(mat_t *mat, double scalar, mat_t *result)
 {
     int i, j;
-
     for (i = 0; i < result->size; i++)
     {
         for (j = 0; j < result->size; j++)

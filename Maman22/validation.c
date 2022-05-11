@@ -32,6 +32,17 @@ int validateCommas(char *command)
     return S_SUCCESS;
 }
 
+int validateScalar(char *scalar_str)
+{
+    char *end;
+    printf("validate scalar \n");
+    strtod(scalar_str, &end);
+    if (strcmp(end, "\0") != 0)
+        return S_FAIL_NOT_A_SCALAR;
+
+    return S_SUCCESS;
+}
+
 int validateNull(char *command)
 {
     if (strcmp(command, "\0") != 0)
