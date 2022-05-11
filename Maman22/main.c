@@ -19,7 +19,7 @@ void initMats(mat_t *mats[])
 
         m->size = MAT_SIZE;
 
-        /* initiate all matrix cells to 0 */
+        /* initiate all matrix cells to DEFAULT_MAT_VAL */
         for (j = 0; j < m->size; j++)
         {
             for (k = 0; k < m->size; k++)
@@ -147,7 +147,7 @@ int whichCommand(char *c)
     else
         return CMD_UNDEFINED;
     
-    if((strncmp(c, " ", strlen(" ")) != 0))
+    if((strncmp(c, " ", strlen(" ")) != 0) && (status != CMD_STOP))
         return CMD_NO_SPACE;
 
     return status;
