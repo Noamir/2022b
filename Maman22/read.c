@@ -60,7 +60,7 @@ int toStructForRead(mat_t *all[], char *c, read_mat_t *ptrStruct)
         if (counter < 16)
             ptrStruct->numbers[counter] = number;
 
-        /* If its ONLY A COMMA in the whole command */
+        /* If ONLY A COMMA LEFT in the whole command */
         if (strcmp(c, ",") == 0)
             return S_FAIL_EXTRA_TEXT; /* no more numbers after comma */
 

@@ -7,10 +7,6 @@
 #define DEFAULT_BUFFER 5
 #define DEFAULT_MAT_VAL 0
 
-int isalpha( int ch );
-int isdigit( int ch );
-
-
 enum STATUS
 {
     S_SUCCESS,
@@ -55,13 +51,6 @@ enum MATRIX
     E_MAT_F,
     MAT_NULL,
     MAT_UNDEFINED
-};
-
-enum ARG_TYPE
-{
-    A_MAT,
-    A_NUM,
-    A_NUMS
 };
 
 
