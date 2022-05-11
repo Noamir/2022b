@@ -9,7 +9,6 @@ int validateNull(char *command);
 int toStructForSub(mat_t *all[], char *c, sub_mat_t *ptrStruct)
 {
     int idx, status;
-
     idx = whichMat(c);
     status = validateMat(idx);
     if (status != S_SUCCESS)

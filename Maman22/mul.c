@@ -9,7 +9,6 @@ int validateNull(char *command);
 int toStructForMul(mat_t *all[], char *c, mul_mat_t *ptrStruct)
 {
     int idx, status;
-
     idx = whichMat(c);
     status = validateMat(idx);
     if (status != S_SUCCESS)
@@ -68,7 +67,7 @@ void mul_mat(mat_t *mul1, mat_t *mul2, mat_t *result)
         for (j = 0; j < result->size; j++)
             result->matrix[i][j] = tmp->matrix[i][j];
     }
-
+    free(tmp);
     print_mat(result);
 }
 

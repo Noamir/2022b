@@ -133,8 +133,6 @@ void trimLeadingSpaces(char *c)
         memmove(c, c + i * sizeof(char), strlen(c));
 }
 
-
-
 int whichCommand(char *c)
 {
     char *tmp = (char *)malloc(strlen(c) * sizeof(char));
@@ -198,6 +196,7 @@ int whichCommand(char *c)
     if((strncmp(c, " ", strlen(" ")) != 0) && (status != CMD_STOP))
         return CMD_NO_SPACE;
 
+    free(tmp);
     return status;
 }
 
@@ -331,6 +330,7 @@ int main()
         }
 
         finish(status);
+        free(command_str);
     }
 
     return 0;

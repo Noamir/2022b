@@ -9,7 +9,6 @@ int validateNull(char *command);
 int toStructForTrans(mat_t *all[], char *c, trans_mat_t *ptrStruct)
 {
     int idx, status;
-
     idx = whichMat(c);
     status = validateMat(idx);
     if (status != S_SUCCESS)
@@ -38,13 +37,22 @@ int toStructForTrans(mat_t *all[], char *c, trans_mat_t *ptrStruct)
 void trans_mat(mat_t *mat, mat_t *result)
 {
     int i, j;
+    mat_t *tmp = calloc(1, sizeof(mat_t));
+    tmp->size = MAT_SIZE;
+
+    for (i = 0; i < tmp->size; i++)
+    {
+        for (j = 0; j < tmp->size; j++)
+            tmp->matrix[i][j] = mat->matrix[j][i];
+    }
+    print_mat(tmp);
 
     for (i = 0; i < result->size; i++)
     {
         for (j = 0; j < result->size; j++)
-            result->matrix[i][j] = mat->matrix[j][i];
+            result->matrix[i][j] = tmp->matrix[i][j];
     }
-
+    free(tmp);
     print_mat(result);
 }
 

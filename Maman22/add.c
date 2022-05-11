@@ -53,9 +53,7 @@ void add_mat(mat_t *add1, mat_t *add2, mat_t *result)
     for (i = 0; i < result->size; i++)
     {
         for (j = 0; j < result->size; j++)
-        {
             result->matrix[i][j] = add1->matrix[i][j] + add2->matrix[i][j];
-        }
     }
 
     print_mat(result);

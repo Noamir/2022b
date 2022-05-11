@@ -7,7 +7,6 @@ int validateNull(char *command);
 int toStructForPrint(mat_t *all[], char *c, print_mat_t *ptrStruct)
 {
     int idx, status;
-
     idx = whichMat(c);
     status = validateMat(idx);
     if (status != S_SUCCESS)
@@ -25,7 +24,6 @@ int toStructForPrint(mat_t *all[], char *c, print_mat_t *ptrStruct)
 void print_mat(mat_t *m)
 {
     int i, j;
-
     printf("\n\n");
     for (i = 0; i < m->size; i++, j++)
     {

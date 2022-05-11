@@ -22,6 +22,7 @@ void trimSpaces(char *c)
     }
     /* TODO: make sure memory allocation is right */
     strcpy(c, tmp);
+    free(tmp);
 }
 
 int toStructForRead(mat_t *all[], char *c, read_mat_t *ptrStruct)
@@ -86,7 +87,6 @@ int toStructForRead(mat_t *all[], char *c, read_mat_t *ptrStruct)
         return status;
 
     free(tmp);
-
     return S_SUCCESS;
 }
 
@@ -98,9 +98,7 @@ void read_mat(mat_t *mat, double numbers[])
     for (i = 0; i < mat->size; i++)
     {
         for (j = 0; j < mat->size; j++, k++)
-        {
             mat->matrix[i][j] = numbers[k];
-        }
     }
 
     print_mat(mat);
