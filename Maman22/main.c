@@ -1,13 +1,5 @@
 #include "mat.h"
 
-int handlePrint(mat_t *all[], char *c);
-int handleAdd(mat_t *all[], char *c);
-int handleSub(mat_t *all[], char *c);
-int handleMul(mat_t *all[], char *c);
-int handleRead(mat_t *all[], char *c);
-int handleMulScalar(mat_t *all[], char *c);
-int handleTrans(mat_t *all[], char *c);
-
 void initMats(mat_t *mats[])
 {
     int i, j, k;
@@ -88,7 +80,7 @@ char *getCommand()
     char *tmp_ptr;
     char *command = (char *)malloc(limit * sizeof(char));
 
-    printf("\nHi, insert a new command\n");
+    printf("\nInsert a new command\n");
 
     /* get command chars from stdin to command pointer */
     /* TODO: get input from file is not ending aith \n - handle */
@@ -120,13 +112,14 @@ char *getCommand()
 
     printf("\nThe command is: %s\n", command);
 
+    /* free(tmp_ptr); */
     return command;
 }
 
 void trimLeadingSpaces(char *c)
 {
     int i = 0;
-    while (c[i] == ' ' || c[i] == '\t')
+    while (isspace(c[i]))
         i++;
 
     if (i > 0)
@@ -196,7 +189,7 @@ int whichCommand(char *c)
     if((strncmp(c, " ", strlen(" ")) != 0) && (status != CMD_STOP))
         return CMD_NO_SPACE;
 
-    free(tmp);
+    /* free(tmp); */
     return status;
 }
 
@@ -272,6 +265,18 @@ int main()
 
     initMats(all);
 
+    printf("\nHi, welcome to the best matrix calculator ever!\n"
+    "Here are the available commands. Notice the syntax:\n"
+    "print_mat <MAT_X>\n"
+    "read_mat <MAT_X>,<number>,<number>,<number> ... \n"
+    "add_mat <MAT_A>,<MAT_B>,<MAT_C>\n"
+    "sub_mat <MAT_A>,<MAT_B>,<MAT_C>\n"
+    "mul_mat <MAT_A>,<MAT_B>,<MAT_C>\n"
+    "mul_scalar <MAT_A>,<number>,<MAT_B>\n"
+    "trans_mat <MAT_A>,<MAT_B>\n"
+    "stop\n"
+    );
+
     while (1)
     {
         command_str = getCommand();
@@ -330,7 +335,7 @@ int main()
         }
 
         finish(status);
-        free(command_str);
+        /* free(command_str); */
     }
 
     return 0;
