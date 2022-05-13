@@ -1,5 +1,6 @@
 #include "mat.h"
 void trimLeadingSpaces(char *c);
+void finish(int status);
 
 int validateMat(int matIdx)
 {
@@ -15,7 +16,6 @@ int validateMat(int matIdx)
 int validateCommas(char *command)
 {
     trimLeadingSpaces(command);
-
     if (strcmp(command, "\0") == 0)
         return S_FAIL_MISSING_ARGS;
     else if (strncmp(command, ",", strlen(",")) != 0)
@@ -42,8 +42,20 @@ int validateScalar(char *scalar_str)
     return S_SUCCESS;
 }
 
+int validateNumber(char *num_str)
+{
+    char *end;
+    strtod(num_str, &end);
+    if (strcmp(end, "\0") != 0)
+        return S_FAIL_NOT_A_REAL_NUMBER;
+
+    return S_SUCCESS;
+}
+
 int validateNull(char *command)
 {
+    trimLeadingSpaces(command);
+
     if (strcmp(command, "\0") != 0)
         return S_FAIL_EXTRA_TEXT;
 

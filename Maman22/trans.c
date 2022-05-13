@@ -1,10 +1,10 @@
-#include "mat.h"
+#include "handlers.h"
 
-int print_mat(mat_t *m);
-int whichMat(char *c);
-int validateMat(int matIdx);
-int validateCommas(char *command);
-int validateNull(char *command);
+struct trans_mat_def
+{
+    mat_t *mat;
+    mat_t *result;
+};
 
 int toStructForTrans(mat_t *all[], char *c, trans_mat_t *ptrStruct)
 {
@@ -45,7 +45,6 @@ void trans_mat(mat_t *mat, mat_t *result)
         for (j = 0; j < tmp->size; j++)
             tmp->matrix[i][j] = mat->matrix[j][i];
     }
-    print_mat(tmp);
 
     for (i = 0; i < result->size; i++)
     {

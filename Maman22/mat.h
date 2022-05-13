@@ -7,6 +7,8 @@
 #define DEFAULT_BUFFER 5
 #define DEFAULT_MAT_VAL 0
 
+int isspace(int ch);
+
 enum STATUS
 {
     S_SUCCESS,
@@ -53,70 +55,25 @@ enum MATRIX
     MAT_UNDEFINED
 };
 
-
 struct mat_def
 {
-    int size;                          /* how many rows and cols in mat (for us 4x4) */
-    double matrix[MAT_SIZE][MAT_SIZE]; /* floats array, with MAT_SIZE*MAT_SIZE places (for us 4x4) */
+    int size;                         
+    double matrix[MAT_SIZE][MAT_SIZE]; 
 };
 
 typedef struct mat_def mat_t;
-
-struct print_mat_def
-{
-    mat_t *mat;
-};
-
 typedef struct print_mat_def print_mat_t;
-
-struct add_mat_def
-{   
-    mat_t *add1;
-    mat_t *add2;
-    mat_t *result;
-};
-
 typedef struct add_mat_def add_mat_t;
-
-struct sub_mat_def
-{
-    mat_t *sub1;
-    mat_t *sub2;
-    mat_t *result;
-};
-
 typedef struct sub_mat_def sub_mat_t;
-
-struct mul_mat_def
-{
-    mat_t *mul1;
-    mat_t *mul2;
-    mat_t *result;
-};
-
 typedef struct mul_mat_def mul_mat_t;
-
-struct mul_scalar_def
-{
-    mat_t *mat;
-    double scalar;
-    mat_t *result;
-};
-
 typedef struct mul_scalar_def mul_scalar_t;
-
-struct read_mat_def
-{
-    mat_t *mat;
-    double numbers[MAT_SIZE * MAT_SIZE];
-};
-
 typedef struct read_mat_def read_mat_t;
-
-struct trans_mat_def
-{
-    mat_t *mat;
-    mat_t *result;
-};
-
 typedef struct trans_mat_def trans_mat_t;
+
+int handlePrint(mat_t *all[], char *c);
+int handleAdd(mat_t *all[], char *c);
+int handleSub(mat_t *all[], char *c);
+int handleMul(mat_t *all[], char *c);
+int handleRead(mat_t *all[], char *c);
+int handleMulScalar(mat_t *all[], char *c);
+int handleTrans(mat_t *all[], char *c);

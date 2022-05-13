@@ -1,10 +1,11 @@
-#include "mat.h"
+#include "handlers.h"
 
-int print_mat(mat_t *m);
-int whichMat(char *c);
-int validateMat(int matIdx);
-int validateCommas(char *command);
-int validateNull(char *command);
+struct add_mat_def
+{
+    mat_t *add1;
+    mat_t *add2;
+    mat_t *result;
+};
 
 int toStructForAdd(mat_t *all[], char *c, add_mat_t *ptrStruct)
 {

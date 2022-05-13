@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sun May  8 11:15:15 2022
+# Make data base, printed on Fri May 13 09:12:47 2022
 
 # Variables
 
@@ -65,7 +65,7 @@ XDG_RUNTIME_DIR = /run/user/1000
 # environment
 VSCODE_LOG_STACK = false
 # environment
-VSCODE_IPC_HOOK_CLI = /run/user/1000/vscode-ipc-a74165c4-4f69-4960-8cc7-4a0f861b84e6.sock
+VSCODE_IPC_HOOK_CLI = /run/user/1000/vscode-ipc-eb3dab11-07ee-48ef-89e5-bb6aba79f121.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -161,9 +161,9 @@ MOTD_SHOWN = pam
 
 # Directories
 
-# . (device 2053, inode 409029): 15 files, no impossibilities.
+# . (device 2053, inode 409029): 18 files, no impossibilities.
 
-# 15 files, no impossibilities in 1 directories.
+# 18 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -260,12 +260,12 @@ trans.c:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 21 / storage = 170 B / avg = 8 B
-# current buf: size = 8162 B / used = 170 B / count = 21 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 24 / storage = 206 B / avg = 8 B
+# current buf: size = 8162 B / used = 206 B / count = 24 / avg = 8 B
 
-# strcache performance: lookups = 35 / hit rate = 40%
+# strcache performance: lookups = 38 / hit rate = 36%
 # hash-table stats:
-# Load=21/8192=0%, Rehash=0, Collisions=1/35=3%
-# Finished Make data base on Sun May  8 11:15:15 2022
+# Load=24/8192=0%, Rehash=0, Collisions=1/38=3%
+# Finished Make data base on Fri May 13 09:12:47 2022
 
  

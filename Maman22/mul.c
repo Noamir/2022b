@@ -1,10 +1,11 @@
-#include "mat.h"
+#include "handlers.h"
 
-int print_mat(mat_t *m);
-int whichMat(char *c);
-int validateMat(int matIdx);
-int validateCommas(char *command);
-int validateNull(char *command);
+struct mul_mat_def
+{
+    mat_t *mul1;
+    mat_t *mul2;
+    mat_t *result;
+};
 
 int toStructForMul(mat_t *all[], char *c, mul_mat_t *ptrStruct)
 {
@@ -59,8 +60,6 @@ void mul_mat(mat_t *mul1, mat_t *mul2, mat_t *result)
                 tmp->matrix[i][j] += mul1->matrix[i][k] * mul2->matrix[k][j];
         }
     }
-
-    print_mat(tmp);
 
     for (i = 0; i < result->size; i++)
     {

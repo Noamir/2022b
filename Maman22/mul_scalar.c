@@ -1,11 +1,11 @@
-#include "mat.h"
+#include "handlers.h"
 
-int print_mat(mat_t *m);
-int whichMat(char *c);
-int validateMat(int matIdx);
-int validateScalar(char *scalar_str);
-int validateCommas(char *command);
-int validateNull(char *command);
+struct mul_scalar_def
+{
+    mat_t *mat;
+    double scalar;
+    mat_t *result;
+};
 
 int toStructForMulScalar(mat_t *all[], char *c, mul_scalar_t *ptrStruct)
 {

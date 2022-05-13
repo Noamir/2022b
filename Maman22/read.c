@@ -1,33 +1,14 @@
-#include "mat.h"
+#include "handlers.h"
 
-int print_mat(mat_t *m);
-int whichMat(char *c);
-int validateMat(int matIdx);
-int validateCommas(char *command);
-int validateNull(char *command);
-void trimLeadingSpaces(char *c);
-
-void trimSpaces(char *c)
+struct read_mat_def
 {
-    int i, j = 0;
-    char *tmp = (char *)malloc(strlen(c) * sizeof(char));
-
-    for (i = 0; i < strlen(c); i++)
-    {
-        if (c[i] != ' ' && c[i] != '\t')
-        {
-            tmp[j] = c[i];
-            j++;
-        }
-    }
-    /* TODO: make sure memory allocation is right */
-    strcpy(c, tmp);
-    free(tmp);
-}
+    mat_t *mat;
+    double numbers[MAT_SIZE * MAT_SIZE];
+};
 
 int toStructForRead(mat_t *all[], char *c, read_mat_t *ptrStruct)
 {
-    int i, idx, status, counter = 0;
+    int i, idx, status, counter = 0, cells_num;
     char *num_str, *tmp, *end;
     double number;
 
@@ -41,6 +22,7 @@ int toStructForRead(mat_t *all[], char *c, read_mat_t *ptrStruct)
         return status;
 
     ptrStruct->mat = all[idx];
+    cells_num = ptrStruct->mat->size * ptrStruct->mat->size;
 
     /* TODO: How to forward pointer correctly - how to free spaces I skipped here */
     tmp = (char *)malloc(strlen(c) * sizeof(char));
@@ -48,21 +30,23 @@ int toStructForRead(mat_t *all[], char *c, read_mat_t *ptrStruct)
     num_str = strtok(tmp, ",");
 
     while (num_str != NULL)
-    {   
+    {
         num_str = strtok(num_str, " ");
         memmove(c, c + strlen(num_str), strlen(c));
         trimLeadingSpaces(num_str);
+
+        status = validateNumber(num_str);
+        if (status != S_SUCCESS)
+            return status;
+
         number = strtod(num_str, &end);
 
-        if (strcmp(end, "\0") != 0)
-            return S_FAIL_NOT_A_REAL_NUMBER;
-
-        if (counter < 16)
+        if (counter < cells_num)
             ptrStruct->numbers[counter] = number;
 
         /* If ONLY A COMMA LEFT in the whole command */
         if (strcmp(c, ",") == 0)
-            return S_FAIL_EXTRA_TEXT; /* no more numbers after comma */
+            return S_FAIL_EXTRA_TEXT;
 
         if (strcmp(c, "\0") != 0)
         {
@@ -76,9 +60,9 @@ int toStructForRead(mat_t *all[], char *c, read_mat_t *ptrStruct)
         counter++;
     }
 
-    if (counter < 16)
+    if (counter < cells_num)
     {
-        for (i = counter; i < 16; i++)
+        for (i = counter; i < cells_num; i++)
             ptrStruct->numbers[counter] = DEFAULT_MAT_VAL;
     }
 
