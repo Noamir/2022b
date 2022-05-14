@@ -22,7 +22,7 @@ void initMats(mat_t *mats[])
     }
 }
 
-void finish(int status)
+void printMessage(int status)
 {
     switch (status)
     {
@@ -59,9 +59,6 @@ void finish(int status)
     case S_FAIL_NOT_SCALAR:
         printf("\nArgument is not a scalar\n");
         break;
-    case S_FAIL_ETRA_TEXT_END:
-        printf("\nExtraneous text after end of command\n");
-        break;
     case S_FAIL_NO_SPACE:
         printf("\nMust be at least 1 space after command\n");
         break;
@@ -88,7 +85,7 @@ char *getCommand()
     {
         if (*(command + i) == EOF)
         {
-            finish(S_FAIL_EOF);
+            printMessage(S_FAIL_EOF);
             exit(S_FAIL_EOF);
         }
         /* got to the limit of chars size - increase limit and realloc command with new limit size */
@@ -283,7 +280,7 @@ int main()
 
         if (command_str == NULL)
         {
-            finish(S_FAIL_MEMORY_ALLOCATION);
+            printMessage(S_FAIL_MEMORY_ALLOCATION);
         }
 
         cmd = whichCommand(command_str);
@@ -291,7 +288,7 @@ int main()
 
         if (strncmp(command_str, ",", 1) == 0)
         {
-            finish(S_FAIL_ILLEGAL_COMMA);
+            printMessage(S_FAIL_ILLEGAL_COMMA);
             continue;
         }
 
@@ -324,7 +321,7 @@ int main()
                 printf("Stopping...\n");
                 exit(S_SUCCESS);
             }
-            status = S_FAIL_ETRA_TEXT_END;
+            status = S_FAIL_EXTRA_TEXT;
             break;
         case CMD_NO_SPACE:
             status = S_FAIL_NO_SPACE;
@@ -334,7 +331,7 @@ int main()
             break;
         }
 
-        finish(status);
+        printMessage(status);
         /* free(command_str); */
     }
 

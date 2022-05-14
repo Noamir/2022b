@@ -13,6 +13,26 @@ int validateMat(int matIdx)
     return S_SUCCESS;
 }
 
+int validateReadCommas(char *command)
+{
+    trimLeadingSpaces(command);
+    if (strcmp(command, "\0") == 0)
+        return S_SUCCESS;
+    else if (strncmp(command, ",", strlen(",")) != 0)
+        return S_FAIL_MISSING_COMMA;
+
+    memmove(command, command + strlen(","), strlen(command)); /* remove the comma */
+    trimLeadingSpaces(command);
+
+    if (strcmp(command, "\0") == 0)
+        return S_FAIL_EXTRA_TEXT;
+    if (strncmp(command, ",", strlen(",")) == 0)
+        return S_FAIL_MULTIPLE_COMMAS;
+
+    return S_SUCCESS;
+}
+
+
 int validateCommas(char *command)
 {
     trimLeadingSpaces(command);

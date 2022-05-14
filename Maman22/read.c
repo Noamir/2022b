@@ -1,4 +1,5 @@
 #include "handlers.h"
+int validateReadCommas(char *command);
 
 struct read_mat_def
 {
@@ -44,13 +45,9 @@ int toStructForRead(mat_t *all[], char *c, read_mat_t *ptrStruct)
         if (counter < cells_num)
             ptrStruct->numbers[counter] = number;
 
-        /* If ONLY A COMMA LEFT in the whole command */
-        if (strcmp(c, ",") == 0)
-            return S_FAIL_EXTRA_TEXT;
-
         if (strcmp(c, "\0") != 0)
         {
-            status = validateCommas(c);
+            status = validateReadCommas(c);
             if (status != S_SUCCESS)
                 return status;
         }

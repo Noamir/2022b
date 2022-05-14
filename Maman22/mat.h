@@ -22,7 +22,6 @@ enum STATUS
     S_FAIL_MISSING_COMMA,
     S_FAIL_MULTIPLE_COMMAS,
     S_FAIL_NOT_SCALAR,
-    S_FAIL_ETRA_TEXT_END,
     S_FAIL_EOF,
     S_FAIL_NO_SPACE,
     S_FAIL_MEMORY_ALLOCATION
@@ -62,13 +61,6 @@ struct mat_def
 };
 
 typedef struct mat_def mat_t;
-typedef struct print_mat_def print_mat_t;
-typedef struct add_mat_def add_mat_t;
-typedef struct sub_mat_def sub_mat_t;
-typedef struct mul_mat_def mul_mat_t;
-typedef struct mul_scalar_def mul_scalar_t;
-typedef struct read_mat_def read_mat_t;
-typedef struct trans_mat_def trans_mat_t;
 
 int handlePrint(mat_t *all[], char *c);
 int handleAdd(mat_t *all[], char *c);
