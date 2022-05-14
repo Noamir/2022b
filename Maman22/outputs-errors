@@ -1,0 +1,111 @@
+
+Hi, welcome to the best matrix calculator ever!
+Here are the available commands. Notice the syntax:
+print_mat <MAT_X>
+read_mat <MAT_X>,<number>,<number>,<number> ... 
+add_mat <MAT_A>,<MAT_B>,<MAT_C>
+sub_mat <MAT_A>,<MAT_B>,<MAT_C>
+mul_mat <MAT_A>,<MAT_B>,<MAT_C>
+mul_scalar <MAT_A>,<number>,<MAT_B>
+trans_mat <MAT_A>,<MAT_B>
+stop
+
+Insert a new command
+
+The command is: read_mat MAT_G, 3.2, 8
+
+Undefined matrix name
+
+Insert a new command
+
+The command is: read_mat mat_a, 3.2, -5.3 
+
+Undefined matrix name
+
+Insert a new command
+
+The command is: do_it MAT_A, MAT_B, MAT_C
+
+Undefined command name
+
+Insert a new command
+
+The command is: Add_Mat MAT_A, MAT_B, MAT_C
+
+Undefined command name
+
+Insert a new command
+
+The command is: read_mat MAT_A, abc, 567
+
+Argument is not a real number
+
+Insert a new command
+
+The command is: read_mat MAT_A, 3, -4.2, 6,
+
+Extraneous text after end of command
+
+Insert a new command
+
+The command is: read_mat MAT_A, 3, -4.2, 6,                     
+
+Extraneous text after end of command
+
+Insert a new command
+
+The command is: read_mat MAT_A   
+
+Missing argument
+
+Insert a new command
+
+The command is: read_mat MAT_A, 2, 3, 4, 5 6 , 7
+
+Missing comma
+
+Insert a new command
+
+The command is: mul_mat MAT_B, MAT_C
+
+Missing argument
+
+Insert a new command
+
+The command is: trans_mat MAT_B, MAT_C, MAT_D
+
+Extraneous text after end of command
+
+Insert a new command
+
+The command is: print_mat , MAT_A
+
+Illegal comma
+
+Insert a new command
+
+The command is: trans_mat MAT_A MAT_B 
+
+Missing comma
+
+Insert a new command
+
+The command is: sub_mat MAT_A, , MAT_B, MAT_C
+
+Multiple consecutive commas
+
+Insert a new command
+
+The command is: mul_scalar MAT_A, MAT_B, MAT_C
+
+Argument is not a scalar
+
+Insert a new command
+
+The command is: stop now
+
+Extraneous text after end of command
+
+Insert a new command
+
+Input got EOF char. Illigal. Stopping the program with error.
