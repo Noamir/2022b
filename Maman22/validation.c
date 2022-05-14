@@ -1,6 +1,5 @@
 #include "mat.h"
 void trimLeadingSpaces(char *c);
-void finish(int status);
 
 int validateMat(int matIdx)
 {
@@ -31,7 +30,6 @@ int validateReadCommas(char *command)
 
     return S_SUCCESS;
 }
-
 
 int validateCommas(char *command)
 {
@@ -76,7 +74,7 @@ int validateNull(char *command)
 {
     trimLeadingSpaces(command);
 
-    if (strcmp(command, "\0") != 0)
+    if ((strcmp(command, "\0") != 0) && (command[0] != EOF))
         return S_FAIL_EXTRA_TEXT;
 
     return S_SUCCESS;

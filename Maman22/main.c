@@ -79,15 +79,12 @@ char *getCommand()
 
     printf("\nInsert a new command\n");
 
+    *(command + i) = getchar();
+
     /* get command chars from stdin to command pointer */
     /* TODO: get input from file is not ending aith \n - handle */
-    for (i = 0; (i <= limit) && (*(command + i) = getchar()) != '\n'; i++)
+    for (i = 0; (i <= limit) && (*(command + i) != '\n') && (*(command + i) != EOF); i++)
     {
-        if (*(command + i) == EOF)
-        {
-            printMessage(S_FAIL_EOF);
-            exit(S_FAIL_EOF);
-        }
         /* got to the limit of chars size - increase limit and realloc command with new limit size */
         if (i == limit - 1)
         {
@@ -102,10 +99,12 @@ char *getCommand()
 
             command = tmp_ptr;
         }
+        *(command + i + 1) = getchar();
     }
 
     /* replace \n with \0 - NULL */
-    command[i] = '\0';
+    if (*(command + i) == '\n')
+        command[i] = '\0';
 
     printf("\nThe command is: %s\n", command);
 
@@ -123,16 +122,31 @@ void trimLeadingSpaces(char *c)
         memmove(c, c + i * sizeof(char), strlen(c));
 }
 
+void containsEOF(char *c)
+{
+    int i = 0;
+    while (c[i] != '\0')
+    {
+        if (c[i] == EOF)
+        {
+            printMessage(S_FAIL_EOF);
+            exit(S_FAIL_EOF);
+        }
+
+        i++;
+    }
+}
+
 int whichCommand(char *c)
 {
     char *tmp = (char *)malloc(strlen(c) * sizeof(char));
     char *cmd;
     int status;
 
+    trimLeadingSpaces(c);
+
     if (strcmp(c, "\0") == 0)
         return CMD_UNDEFINED;
-
-    trimLeadingSpaces(c);
 
     strcpy(tmp, c);
 
@@ -182,8 +196,8 @@ int whichCommand(char *c)
     }
     else
         return CMD_UNDEFINED;
-    
-    if((strncmp(c, " ", strlen(" ")) != 0) && (status != CMD_STOP))
+
+    if ((!isspace(c[0])) && (status != CMD_STOP))
         return CMD_NO_SPACE;
 
     /* free(tmp); */
@@ -192,11 +206,16 @@ int whichCommand(char *c)
 
 int whichMat(char *c)
 {
+
+    char *tmp = (char *)malloc(strlen(c) * sizeof(char));
     int status;
+
     trimLeadingSpaces(c);
 
     if (strcmp(c, "\0") == 0)
         return MAT_NULL;
+
+    strcpy(tmp, c);
 
     if (strncmp(c, "MAT_A", strlen("MAT_A")) == 0)
     {
@@ -229,11 +248,9 @@ int whichMat(char *c)
         status = E_MAT_F;
     }
     else
-    {
         return MAT_UNDEFINED;
-    }
 
-    if ((strcmp(c, "\0") != 0) && (strncmp(c, " ", strlen(" ")) != 0) && (strncmp(c, "\t", strlen("\t")) != 0) && (strncmp(c, ",", strlen("\t")) != 0))
+    if ((strcmp(c, "\0") != 0) && (!isspace(c[0])) && (strncmp(c, ",", strlen(",")) != 0) && (c[0] != EOF))
         return MAT_UNDEFINED;
 
     return status;
@@ -248,9 +265,8 @@ int main()
     mat_t *MAT_E = calloc(1, sizeof(mat_t));
     mat_t *MAT_F = calloc(1, sizeof(mat_t));
 
-    int status;
+    int status, cmd;
     char *command_str;
-    int cmd;
 
     mat_t *all[6];
     all[E_MAT_A] = MAT_A;
@@ -263,16 +279,15 @@ int main()
     initMats(all);
 
     printf("\nHi, welcome to the best matrix calculator ever!\n"
-    "Here are the available commands. Notice the syntax:\n"
-    "print_mat <MAT_X>\n"
-    "read_mat <MAT_X>,<number>,<number>,<number> ... \n"
-    "add_mat <MAT_A>,<MAT_B>,<MAT_C>\n"
-    "sub_mat <MAT_A>,<MAT_B>,<MAT_C>\n"
-    "mul_mat <MAT_A>,<MAT_B>,<MAT_C>\n"
-    "mul_scalar <MAT_A>,<number>,<MAT_B>\n"
-    "trans_mat <MAT_A>,<MAT_B>\n"
-    "stop\n"
-    );
+           "Here are the available commands. Notice the syntax:\n"
+           "print_mat <MAT_X>\n"
+           "read_mat <MAT_X>,<number>,<number>,<number> ... \n"
+           "add_mat <MAT_A>,<MAT_B>,<MAT_C>\n"
+           "sub_mat <MAT_A>,<MAT_B>,<MAT_C>\n"
+           "mul_mat <MAT_A>,<MAT_B>,<MAT_C>\n"
+           "mul_scalar <MAT_A>,<number>,<MAT_B>\n"
+           "trans_mat <MAT_A>,<MAT_B>\n"
+           "stop\n");
 
     while (1)
     {
@@ -289,6 +304,7 @@ int main()
         if (strncmp(command_str, ",", 1) == 0)
         {
             printMessage(S_FAIL_ILLEGAL_COMMA);
+            containsEOF(command_str);
             continue;
         }
 
@@ -321,6 +337,12 @@ int main()
                 printf("Stopping...\n");
                 exit(S_SUCCESS);
             }
+            else if (command_str[0] == EOF)
+            {
+                printf("Stopping...\n");
+                printMessage(S_FAIL_EOF);
+                exit(S_FAIL_EOF);
+            }
             status = S_FAIL_EXTRA_TEXT;
             break;
         case CMD_NO_SPACE:
@@ -332,6 +354,7 @@ int main()
         }
 
         printMessage(status);
+        containsEOF(command_str);
         /* free(command_str); */
     }
 
