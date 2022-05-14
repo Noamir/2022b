@@ -29,6 +29,7 @@ int toStructForMulScalar(mat_t *all[], char *c, mul_scalar_t *ptrStruct)
     /* TODO: How to forward pointer correctly - how to free spaces I skipped here */
     strcpy(tmp, c);
     scalar_str = strtok(tmp, ",");
+    scalar_str = strtok(scalar_str, " ");
     status = validateScalar(scalar_str);
     if (status != S_SUCCESS)
         return status;
