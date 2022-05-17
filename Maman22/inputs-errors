@@ -14,3 +14,4 @@ trans_mat MAT_A MAT_B
 sub_mat MAT_A, , MAT_B, MAT_C
 mul_scalar MAT_A, MAT_B, MAT_C
 stop now
+print_mat MAT_

@@ -108,4 +108,8 @@ Extraneous text after end of command
 
 Insert a new command
 
+The command is: print_mat MAT_ÿ
+
+Undefined matrix name
+
 Input got EOF char. Illigal. Stopping the program with error.

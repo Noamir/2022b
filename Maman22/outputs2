@@ -250,7 +250,7 @@ Success
 
 Insert a new command
 
-The command is:     print_mat MAT_B
+The command is:     print_mat MAT_Bÿ
 
 
   81.00   106.00    33.00    44.00  
@@ -262,7 +262,4 @@ The command is:     print_mat MAT_B
 
 Success
 
-Insert a new command
-
-The command is: stop
-Stopping...
+Input got EOF char. Illigal. Stopping the program with error.

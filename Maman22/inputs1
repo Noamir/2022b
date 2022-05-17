@@ -21,4 +21,4 @@ read_mat MAT_B, 0
 print_mat MAT_B
 mul_mat MAT_A,MAT_A,MAT_A
 print_mat MAT_A
-stop 
+stop
