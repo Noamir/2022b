@@ -56,7 +56,6 @@ int toStructForMulScalar(mat_t *all[], char *c, mul_scalar_t *ptrStruct)
     ptrStruct->result = all[idx];
 
     free(tmp);
-
     return status;
 }
 
