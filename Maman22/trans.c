@@ -67,5 +67,6 @@ int handleTrans(mat_t *all[], char *c)
         return status;
 
     transMat(my_mat->mat, my_mat->result);
+    free(my_mat);
     return status;
 }

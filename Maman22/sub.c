@@ -69,5 +69,6 @@ int handleSub(mat_t *all[], char *c)
         return status;
 
     subMat(my_mat->sub1, my_mat->sub2, my_mat->result);
+    free(my_mat);
     return status;
 }

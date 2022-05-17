@@ -72,5 +72,6 @@ int handleAdd(mat_t *all[], char *c)
         return status;
 
     addMat(my_mat->add1, my_mat->add2, my_mat->result);
+    free(my_mat);
     return status;
 }

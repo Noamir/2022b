@@ -159,8 +159,6 @@ int whichCommand(char *c)
 
     cmd = strtok(tmp, " \t"); /* looks for the first space or tab. If there are no such - return all string */
 
-    /* FIXME: How to forward pointer correctly - how to free spaces I skipped here */
-
     if (strncmp(cmd, "print_mat", strlen("print_mat")) == 0)
     {
         memmove(c, c + strlen("print_mat"), strlen(c));
@@ -326,6 +324,7 @@ int main()
             continue;
         }
 
+        printf("debug1: main\n");
         /* For each command - call the relevant handler for additional analysis */
         switch (cmd)
         {
@@ -372,8 +371,9 @@ int main()
         }
         statusHandler(status);
         endsWithEOF(command_str);
-        /* free(command_str); */
+        free(command_str);
     }
 
+    /* free(all); */
     return 0;
 }

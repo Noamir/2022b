@@ -96,5 +96,6 @@ int handleRead(mat_t *all[], char *c)
         return status;
 
     readMat(my_mat->mat, my_mat->numbers);
+    free(my_mat);
     return status;
 }

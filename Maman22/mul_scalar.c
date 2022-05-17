@@ -10,12 +10,10 @@ struct mul_scalar_def
 /* toStructForMulScalar: Get mul_scalar command string, validate its components, adapt it to mul_scalar struct */
 int toStructForMulScalar(mat_t *all[], char *c, mul_scalar_t *ptrStruct)
 {
-    char *tmp = (char *)malloc(strlen(c) * sizeof(char));
-    
-    char *scalar_str, *end;
+    char *tmp, *scalar_str, *end;
     int idx, status;
     double scalar;
-
+    printf("debug2: toStructForMulScalar\n");
     idx = whichMat(c);
     status = validateMat(idx);
     if (status != S_SUCCESS)
@@ -27,7 +25,7 @@ int toStructForMulScalar(mat_t *all[], char *c, mul_scalar_t *ptrStruct)
 
     ptrStruct->mat = all[idx];
 
-    /* TODO: How to forward pointer correctly - how to free spaces I skipped here */
+    tmp = (char *)malloc(strlen(c) * sizeof(char));
     strcpy(tmp, c);
     scalar_str = strtok(tmp, ",");
     scalar_str = strtok(scalar_str, " ");
@@ -55,13 +53,14 @@ int toStructForMulScalar(mat_t *all[], char *c, mul_scalar_t *ptrStruct)
 
     ptrStruct->result = all[idx];
 
-    free(tmp);
+    /* free(tmp); */
     return status;
 }
 
 /* subMat: Get a mat, a number, multiple mat cells with the number and insert result to mat result */
 void mulScalar(mat_t *mat, double scalar, mat_t *result)
-{
+{   
+    printf("debug3: mulScalar\n");
     int i, j;
     for (i = 0; i < result->size; i++)
     {
@@ -80,7 +79,8 @@ int handleMulScalar(mat_t *all[], char *c)
     status = toStructForMulScalar(all, c, my_mat);
     if (status != S_SUCCESS)
         return status;
-
     mulScalar(my_mat->mat, my_mat->scalar, my_mat->result);
+    /* free(my_mat); */
+    printf("debug4: free()\n");
     return status;
 }

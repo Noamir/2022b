@@ -82,5 +82,6 @@ int handleMul(mat_t *all[], char *c)
         return status;
 
     mulMat(my_mat->mul1, my_mat->mul2, my_mat->result);
+    free(my_mat);
     return status;
 }

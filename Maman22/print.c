@@ -48,5 +48,6 @@ int handlePrint(mat_t *all[], char *c)
         return status;
 
     printMat(my_mat->mat);
+    free(my_mat);
     return status;
 }
