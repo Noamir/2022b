@@ -6,6 +6,7 @@
 #define MAT_SIZE 4
 #define DEFAULT_BUFFER 5
 #define DEFAULT_MAT_VAL 0
+#define NUM_OF_MATS 6
 
 int isspace(int ch);
 
