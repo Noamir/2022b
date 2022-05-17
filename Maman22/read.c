@@ -7,6 +7,7 @@ struct read_mat_def
     double numbers[MAT_SIZE * MAT_SIZE];
 };
 
+/* toStructForRead: Get read_mat command string, validate its components, adapt it to read_mat struct */
 int toStructForRead(mat_t *all[], char *c, read_mat_t *ptrStruct)
 {
     int i, idx, status, counter = 0, cells_num;
@@ -71,7 +72,8 @@ int toStructForRead(mat_t *all[], char *c, read_mat_t *ptrStruct)
     return S_SUCCESS;
 }
 
-void read_mat(mat_t *mat, double numbers[])
+/* readMat: Get a mat and array of numbers. Insert numbers to mat cells.*/
+void readMat(mat_t *mat, double numbers[])
 {
     int i, j, k;
     k = 0;
@@ -85,16 +87,15 @@ void read_mat(mat_t *mat, double numbers[])
     print_mat(mat);
 }
 
+/* handleRead: Handle read_mat process - from string input to execution */
 int handleRead(mat_t *all[], char *c)
 {
     int status;
     read_mat_t *my_mat = calloc(1, sizeof(read_mat_t));
     status = toStructForRead(all, c, my_mat);
-
     if (status != S_SUCCESS)
         return status;
 
-    read_mat(my_mat->mat, my_mat->numbers);
-
+    readMat(my_mat->mat, my_mat->numbers);
     return status;
 }

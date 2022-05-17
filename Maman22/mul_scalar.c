@@ -7,6 +7,7 @@ struct mul_scalar_def
     mat_t *result;
 };
 
+/* toStructForMulScalar: Get mul_scalar command string, validate its components, adapt it to mul_scalar struct */
 int toStructForMulScalar(mat_t *all[], char *c, mul_scalar_t *ptrStruct)
 {
     char *tmp = (char *)malloc(strlen(c) * sizeof(char));
@@ -59,7 +60,8 @@ int toStructForMulScalar(mat_t *all[], char *c, mul_scalar_t *ptrStruct)
     return status;
 }
 
-void mul_scalar(mat_t *mat, double scalar, mat_t *result)
+/* subMat: Get a mat, a number, multiple mat cells with the number and insert result to mat result */
+void mulScalar(mat_t *mat, double scalar, mat_t *result)
 {
     int i, j;
     for (i = 0; i < result->size; i++)
@@ -71,16 +73,15 @@ void mul_scalar(mat_t *mat, double scalar, mat_t *result)
     print_mat(result);
 }
 
+/* handleMulScalar: Handle mul_scalar process - from string input to execution */
 int handleMulScalar(mat_t *all[], char *c)
 {
     int status;
     mul_scalar_t *my_mat = calloc(1, sizeof(mul_scalar_t));
     status = toStructForMulScalar(all, c, my_mat);
-
     if (status != S_SUCCESS)
         return status;
 
-    mul_scalar(my_mat->mat, my_mat->scalar, my_mat->result);
-
+    mulScalar(my_mat->mat, my_mat->scalar, my_mat->result);
     return status;
 }

@@ -6,6 +6,7 @@ struct trans_mat_def
     mat_t *result;
 };
 
+/* toStructForTrans: Get trans_mat command string, validate its components, adapt it to trans_mat struct */
 int toStructForTrans(mat_t *all[], char *c, trans_mat_t *ptrStruct)
 {
     int idx, status;
@@ -34,7 +35,8 @@ int toStructForTrans(mat_t *all[], char *c, trans_mat_t *ptrStruct)
     return status;
 }
 
-void trans_mat(mat_t *mat, mat_t *result)
+/* subMat: Get 2 mats, transfer mat and insert result to mat result */
+void transMat(mat_t *mat, mat_t *result)
 {
     int i, j;
     mat_t *tmp = calloc(1, sizeof(mat_t));
@@ -55,16 +57,15 @@ void trans_mat(mat_t *mat, mat_t *result)
     print_mat(result);
 }
 
+/* handleTrans: Handle trans_mat process - from string input to execution */
 int handleTrans(mat_t *all[], char *c)
 {
     int status;
     trans_mat_t *my_mat = calloc(1, sizeof(trans_mat_t));
     status = toStructForTrans(all, c, my_mat);
-
     if (status != S_SUCCESS)
         return status;
 
-    trans_mat(my_mat->mat, my_mat->result);
-
+    transMat(my_mat->mat, my_mat->result);
     return status;
 }

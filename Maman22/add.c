@@ -7,6 +7,7 @@ struct add_mat_def
     mat_t *result;
 };
 
+/* toStructForAdd: Get add_mat command string, validate its components, adapt it to add_mat struct */
 int toStructForAdd(mat_t *all[], char *c, add_mat_t *ptrStruct)
 {
     int idx, status;
@@ -47,7 +48,8 @@ int toStructForAdd(mat_t *all[], char *c, add_mat_t *ptrStruct)
     return status;
 }
 
-void add_mat(mat_t *add1, mat_t *add2, mat_t *result)
+/* addMat: Get 3 mats, add mat add1 to mat add2 and insert result to mat result */
+void addMat(mat_t *add1, mat_t *add2, mat_t *result)
 {
     int i, j;
 
@@ -60,16 +62,15 @@ void add_mat(mat_t *add1, mat_t *add2, mat_t *result)
     print_mat(result);
 }
 
+/* handleAdd: Handle add_mat process - from string input to execution */
 int handleAdd(mat_t *all[], char *c)
 {
     int status;
-
     add_mat_t *my_mat = calloc(1, sizeof(add_mat_t));
     status = toStructForAdd(all, c, my_mat);
     if (status != S_SUCCESS)
         return status;
 
-    add_mat(my_mat->add1, my_mat->add2, my_mat->result);
-
+    addMat(my_mat->add1, my_mat->add2, my_mat->result);
     return status;
 }

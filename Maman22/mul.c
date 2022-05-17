@@ -7,6 +7,7 @@ struct mul_mat_def
     mat_t *result;
 };
 
+/* toStructForMul: Get mul_mat command string, validate its components, adapt it to mul_mat struct */
 int toStructForMul(mat_t *all[], char *c, mul_mat_t *ptrStruct)
 {
     int idx, status;
@@ -46,7 +47,8 @@ int toStructForMul(mat_t *all[], char *c, mul_mat_t *ptrStruct)
     return status;
 }
 
-void mul_mat(mat_t *mul1, mat_t *mul2, mat_t *result)
+/* mulMat: Get 3 mats, mul mat mul1 in mat mul2 and insert result to mat result */
+void mulMat(mat_t *mul1, mat_t *mul2, mat_t *result)
 {
     int i, j, k;
     mat_t *tmp = calloc(1, sizeof(mat_t));
@@ -70,16 +72,15 @@ void mul_mat(mat_t *mul1, mat_t *mul2, mat_t *result)
     print_mat(result);
 }
 
+/* handleMul: Handle mul_mat process - from string input to execution */
 int handleMul(mat_t *all[], char *c)
 {
     int status;
     mul_mat_t *my_mat = calloc(1, sizeof(mul_mat_t));
     status = toStructForMul(all, c, my_mat);
-
     if (status != S_SUCCESS)
         return status;
 
-    mul_mat(my_mat->mul1, my_mat->mul2, my_mat->result);
-
+    mulMat(my_mat->mul1, my_mat->mul2, my_mat->result);
     return status;
 }
