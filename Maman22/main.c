@@ -1,17 +1,17 @@
 #include "mat.h"
 
+/* initMats: Get array of mat_t mats, initiate all mats matrixes cells to DEFAULT_MAT_VAL */
 void initMats(mat_t *mats[])
 {
     int i, j, k;
     mat_t *m;
 
-    for (i = 0; i < 6; i++)
+    for (i = 0; i < NUM_OF_MATS; i++)
     {
         m = mats[i];
 
         m->size = MAT_SIZE;
 
-        /* initiate all matrix cells to DEFAULT_MAT_VAL */
         for (j = 0; j < m->size; j++)
         {
             for (k = 0; k < m->size; k++)
@@ -22,7 +22,8 @@ void initMats(mat_t *mats[])
     }
 }
 
-void printMessage(int status)
+/* statusHandler: Get a status code, print the relevant message, exit if needed */
+void statusHandler(int status)
 {
     switch (status)
     {
@@ -64,25 +65,31 @@ void printMessage(int status)
         break;
     case S_FAIL_MEMORY_ALLOCATION:
         printf("\nFatal error: memory allocation failed!\n");
-        break;
+        exit(S_FAIL_MEMORY_ALLOCATION);
     case S_FAIL_EOF:
         printf("\nInput got EOF char. Illigal. Stopping the program with error.\n");
-        break;
+        exit(S_FAIL_EOF);
     }
 }
 
+/* getCommand: Get unlimited number of chars from stdin, return pointer to these chars */
 char *getCommand()
 {
     int limit = DEFAULT_BUFFER, i = 0;
     char *tmp_ptr;
+
+    /* allocate DEFAULT_LIMIT size for dynamic chars pointer size */
     char *command = (char *)malloc(limit * sizeof(char));
+
+    /* if dynamic allocation failed - return NULL */
+    if (command == NULL)
+        return NULL;
 
     printf("\nInsert a new command\n");
 
     *(command + i) = getchar();
 
-    /* get command chars from stdin to command pointer */
-    /* TODO: get input from file is not ending aith \n - handle */
+    /* get command chars from stdin to command pointer. If command limit is met - realloc. */
     for (i = 0; (i <= limit) && (*(command + i) != '\n') && (*(command + i) != EOF); i++)
     {
         /* got to the limit of chars size - increase limit and realloc command with new limit size */
@@ -93,16 +100,14 @@ char *getCommand()
 
             /* if dynamic allocation failed - return NULL */
             if (tmp_ptr == NULL)
-            {
                 return NULL;
-            }
 
             command = tmp_ptr;
         }
         *(command + i + 1) = getchar();
     }
 
-    /* replace \n with \0 - NULL */
+    /* replace \n with \0 */
     if (*(command + i) == '\n')
         command[i] = '\0';
 
@@ -112,6 +117,7 @@ char *getCommand()
     return command;
 }
 
+/* trimLeadingSpaces: Remove all leading spaces in a given string */
 void trimLeadingSpaces(char *c)
 {
     int i = 0;
@@ -122,21 +128,23 @@ void trimLeadingSpaces(char *c)
         memmove(c, c + i * sizeof(char), strlen(c));
 }
 
-void containsEOF(char *c)
+/* endsWithEOF: Check if a given string ends with EOF.
+If yes - print a relevant message, and exit the program.
+If not - do nothing */
+void endsWithEOF(char *c)
 {
     int i = 0;
     while (c[i] != '\0')
     {
         if (c[i] == EOF)
-        {
-            printMessage(S_FAIL_EOF);
-            exit(S_FAIL_EOF);
-        }
+            statusHandler(S_FAIL_EOF);
 
         i++;
     }
 }
 
+/* whichCommand: Get the full command string input,
+return the command action to perform on the matrix - represented by ENUM */
 int whichCommand(char *c)
 {
     char *tmp = (char *)malloc(strlen(c) * sizeof(char));
@@ -197,6 +205,8 @@ int whichCommand(char *c)
     else
         return CMD_UNDEFINED;
 
+    /* must have at least 1 space between action and the rest of the command
+    (unless it is stop command) */
     if ((!isspace(c[0])) && (status != CMD_STOP))
         return CMD_NO_SPACE;
 
@@ -204,12 +214,12 @@ int whichCommand(char *c)
     return status;
 }
 
+/* whichMat: Get the current command string,
+return the matrix name to perform actions on - represented by ENUM */
 int whichMat(char *c)
 {
-
     char *tmp = (char *)malloc(strlen(c) * sizeof(char));
     int status;
-
     trimLeadingSpaces(c);
 
     if (strcmp(c, "\0") == 0)
@@ -250,11 +260,18 @@ int whichMat(char *c)
     else
         return MAT_UNDEFINED;
 
+    /* must have at least 1 space or comma between matrix name and the rest of the command
+    (unless it is the end of the command) */
     if ((strcmp(c, "\0") != 0) && (!isspace(c[0])) && (strncmp(c, ",", strlen(",")) != 0) && (c[0] != EOF))
         return MAT_UNDEFINED;
 
     return status;
 }
+
+
+/* This program functions as matrix calculator.
+The calculator gets commands from stdin, 
+analize them, and perform the requested actions on the requested matrixes. */
 
 int main()
 {
@@ -265,10 +282,13 @@ int main()
     mat_t *MAT_E = calloc(1, sizeof(mat_t));
     mat_t *MAT_F = calloc(1, sizeof(mat_t));
 
+    if(MAT_A == NULL || MAT_B == NULL || MAT_C == NULL || MAT_D == NULL || MAT_E == NULL || MAT_F == NULL)
+        statusHandler(S_FAIL_MEMORY_ALLOCATION);
+
     int status, cmd;
     char *command_str;
 
-    mat_t *all[6];
+    mat_t *all[NUM_OF_MATS];
     all[E_MAT_A] = MAT_A;
     all[E_MAT_B] = MAT_B;
     all[E_MAT_C] = MAT_C;
@@ -294,20 +314,19 @@ int main()
         command_str = getCommand();
 
         if (command_str == NULL)
-        {
-            printMessage(S_FAIL_MEMORY_ALLOCATION);
-        }
+            statusHandler(S_FAIL_MEMORY_ALLOCATION);
 
         cmd = whichCommand(command_str);
         trimLeadingSpaces(command_str);
 
         if (strncmp(command_str, ",", 1) == 0)
         {
-            printMessage(S_FAIL_ILLEGAL_COMMA);
-            containsEOF(command_str);
+            statusHandler(S_FAIL_ILLEGAL_COMMA);
+            endsWithEOF(command_str);
             continue;
         }
 
+        /* For each command - call the relevant handler for additional analysis */
         switch (cmd)
         {
         case CMD_PRINT_MAT:
@@ -340,8 +359,7 @@ int main()
             else if (command_str[0] == EOF)
             {
                 printf("Stopping...\n");
-                printMessage(S_FAIL_EOF);
-                exit(S_FAIL_EOF);
+                statusHandler(S_FAIL_EOF);
             }
             status = S_FAIL_EXTRA_TEXT;
             break;
@@ -352,9 +370,8 @@ int main()
             status = S_FAIL_NO_COMMAND;
             break;
         }
-
-        printMessage(status);
-        containsEOF(command_str);
+        statusHandler(status);
+        endsWithEOF(command_str);
         /* free(command_str); */
     }
 
