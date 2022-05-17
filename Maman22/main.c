@@ -113,7 +113,6 @@ char *getCommand()
 
     printf("\nThe command is: %s\n", command);
 
-    /* free(tmp_ptr); */
     return command;
 }
 
@@ -210,7 +209,7 @@ int whichCommand(char *c)
     if ((!isspace(c[0])) && (status != CMD_STOP))
         return CMD_NO_SPACE;
 
-    /* free(tmp); */
+    free(tmp);
     return status;
 }
 
@@ -265,6 +264,7 @@ int whichMat(char *c)
     if ((strcmp(c, "\0") != 0) && (!isspace(c[0])) && (strncmp(c, ",", strlen(",")) != 0) && (c[0] != EOF))
         return MAT_UNDEFINED;
 
+    free(tmp);
     return status;
 }
 
