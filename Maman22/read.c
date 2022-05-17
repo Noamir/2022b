@@ -26,7 +26,6 @@ int toStructForRead(mat_t *all[], char *c, read_mat_t *ptrStruct)
     ptrStruct->mat = all[idx];
     cells_num = ptrStruct->mat->size * ptrStruct->mat->size;
 
-    /* TODO: How to forward pointer correctly - how to free spaces I skipped here */
     tmp = (char *)malloc(strlen(c) * sizeof(char));
     strcpy(tmp, c);
     num_str = strtok(tmp, ",");
@@ -45,7 +44,7 @@ int toStructForRead(mat_t *all[], char *c, read_mat_t *ptrStruct)
 
         if (counter < cells_num)
             ptrStruct->numbers[counter] = number;
-
+            
         if (strcmp(c, "\0") != 0)
         {
             status = validateReadCommas(c);
@@ -84,7 +83,7 @@ void readMat(mat_t *mat, double numbers[])
             mat->matrix[i][j] = numbers[k];
     }
 
-    print_mat(mat);
+    printMat(mat);
 }
 
 /* handleRead: Handle read_mat process - from string input to execution */

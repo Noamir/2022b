@@ -54,7 +54,7 @@ void transMat(mat_t *mat, mat_t *result)
             result->matrix[i][j] = tmp->matrix[i][j];
     }
     free(tmp);
-    print_mat(result);
+    printMat(result);
 }
 
 /* handleTrans: Handle trans_mat process - from string input to execution */

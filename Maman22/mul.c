@@ -69,7 +69,7 @@ void mulMat(mat_t *mul1, mat_t *mul2, mat_t *result)
             result->matrix[i][j] = tmp->matrix[i][j];
     }
     free(tmp);
-    print_mat(result);
+    printMat(result);
 }
 
 /* handleMul: Handle mul_mat process - from string input to execution */

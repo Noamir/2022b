@@ -268,27 +268,27 @@ int whichMat(char *c)
     return status;
 }
 
-
 /* This program functions as matrix calculator.
-The calculator gets commands from stdin, 
+The calculator gets commands from stdin,
 analize them, and perform the requested actions on the requested matrixes. */
 
 int main()
 {
+    int status, cmd;
+    char *command_str;
+
     mat_t *MAT_A = calloc(1, sizeof(mat_t));
     mat_t *MAT_B = calloc(1, sizeof(mat_t));
     mat_t *MAT_C = calloc(1, sizeof(mat_t));
     mat_t *MAT_D = calloc(1, sizeof(mat_t));
     mat_t *MAT_E = calloc(1, sizeof(mat_t));
     mat_t *MAT_F = calloc(1, sizeof(mat_t));
+    mat_t *all[NUM_OF_MATS];
 
-    if(MAT_A == NULL || MAT_B == NULL || MAT_C == NULL || MAT_D == NULL || MAT_E == NULL || MAT_F == NULL)
+    if (MAT_A == NULL || MAT_B == NULL || MAT_C == NULL || MAT_D == NULL || MAT_E == NULL || MAT_F == NULL)
         statusHandler(S_FAIL_MEMORY_ALLOCATION);
 
-    int status, cmd;
-    char *command_str;
-
-    mat_t *all[NUM_OF_MATS];
+    
     all[E_MAT_A] = MAT_A;
     all[E_MAT_B] = MAT_B;
     all[E_MAT_C] = MAT_C;

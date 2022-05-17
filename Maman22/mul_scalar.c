@@ -70,7 +70,7 @@ void mulScalar(mat_t *mat, double scalar, mat_t *result)
             result->matrix[i][j] = mat->matrix[i][j] * scalar;
     }
 
-    print_mat(result);
+    printMat(result);
 }
 
 /* handleMulScalar: Handle mul_scalar process - from string input to execution */

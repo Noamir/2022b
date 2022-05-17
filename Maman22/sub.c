@@ -56,7 +56,7 @@ void subMat(mat_t *sub1, mat_t *sub2, mat_t *result)
         for (j = 0; j < result->size; j++)
             result->matrix[i][j] = sub1->matrix[i][j] - sub2->matrix[i][j];
     }
-    print_mat(result);
+    printMat(result);
 }
 
 /* handleSub: Handle sub_mat process - from string input to execution */

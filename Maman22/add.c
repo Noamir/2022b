@@ -59,7 +59,7 @@ void addMat(mat_t *add1, mat_t *add2, mat_t *result)
             result->matrix[i][j] = add1->matrix[i][j] + add2->matrix[i][j];
     }
 
-    print_mat(result);
+    printMat(result);
 }
 
 /* handleAdd: Handle add_mat process - from string input to execution */
