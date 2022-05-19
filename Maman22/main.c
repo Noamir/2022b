@@ -215,15 +215,11 @@ int whichCommand(char *c)
 return the matrix name to perform actions on - represented by ENUM */
 int whichMat(char *c)
 {
-    char *tmp = (char *)malloc(strlen(c) * sizeof(char));
     int status;
     trimLeadingSpaces(c);
 
     if (strcmp(c, "\0") == 0)
         return MAT_NULL;
-
-    strcpy(tmp, c);
-
     if (strncmp(c, "MAT_A", strlen("MAT_A")) == 0)
     {
         memmove(c, c + strlen("MAT_A"), strlen(c));
@@ -262,7 +258,6 @@ int whichMat(char *c)
     if ((strcmp(c, "\0") != 0) && (!isspace(c[0])) && (strncmp(c, ",", strlen(",")) != 0) && (c[0] != EOF))
         return MAT_UNDEFINED;
 
-    free(tmp);
     return status;
 }
 
@@ -286,7 +281,6 @@ int main()
     if (MAT_A == NULL || MAT_B == NULL || MAT_C == NULL || MAT_D == NULL || MAT_E == NULL || MAT_F == NULL)
         statusHandler(S_FAIL_MEMORY_ALLOCATION);
 
-    
     all[E_MAT_A] = MAT_A;
     all[E_MAT_B] = MAT_B;
     all[E_MAT_C] = MAT_C;
@@ -324,7 +318,6 @@ int main()
             continue;
         }
 
-        printf("debug1: main\n");
         /* For each command - call the relevant handler for additional analysis */
         switch (cmd)
         {
