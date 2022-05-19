@@ -80,6 +80,5 @@ int handleMulScalar(mat_t *all[], char *c)
         return status;
     mulScalar(my_mat->mat, my_mat->scalar, my_mat->result);
     free(my_mat);
-
     return status;
 }
