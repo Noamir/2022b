@@ -22,6 +22,14 @@ void initMats(mat_t *mats[])
     }
 }
 
+/* freeMats: Get array of mat_t mats, free all allocated memory for all of mats items */
+void freeMats(mat_t *mats[])
+{
+    int i;
+    for (i = 0; i < NUM_OF_MATS; i++)
+        free(mats[i]);
+}
+
 /* statusHandler: Get a status code, print the relevant message, exit if needed */
 void statusHandler(int status)
 {
@@ -367,6 +375,6 @@ int main()
         free(command_str);
     }
 
-    /* free(all); */
+    freeMats(all);
     return 0;
 }
