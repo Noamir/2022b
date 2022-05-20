@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue May 17 13:21:53 2022
+# Make data base, printed on Fri May 20 04:03:46 2022
 
 # Variables
 
@@ -41,7 +41,7 @@ SHELL = /bin/sh
 # environment
 VSCODE_NLS_CONFIG = {"locale":"en","availableLanguages":{}}
 # environment
-_ = /home/noa/.vscode-server/bin/da15b6fd3ef856477bf6f4fb29ba1b7af717770d/node
+_ = /home/noa/.vscode-server/bin/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5/node
 # makefile (from 'makefile', line 1)
 MAKEFILE_LIST :=  makefile
 # 'override' directive
@@ -57,15 +57,15 @@ LESSOPEN = | /usr/bin/lesspipe %s
 # environment
 VSCODE_CWD = /home/noa
 # environment
-SSH_CONNECTION = 192.168.225.1 61513 192.168.225.129 22
+SSH_CONNECTION = 192.168.225.1 49845 192.168.225.129 22
 # environment
-PATH = /home/noa/.vscode-server/bin/da15b6fd3ef856477bf6f4fb29ba1b7af717770d/bin/remote-cli:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+PATH = /home/noa/.vscode-server/bin/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5/bin/remote-cli:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
 VSCODE_LOG_STACK = false
 # environment
-VSCODE_IPC_HOOK_CLI = /run/user/1000/vscode-ipc-258b60b3-48d1-47fd-bf1d-18441b67cc9c.sock
+VSCODE_IPC_HOOK_CLI = /run/user/1000/vscode-ipc-8960e3c0-9dc3-4935-80ac-eecdabea64d8.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -115,7 +115,7 @@ USER = noa
 # default
 MAKE_COMMAND := make
 # environment
-OLDPWD = /home/noa/.vscode-server/bin/da15b6fd3ef856477bf6f4fb29ba1b7af717770d
+OLDPWD = /home/noa/.vscode-server/bin/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5
 # default
 .VARIABLES := 
 # automatic
@@ -125,11 +125,11 @@ MAKEFLAGS = pqrR
 # environment
 MFLAGS = -pqrR
 # environment
-SSH_CLIENT = 192.168.225.1 61513 22
+SSH_CLIENT = 192.168.225.1 49845 22
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # environment
-BROWSER = /home/noa/.vscode-server/bin/da15b6fd3ef856477bf6f4fb29ba1b7af717770d/bin/helpers/browser.sh
+BROWSER = /home/noa/.vscode-server/bin/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5/bin/helpers/browser.sh
 # environment
 VSCODE_HANDLES_SIGPIPE = true
 # default
@@ -163,9 +163,9 @@ MOTD_SHOWN = pam
 
 # Directories
 
-# . (device 2053, inode 409029): 23 files, no impossibilities.
+# . (device 2053, inode 409029): 18 files, no impossibilities.
 
-# 23 files, no impossibilities in 1 directories.
+# 18 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -262,12 +262,12 @@ trans.c:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 28 / storage = 247 B / avg = 8 B
-# current buf: size = 8162 B / used = 247 B / count = 28 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 23 / storage = 200 B / avg = 8 B
+# current buf: size = 8162 B / used = 200 B / count = 23 / avg = 8 B
 
-# strcache performance: lookups = 43 / hit rate = 34%
+# strcache performance: lookups = 38 / hit rate = 39%
 # hash-table stats:
-# Load=28/8192=0%, Rehash=0, Collisions=1/43=2%
-# Finished Make data base on Tue May 17 13:21:53 2022
+# Load=23/8192=0%, Rehash=0, Collisions=1/38=3%
+# Finished Make data base on Fri May 20 04:03:46 2022
 
  

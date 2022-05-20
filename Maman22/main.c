@@ -357,11 +357,13 @@ int main()
             if (strcmp(command_str, "\0") == 0)
             {
                 printf("Stopping...\n");
+                freeMats(all);
                 exit(S_SUCCESS);
             }
             else if (command_str[0] == EOF)
             {
                 printf("Stopping...\n");
+                freeMats(all);
                 statusHandler(S_FAIL_EOF);
             }
             status = S_FAIL_EXTRA_TEXT;
