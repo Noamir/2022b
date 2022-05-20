@@ -43,6 +43,9 @@ int handlePrint(mat_t *all[], char *c)
 {
     int status;
     print_mat_t *my_mat = calloc(1, sizeof(print_mat_t));
+    if (my_mat == NULL)
+        statusHandler(S_FAIL_MEMORY_ALLOCATION);
+
     status = toStructForPrint(all, c, my_mat);
     if (status != S_SUCCESS)
         return status;

@@ -40,6 +40,9 @@ void transMat(mat_t *mat, mat_t *result)
 {
     int i, j;
     mat_t *tmp = calloc(1, sizeof(mat_t));
+    if (tmp == NULL)
+        statusHandler(S_FAIL_MEMORY_ALLOCATION);
+
     tmp->size = MAT_SIZE;
 
     for (i = 0; i < tmp->size; i++)
@@ -62,6 +65,9 @@ int handleTrans(mat_t *all[], char *c)
 {
     int status;
     trans_mat_t *my_mat = calloc(1, sizeof(trans_mat_t));
+    if (my_mat == NULL)
+        statusHandler(S_FAIL_MEMORY_ALLOCATION);
+
     status = toStructForTrans(all, c, my_mat);
     if (status != S_SUCCESS)
         return status;

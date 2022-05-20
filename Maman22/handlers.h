@@ -9,6 +9,7 @@ typedef struct read_mat_def read_mat_t;
 typedef struct trans_mat_def trans_mat_t;
 
 void printMat(mat_t *m);
+void statusHandler(int status);
 int whichMat(char *c);
 int validateMat(int matIdx);
 int validateCommas(char *command);

@@ -67,6 +67,9 @@ int handleAdd(mat_t *all[], char *c)
 {
     int status;
     add_mat_t *my_mat = calloc(1, sizeof(add_mat_t));
+    if (my_mat == NULL)
+        statusHandler(S_FAIL_MEMORY_ALLOCATION);
+
     status = toStructForAdd(all, c, my_mat);
     if (status != S_SUCCESS)
         return status;

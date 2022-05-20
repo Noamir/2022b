@@ -158,6 +158,9 @@ int whichCommand(char *c)
     char *cmd;
     int status;
 
+    if (tmp == NULL)
+        statusHandler(S_FAIL_MEMORY_ALLOCATION);
+
     trimLeadingSpaces(c);
 
     if (strcmp(c, "\0") == 0)

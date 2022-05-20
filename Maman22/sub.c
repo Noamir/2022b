@@ -64,6 +64,9 @@ int handleSub(mat_t *all[], char *c)
 {
     int status;
     sub_mat_t *my_mat = calloc(1, sizeof(sub_mat_t));
+    if (my_mat == NULL)
+        statusHandler(S_FAIL_MEMORY_ALLOCATION);
+
     status = toStructForSub(all, c, my_mat);
     if (status != S_SUCCESS)
         return status;

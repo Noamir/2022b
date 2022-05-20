@@ -52,6 +52,8 @@ void mulMat(mat_t *mul1, mat_t *mul2, mat_t *result)
 {
     int i, j, k;
     mat_t *tmp = calloc(1, sizeof(mat_t));
+    if (tmp == NULL)
+        statusHandler(S_FAIL_MEMORY_ALLOCATION);
     tmp->size = MAT_SIZE;
 
     for (i = 0; i < mul1->size; i++)
@@ -77,6 +79,9 @@ int handleMul(mat_t *all[], char *c)
 {
     int status;
     mul_mat_t *my_mat = calloc(1, sizeof(mul_mat_t));
+    if (my_mat == NULL)
+        statusHandler(S_FAIL_MEMORY_ALLOCATION);
+
     status = toStructForMul(all, c, my_mat);
     if (status != S_SUCCESS)
         return status;

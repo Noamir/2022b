@@ -15,6 +15,9 @@ int toStructForMulScalar(mat_t *all[], char *c, mul_scalar_t *ptrStruct)
     double scalar;
     char *tmp = (char *)malloc(strlen(c) * sizeof(char));
 
+    if (tmp == NULL)
+        statusHandler(S_FAIL_MEMORY_ALLOCATION);
+
     idx = whichMat(c);
     status = validateMat(idx);
     if (status != S_SUCCESS)
@@ -75,6 +78,9 @@ int handleMulScalar(mat_t *all[], char *c)
 {
     int status;
     mul_scalar_t *my_mat = calloc(1, sizeof(mul_scalar_t));
+    if (my_mat == NULL)
+        statusHandler(S_FAIL_MEMORY_ALLOCATION);
+
     status = toStructForMulScalar(all, c, my_mat);
     if (status != S_SUCCESS)
         return status;

@@ -27,6 +27,9 @@ int toStructForRead(mat_t *all[], char *c, read_mat_t *ptrStruct)
     cells_num = ptrStruct->mat->size * ptrStruct->mat->size;
 
     tmp = (char *)malloc(strlen(c) * sizeof(char));
+    if (tmp == NULL)
+        statusHandler(S_FAIL_MEMORY_ALLOCATION);
+
     strcpy(tmp, c);
     num_str = strtok(tmp, ",");
 
@@ -91,6 +94,9 @@ int handleRead(mat_t *all[], char *c)
 {
     int status;
     read_mat_t *my_mat = calloc(1, sizeof(read_mat_t));
+    if (my_mat == NULL)
+        statusHandler(S_FAIL_MEMORY_ALLOCATION);
+
     status = toStructForRead(all, c, my_mat);
     if (status != S_SUCCESS)
         return status;
