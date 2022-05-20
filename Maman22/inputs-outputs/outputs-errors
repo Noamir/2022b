@@ -102,6 +102,12 @@ Argument is not a scalar
 
 Insert a new command
 
+The command is:                 read_mat MAT_A , 1,1,1,1,1,1,1,1,1 1,1,1,1,1,1
+
+Missing comma
+
+Insert a new command
+
 The command is: stop now
 
 Extraneous text after end of command
