@@ -101,7 +101,7 @@ char *getCommand()
     for (i = 0; (i <= limit) && (*(command + i) != '\n') && (*(command + i) != EOF); i++)
     {
         /* got to the limit of chars size - increase limit and realloc command with new limit size */
-        if (i == limit - 1)
+        if (i == limit - 2)
         {
             limit = 2 * limit;
             tmp_ptr = (char *)realloc(command, limit * sizeof(char));

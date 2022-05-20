@@ -43,6 +43,7 @@ int toStructForRead(mat_t *all[], char *c, read_mat_t *ptrStruct)
         if (status != S_SUCCESS)
             return status;
 
+        /* if num_str represents a real number - transfer it from string to double */
         number = strtod(num_str, &end);
 
         if (counter < cells_num)
@@ -60,6 +61,7 @@ int toStructForRead(mat_t *all[], char *c, read_mat_t *ptrStruct)
         counter++;
     }
 
+    /* if got less numbers than matrix cells, fill the rest of cells in matrix with DEFAULT_MAT_VAL */
     if (counter < cells_num)
     {
         for (i = counter; i < cells_num; i++)
