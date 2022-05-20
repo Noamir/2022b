@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Fri May 20 04:49:26 2022
+# Make data base, printed on Fri May 20 04:49:54 2022
 
 # Variables
 
@@ -35,15 +35,15 @@ VSCODE_LOG_NATIVE = false
 # default
 MAKE_VERSION := 4.2.1
 # makefile
-CURDIR := /home/noa/Desktop/2022b/Maman22
+CURDIR := /home/noa/Desktop/2022b
 # makefile
 SHELL = /bin/sh
 # environment
 VSCODE_NLS_CONFIG = {"locale":"en","availableLanguages":{}}
 # environment
 _ = /home/noa/.vscode-server/bin/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5/node
-# makefile (from 'makefile', line 1)
-MAKEFILE_LIST :=  makefile
+# makefile
+MAKEFILE_LIST := 
 # 'override' directive
 GNUMAKEFLAGS := 
 # environment
@@ -65,7 +65,7 @@ XDG_RUNTIME_DIR = /run/user/1000
 # environment
 VSCODE_LOG_STACK = false
 # environment
-VSCODE_IPC_HOOK_CLI = /run/user/1000/vscode-ipc-70ec3ca6-d35d-4ea1-87d4-08b2352385e2.sock
+VSCODE_IPC_HOOK_CLI = /run/user/1000/vscode-ipc-ea36c231-664d-4d74-bf11-93b2494c6444.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -75,7 +75,7 @@ LS_COLORS =
 # environment
 VSCODE_PIPE_LOGGING = true
 # environment
-PWD = /home/noa/Desktop/2022b/Maman22
+PWD = /home/noa/Desktop/2022b
 # default
 .LOADED := 
 # automatic
@@ -89,7 +89,7 @@ LESSCLOSE = /usr/bin/lesspipe %s %s
 # environment
 LOGNAME = noa
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # automatic
 +F = $(notdir $+)
 # environment
@@ -109,7 +109,7 @@ XDG_SESSION_ID = 16
 # environment
 USER = noa
 # makefile
-.DEFAULT_GOAL := main
+.DEFAULT_GOAL := 
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
 # default
@@ -153,7 +153,7 @@ VSCODE_EXTHOST_WILL_SEND_SOCKET = true
 # environment
 MOTD_SHOWN = pam
 # variable set hash-table stats:
-# Load=70/1024=7%, Rehash=0, Collisions=9/95=9%
+# Load=70/1024=7%, Rehash=0, Collisions=9/92=10%
 
 # Pattern-specific Variable Values
 
@@ -161,21 +161,15 @@ MOTD_SHOWN = pam
 
 # Directories
 
-# . (device 2053, inode 409029): 18 files, no impossibilities.
+# . (device 2053, inode 397240): 9 files, no impossibilities.
 
-# 18 files, no impossibilities in 1 directories.
+# 9 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
 # No implicit rules.
 
 # Files
-
-# Not a target:
-validation.c:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
 
 # Not a target:
 all:
@@ -185,35 +179,18 @@ all:
 #  File has not been updated.
 
 # Not a target:
-main.c:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-mul_scalar.c:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+Makefile:
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has been updated.
+#  Failed to be updated.
 
 # Not a target:
 makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-05-08 10:52:26.199591025
+#  File does not exist.
 #  File has been updated.
-#  Successfully updated.
-
-# Not a target:
-sub.c:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-add.c:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+#  Failed to be updated.
 
 # Not a target:
 .DEFAULT:
@@ -222,50 +199,26 @@ add.c:
 #  File has not been updated.
 
 # Not a target:
-print.c:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-read.c:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-main: main.c print.c add.c sub.c mul.c read.c mul_scalar.c trans.c validation.c
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-#  recipe to execute (from 'makefile', line 2):
-	gcc -Wall -pedantic -ansi main.c print.c add.c sub.c mul.c read.c mul_scalar.c trans.c validation.c -o main && ./main
-
-# Not a target:
-mul.c:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-trans.c:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+GNUmakefile:
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has been updated.
+#  Failed to be updated.
 
 # files hash-table stats:
-# Load=14/1024=1%, Rehash=0, Collisions=0/33=0%
+# Load=6/1024=1%, Rehash=0, Collisions=0/15=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 23 / storage = 200 B / avg = 8 B
-# current buf: size = 8162 B / used = 200 B / count = 23 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 17 / storage = 148 B / avg = 8 B
+# current buf: size = 8162 B / used = 148 B / count = 17 / avg = 8 B
 
-# strcache performance: lookups = 38 / hit rate = 39%
+# strcache performance: lookups = 20 / hit rate = 15%
 # hash-table stats:
-# Load=23/8192=0%, Rehash=0, Collisions=1/38=3%
-# Finished Make data base on Fri May 20 04:49:26 2022
+# Load=17/8192=0%, Rehash=0, Collisions=1/20=5%
+# Finished Make data base on Fri May 20 04:49:54 2022
 
  
