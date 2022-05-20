@@ -1,2 +1,0 @@
-read_mat MAT_A,1,2,3,4,5
-read_mat MAT_A , 2, 4, 6 8
