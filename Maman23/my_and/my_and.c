@@ -4,10 +4,11 @@
 
 #define ALL_BITS_ON 4294967295
 
-/* dec_to_hex:
+
+/** dec_to_hex:
 Gets a decimal number and converts it to its hexadecimal representation
 Returns a pointer to the hexadecimal number created
-*/
+**/
 char *dec_to_hex(int decimal)
 {
     int temp;
@@ -37,6 +38,7 @@ char *dec_to_hex(int decimal)
     return hexadecimalNumber;
 }
 
+
 /** get_bits_and:
 Gets count param which indicates how many unsigned int parameters this function will get.
 The function can get unlimited unsigned int parameters.
@@ -63,6 +65,13 @@ int get_bits_and(unsigned int count, ...)
     return bits_and;
 }
 
+
+/** This program calls to get_bits_and function 4 times.
+ The program prints to stdout:
+ 1. All parameters sent to get_bits_and function - dynamic unlimited number of parameters
+ 2. bits_and_result in Decimal representation
+ 3. bits_and_result in Hexadecimal representation 
+**/
 int main(void)
 {
     unsigned int bits_and_result;
