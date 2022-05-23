@@ -18,10 +18,13 @@ typedef struct node_def node_t;
 node_t *getChars(FILE *fptr)
 {
     int i = 0, limit = DEFAULT_LIMIT;
+    node_t *head;
     node_t *tmp_ptr = calloc(1, sizeof(node_t));
 
     /* allocate DEFAULT_LIMIT size for dynamic chars pointer size */
     node_t *node = calloc(1, sizeof(node_t));
+
+    head = node;
 
     node->chars = (char *)malloc(limit * sizeof(char));
 
@@ -29,12 +32,11 @@ node_t *getChars(FILE *fptr)
     if (node->chars == NULL)
         return NULL;
 
-    printf("debug1\n");
     /* insert input to the next space in chars. If chars limit is met - realloc. */
     for (i = 0; (i <= limit) && (*(node->chars + i) = fgetc(fptr)) != EOF; i++)
     {
         node->next = calloc(1, sizeof(node_t));
-        
+
         /* got to the limit of chars size - increase limit and realloc chars with new limit size */
         if (i == limit - 1)
         {
@@ -47,53 +49,55 @@ node_t *getChars(FILE *fptr)
 
             node->chars = tmp_ptr->chars;
         }
-        printf("debug2\n");
         node->next->chars = (char *)malloc(limit * sizeof(char));
         node = node->next;
     }
-    printf("debug3\n");
-    return node;
+    return head;
 }
 
 /* printChars: print all *chars chars in a nice format */
 /* special chars to handle for unified printing: \n and \t */
-void printChars(char *chars)
+void printChars(node_t *node)
 {
     int i = 0, len = 0;
 
     printf("\n\n===== NICE PRINT =====\n\n");
 
-    while (*(chars + i) != EOF)
+    while (node != NULL)
     {
-        if (*(chars + i) == '\n') /* \n is a special char - starts a new line*/
+        while (*(node->chars + i) != EOF)
         {
-            printf("%c", *(chars + i)); /* print char */
-            len = 0;                    /* reset len counter to 0 */
-            i++;                        /* point to next char in *chars */
+            if (*(node->chars + i) == '\n') /* \n is a special char - starts a new line*/
+            {
+                printf("%c", *(node->chars + i)); /* print char */
+                len = 0;                          /* reset len counter to 0 */
+                i++;                              /* point to next char in *chars */
+            }
+
+            else
+            {
+                if (len >= LINE_LEN) /* for any other char - first check if line limit has reached LINE_LEN */
+                {
+                    printf("\n"); /* start a new line */
+                    len = 0;      /* reset len counter to 0 */
+                }
+
+                if (*(node->chars + i) == '\t') /* \t is a special char */
+                {
+                    printf("%c", *(node->chars + i)); /* print char */
+                    len += (8 - (len % 8));           /* increase len with the space tab takes in line - completes to multiple of 8 spot*/
+                    i++;                              /* point to next char in *chars */
+                }
+
+                else /* for all other chars */
+                {
+                    printf("%c", *(node->chars + i)); /* print char */
+                    len++;                            /* increase len by 1 */
+                    i++;                              /* point to next char in *chars */
+                }
+            }
         }
-
-        else
-        {
-            if (len >= LINE_LEN) /* for any other char - first check if line limit has reached LINE_LEN */
-            {
-                printf("\n"); /* start a new line */
-                len = 0;      /* reset len counter to 0 */
-            }
-
-            if (*(chars + i) == '\t') /* \t is a special char */
-            {
-                printf("%c", *(chars + i)); /* print char */
-                len += (8 - (len % 8));     /* increase len with the space tab takes in line - completes to multiple of 8 spot*/
-                i++;                        /* point to next char in *chars */
-            }
-
-            else /* for all other chars */
-            {
-                printf("%c", *(chars + i)); /* print char */
-                len++;                      /* increase len by 1 */
-                i++;                        /* point to next char in *chars */
-            }
-        }
+        node = node->next;
     }
 
     printf("\n\n========= END =========\n\n");
@@ -105,8 +109,6 @@ int main(int argc, char **argv)
     FILE *fptr;
     char *filePath;
     node_t *head = calloc(1, sizeof(node_t));
-
-    /* chars = (char *)malloc(1000 * sizeof(char)); */
 
     /* validate the input */
     if (argc != 3)
@@ -134,15 +136,10 @@ int main(int argc, char **argv)
         exit(EXIT_FAILURE);
     }
 
-    /* get unlimited number of chars from file to chars pointer */
+    /* get unlimited number of chars from file into a list */
     head = getChars(fptr);
 
-    printf("test output: %s\n", head->chars);
-
-    /*     printf("The chars we got are: %s\n", chars); */
-
-    /* print input in a nice format */
-    /* printChars(chars); */
+    printChars(head);
 
     /* free chars allocation */
     /* free(chars); */
