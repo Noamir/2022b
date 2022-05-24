@@ -10,7 +10,7 @@
 
 struct node_def
 {
-    char *chars[NODE_CHARS];
+    char chars[NODE_CHARS];
     struct node_def *next;
 };
 
@@ -46,7 +46,8 @@ void printChars(node_t *node)
 
     /* Go over all list nodes */
     while (node != NULL)
-    {
+    {   
+        /* Go over each node and print its contents */
         while (*(node->chars + i) != EOF && (i < NODE_CHARS))
         {
             if (*(node->chars + i) == '\n') /* \n is a special char - starts a new line*/
