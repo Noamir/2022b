@@ -6,9 +6,11 @@
 #define LINE_LEN 20      /* number of chars in each printed line */
 #define INCREAS_BY 2     /* when limit is reached - increase it by this number */
 
+#define NODE_CHARS 10
+
 struct node_def
 {
-    char *chars;
+    char *chars; /* chars[NODE_CHARS] */
     struct node_def *next;
 };
 
