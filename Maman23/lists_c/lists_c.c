@@ -16,29 +16,45 @@ struct node_def
 
 typedef struct node_def node_t;
 
-/* getChars: get unlimited number of chars from file into a list, return a pointer to the list's head */
-node_t *getChars(FILE *fptr)
+/** build_list:
+Get a file pointer.
+Insert unlimited number of chars from the given file into a list.
+Each node in the list contains NODE_CHARS number of chars.
+Return a pointer to the list's head
+**/
+node_t *build_list(FILE *fptr)
 {
     int i = 0;
     node_t *head, *node;
     head = node = calloc(1, sizeof(node_t));
-    /* insert input to the next space in current list node chars. If NODE_CHARS limit is met - create a new node in list, and move on to it. */
-    for (i = 0; (i < NODE_CHARS) && (*(node->chars + i) = fgetc(fptr)) != EOF; i++)
+
+    /* TODO - handle empty file */
+    /* TODO - handle failed calloc */
+
+    /* insert the next char from file to the next index in current list node chars array */
+    while ((*(node->chars + i) = fgetc(fptr)) != EOF)
     {   
-        /* got to the limit of node chars size - create a new node in list, and move on to it */
+        /* if NODE_CHARS limit is met - create a new node in list, and move on to it */
         if (i == NODE_CHARS - 1)
         {
             node->next = calloc(1, sizeof(node_t));
             node = node->next;
-            i = 0;
+            i = 0;      /* new node, chars starts from index 0 */
         }
+        else
+            i++;
     }
+    node->next = NULL;  /* need to know where the list ends */
     return head;
 }
 
-/* printChars: print all *chars chars in a nice format */
-/* special chars to handle for unified printing: \n and \t */
-void printChars(node_t *node)
+
+/** print_list:
+Get a list's node to start printing from
+Print all nodes chars in a nice format
+Special chars to handle for unified printing: \n and \t 
+**/
+void print_list(node_t *node)
 {
     int i = 0, len = 0;
 
@@ -46,7 +62,7 @@ void printChars(node_t *node)
 
     /* Go over all list nodes */
     while (node != NULL)
-    {   
+    {
         /* Go over each node and print its contents */
         while (*(node->chars + i) != EOF && (i < NODE_CHARS))
         {
@@ -83,11 +99,11 @@ void printChars(node_t *node)
         node = node->next;
         i = 0;
     }
-
     printf("\n\n========= END =========\n\n");
 }
 
-/* main */
+
+/** This program.... **/
 int main(int argc, char **argv)
 {
     FILE *fptr;
@@ -121,13 +137,13 @@ int main(int argc, char **argv)
     }
 
     /* get unlimited number of chars from file into a list */
-    head = getChars(fptr);
+    head = build_list(fptr);
 
-    printChars(head);
+    print_list(head);
 
     /* free chars allocation */
     /* free(chars); */
     /* close file */
-    /* fclose(fptr); */
+    fclose(fptr);
     return 0;
 }
