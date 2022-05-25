@@ -5,7 +5,7 @@
 #define ALL_BITS_ON 4294967295
 
 /** get_bits_and:
-Gets count param which indicates how many unsigned int parameters this function will get.
+Gets count parameter which indicates how many unsigned int parameters this function will get.
 The function can get dynamic unlimited unsigned int parameters.
 The function returns the result of 'and' - '&' between all parameters bits. (exclusing the count parameter)
 **/
@@ -16,7 +16,6 @@ int get_bits_and(unsigned int count, ...)
     unsigned int curr, bits_and = ALL_BITS_ON; /* initial bits_and value is the max unsigned int value - so it won't affect the result */
 
     va_start(args, count);
-
     for (i = 0; i < count; i++)
     {
         curr = va_arg(args, unsigned int); /* get the current parameter */
@@ -27,10 +26,11 @@ int get_bits_and(unsigned int count, ...)
     return bits_and;
 }
 
+
 /** print_parameters:
-Gets count param which indicates how many unsigned int parameters this function will get.
+Gets count parameter which indicates how many unsigned int parameters this function will get.
 The function can get dynamic unlimited unsigned int parameters.
-The function prints all parameters, seperated by commas.
+The function prints all parameters, seperated by commas. (exclusing the count parameter)
  **/
 void print_parameters(unsigned int count, ...)
 {
@@ -49,11 +49,11 @@ void print_parameters(unsigned int count, ...)
             printf("%d, ", curr); /* print the current parameter with a following comma */
     }
     printf("\n");
-
     va_end(args);
 }
 
-/** This program calls to get_bits_and function 4 times.
+
+/** This program calls get_bits_and function 4 times.
  The program prints to stdout:
  1. All parameters sent to get_bits_and function - dynamic unlimited number of parameters
  2. bits_and_result in Decimal representation

@@ -2,11 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define DEFAULT_LIMIT 50 /* default limit of chars to get from stdin. if limit is reached - realloc will be made */
-#define LINE_LEN 20      /* number of chars in each printed line */
-#define INCREAS_BY 2     /* when limit is reached - increase it by this number */
-
-#define NODE_CHARS 10
+#define FILE_PATH_LEN 2048 /* default limit of file path chars length, to get from argv */
+#define NODE_CHARS 10      /* number of chars in each list node */
+#define LINE_LEN 20        /* number of chars in each printed line */
 
 struct node_def
 {
@@ -28,31 +26,40 @@ node_t *build_list(FILE *fptr)
     node_t *head, *node;
     head = node = calloc(1, sizeof(node_t));
 
+    if (head == NULL)
+    {
+        printf("\nFatal error: memory allocation failed!\n");
+        exit(EXIT_FAILURE);
+    }
+
     /* TODO - handle empty file */
-    /* TODO - handle failed calloc */
 
     /* insert the next char from file to the next index in current list node chars array */
     while ((*(node->chars + i) = fgetc(fptr)) != EOF)
-    {   
+    {
         /* if NODE_CHARS limit is met - create a new node in list, and move on to it */
         if (i == NODE_CHARS - 1)
         {
             node->next = calloc(1, sizeof(node_t));
+            if (node->next == NULL)
+            {
+                printf("\nFatal error: memory allocation failed!\n");
+                exit(EXIT_FAILURE);
+            }
             node = node->next;
-            i = 0;      /* new node, chars starts from index 0 */
+            i = 0; /* new node, chars starts from index 0 */
         }
         else
             i++;
     }
-    node->next = NULL;  /* need to know where the list ends */
+    node->next = NULL; /* need to know where the list ends */
     return head;
 }
-
 
 /** print_list:
 Get a list's node to start printing from
 Print all nodes chars in a nice format
-Special chars to handle for unified printing: \n and \t 
+Special chars to handle for unified printing: \n and \t
 **/
 void print_list(node_t *node)
 {
@@ -102,47 +109,51 @@ void print_list(node_t *node)
     printf("\n\n========= END =========\n\n");
 }
 
-
 /** This program.... **/
 int main(int argc, char **argv)
 {
     FILE *fptr;
-    char *filePath;
+    char *filePath = (char *)malloc(FILE_PATH_LEN * sizeof(char));
     node_t *head = calloc(1, sizeof(node_t));
+    node_t *tmp = calloc(1, sizeof(node_t));
 
-    /* validate the input */
-    if (argc != 3)
+    if (filePath == NULL || head == NULL || tmp == NULL)
     {
-        printf("Usage: %s -f <path_to_file>\n", argv[0]);
-        return 0;
+        printf("\nFatal error: memory allocation failed!\n");
+        exit(EXIT_FAILURE);
     }
 
-    if (strcmp(argv[1], "-f") != 0)
+    /* validate the command */
+    if ((argc != 3) || (strcmp(argv[1], "-f") != 0))
     {
         printf("Usage: %s -f <path_to_file>\n", argv[0]);
         return 0;
     }
 
     filePath = argv[2];
-
     fptr = fopen(filePath, "r");
 
     /* Exit if file not opened successfully */
     if (fptr == NULL)
     {
-        printf("Unable to open file.\n");
-        printf("Please check you have read/write previleges.\n");
-
+        printf("Unable to open file: %s\n",  argv[2]);
+        printf("Please check the file exists and make sure you have the right previleges.\n");
         exit(EXIT_FAILURE);
     }
 
     /* get unlimited number of chars from file into a list */
     head = build_list(fptr);
 
+    /* print all chars in list in a nice format */
     print_list(head);
 
-    /* free chars allocation */
-    /* free(chars); */
+    /* free list nodes allocation */
+    while (head != NULL)
+    {
+        tmp = head->next;
+        free(head);
+        head = tmp;
+    }
     /* close file */
     fclose(fptr);
     return 0;
