@@ -109,7 +109,10 @@ void print_list(node_t *node)
     printf("\n\n========= END =========\n\n");
 }
 
-/** This program.... **/
+/** This program gets a file name from the command line in this format: '-f <path_to_file>'
+The file should contain unlimited number of chars.
+The program insert the file content into a linked list and prints its content in a nice format to stdout.
+**/
 int main(int argc, char **argv)
 {
     FILE *fptr;
