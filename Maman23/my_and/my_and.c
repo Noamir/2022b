@@ -76,7 +76,7 @@ void print_hexadecimal(unsigned int count, ...)
     va_end(args);
 }
 
-/** This program calls get_bits_and function 4 times.
+/** This program calls get_bits_and function 4 times. Each time with a different number of parameters.
  The program prints to stdout:
  1. All parameters sent to get_bits_and function - dynamic unlimited number of parameters - in Decimal base
  2. All parameters sent to get_bits_and function - dynamic unlimited number of parameters - in Hexadecimal base

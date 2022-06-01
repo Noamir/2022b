@@ -1,18 +1,13 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "data.h"
 
-#define FILE_PATH_LEN 2048 /* default length of file path chars length, to get from argv */
-#define NODE_CHARS 10      /* number of chars in each list node */
-#define LINE_LEN 20        /* number of chars in each printed line */
-
+/* struct definition for list node */
 struct node_def
 {
     char chars[NODE_CHARS];
     struct node_def *next;
 };
 
-typedef struct node_def node_t;
+
 
 /** build_list:
 Get a file pointer.
@@ -31,8 +26,6 @@ node_t *build_list(FILE *fptr)
         printf("\nFatal error: memory allocation failed!\n");
         exit(EXIT_FAILURE);
     }
-
-    /* TODO - handle empty file */
 
     /* insert the next char from file to the next index in current list node chars array */
     while ((*(node->chars + i) = fgetc(fptr)) != EOF)
@@ -56,10 +49,11 @@ node_t *build_list(FILE *fptr)
     return head;
 }
 
+
 /** print_list:
 Get a list's node to start printing from
 Print all nodes chars in a nice format
-Special chars to handle for unified printing: \n and \t
+Special chars to handle for unified printing: '\n' and '\t'
 **/
 void print_list(node_t *node)
 {
@@ -73,7 +67,7 @@ void print_list(node_t *node)
         /* Go over each node and print its contents */
         while (*(node->chars + i) != EOF && (i < NODE_CHARS))
         {
-            if (*(node->chars + i) == '\n') /* \n is a special char - starts a new line*/
+            if (*(node->chars + i) == '\n')       /* \n is a special char - starts a new line*/
             {
                 printf("%c", *(node->chars + i)); /* print char */
                 len = 0;                          /* reset len counter to 0 */
@@ -84,18 +78,18 @@ void print_list(node_t *node)
             {
                 if (len >= LINE_LEN) /* for any other char - first check if line limit has reached LINE_LEN */
                 {
-                    printf("\n"); /* start a new line */
-                    len = 0;      /* reset len counter to 0 */
+                    printf("\n");    /* start a new line */
+                    len = 0;         /* reset len counter to 0 */
                 }
 
-                if (*(node->chars + i) == '\t') /* \t is a special char */
+                if (*(node->chars + i) == '\t')       /* \t is a special char */
                 {
                     printf("%c", *(node->chars + i)); /* print char */
                     len += (8 - (len % 8));           /* increase len with the space tab takes in line - completes to multiple of 8 spot*/
                     i++;                              /* point to next char in *chars */
                 }
 
-                else /* for all other chars */
+                else                                  /* for all other chars */
                 {
                     printf("%c", *(node->chars + i)); /* print char */
                     len++;                            /* increase len by 1 */
@@ -108,6 +102,7 @@ void print_list(node_t *node)
     }
     printf("\n\n========= END =========\n\n");
 }
+
 
 /** This program gets a file name from the command line in this format: '-f <path_to_file>'
 The file should contain unlimited number of chars.
@@ -129,14 +124,15 @@ int main(int argc, char **argv)
     /* validate the command */
     if ((argc != 3) || (strcmp(argv[1], "-f") != 0))
     {
-        printf("Usage: %s -f <path_to_file>\n", argv[0]);
-        return 0;
+        printf("The command you inserted is not in the right format. Please try again.\nUsage: %s -f <path_to_file>\n", argv[0]);
+        exit(EXIT_FAILURE);
     }
 
+    /* open file */
     filePath = argv[2];
     fptr = fopen(filePath, "r");
 
-    /* Exit if file not opened successfully */
+    /* exit if file not opened successfully */
     if (fptr == NULL)
     {
         printf("Unable to open file: %s\n",  argv[2]);
@@ -144,7 +140,7 @@ int main(int argc, char **argv)
         exit(EXIT_FAILURE);
     }
 
-    /* get unlimited number of chars from file into a list */
+    /* get unlimited number of chars from file into a list starts with head node */
     head = build_list(fptr);
 
     /* print all chars in list in a nice format */
@@ -159,5 +155,6 @@ int main(int argc, char **argv)
     }
     /* close file */
     fclose(fptr);
+
     return 0;
 }

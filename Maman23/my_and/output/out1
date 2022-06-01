@@ -76,16 +76,3 @@ bits_and_result Hexadecimal: 2
 
 =======================
 
-======== RUN  ========
-
-The parameters in Decimal base:
-2, 6, 10
-
-The parameters in Hexadecimal base:
-2, 6, A
-
-bits_and_result Decimal: 2
-bits_and_result Hexadecimal: 2
-
-=======================
-
