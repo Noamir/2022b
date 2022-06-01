@@ -1,0 +1,91 @@
+======== RUN 1 ========
+
+The parameters in Decimal base:
+5, 7, 61
+
+The parameters in Hexadecimal base:
+5, 7, 3D
+
+bits_and_result Decimal: 5
+bits_and_result Hexadecimal: 5
+
+=======================
+
+======== RUN 2 ========
+
+The parameters in Decimal base:
+15, 687, 831, 349535, 95
+
+The parameters in Hexadecimal base:
+F, 2AF, 33F, 5555F, 5F
+
+bits_and_result Decimal: 15
+bits_and_result Hexadecimal: F
+
+=======================
+
+======== RUN 3 ========
+
+The parameters in Decimal base:
+938, 106, 170, 362, 746, 3818, 2794, 2730, 31402, 55978
+
+The parameters in Hexadecimal base:
+3AA, 6A, AA, 16A, 2EA, EEA, AEA, AAA, 7AAA, DAAA
+
+bits_and_result Decimal: 42
+bits_and_result Hexadecimal: 2A
+
+=======================
+
+======== RUN 4 ========
+
+The parameters in Decimal base:
+262143, 8388607, 8126463, 6029291, 3932137, 2359264, 3407840, 3932128, 8126432, 8126433, 6029283, 5898179, 5799683, 5930771, 5996288
+
+The parameters in Hexadecimal base:
+3FFFF, 7FFFFF, 7BFFFF, 5BFFEB, 3BFFE9, 23FFE0, 33FFE0, 3BFFE0, 7BFFE0, 7BFFE1, 5BFFE3, 59FFC3, 587F03, 5A7F13, 5B7F00
+
+bits_and_result Decimal: 32512
+bits_and_result Hexadecimal: 7F00
+
+=======================
+
+======== RUN 5 ========
+
+The parameters in Decimal base:
+
+
+The parameters in Hexadecimal base:
+
+
+bits_and_result Decimal: 4294967295
+bits_and_result Hexadecimal: FFFFFFFF
+
+=======================
+
+======== RUN 6 ========
+
+The parameters in Decimal base:
+2, 6, 10
+
+The parameters in Hexadecimal base:
+2, 6, A
+
+bits_and_result Decimal: 2
+bits_and_result Hexadecimal: 2
+
+=======================
+
+======== RUN  ========
+
+The parameters in Decimal base:
+2, 6, 10
+
+The parameters in Hexadecimal base:
+2, 6, A
+
+bits_and_result Decimal: 2
+bits_and_result Hexadecimal: 2
+
+=======================
+

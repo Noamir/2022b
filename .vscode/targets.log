@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Wed May 25 04:49:50 2022
+# Make data base, printed on Wed Jun  1 07:53:41 2022
 
 # Variables
 
@@ -57,7 +57,7 @@ LESSOPEN = | /usr/bin/lesspipe %s
 # environment
 VSCODE_CWD = /home/noa
 # environment
-SSH_CONNECTION = 192.168.225.1 50420 192.168.225.129 22
+SSH_CONNECTION = 192.168.225.1 52359 192.168.225.129 22
 # environment
 PATH = /home/noa/.vscode-server/bin/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5/bin/remote-cli:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
 # environment
@@ -65,7 +65,7 @@ XDG_RUNTIME_DIR = /run/user/1000
 # environment
 VSCODE_LOG_STACK = false
 # environment
-VSCODE_IPC_HOOK_CLI = /run/user/1000/vscode-ipc-03977c6a-3601-4109-a416-c9cbcd69d288.sock
+VSCODE_IPC_HOOK_CLI = /run/user/1000/vscode-ipc-1a28738d-0df5-481d-b07e-90786b1010f8.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -123,7 +123,7 @@ MAKEFLAGS = pqrR
 # environment
 MFLAGS = -pqrR
 # environment
-SSH_CLIENT = 192.168.225.1 50420 22
+SSH_CLIENT = 192.168.225.1 52359 22
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # environment
@@ -219,6 +219,6 @@ GNUmakefile:
 # strcache performance: lookups = 21 / hit rate = 14%
 # hash-table stats:
 # Load=18/8192=0%, Rehash=0, Collisions=1/21=5%
-# Finished Make data base on Wed May 25 04:49:50 2022
+# Finished Make data base on Wed Jun  1 07:53:41 2022
 
  
